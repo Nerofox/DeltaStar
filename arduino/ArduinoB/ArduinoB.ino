@@ -2,9 +2,9 @@
 #include <LiquidCrystal_I2C.h>
 
 //constante des leds
-const int led[] = {A0,A1,A2,2,3,4,5,6,7,8,9,10,11};
+const int led[] = {A0,A1,A2,2,3,4,5,6,7,8,9,10,11,12,13};
 //donnée des clignotement pour les leds
-int ledBlink[] = {0,0,0,0,0,0,0,0,0,0,0,0,0};
+int ledBlink[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 
 //donne entrant du port série
 String inputSerial = "";
@@ -78,25 +78,29 @@ void setLcd(String arg_options, String arg_num1, String arg_num2) {
   lcd.setCursor(0,0);
   
   //message selon option si option 0 aucun affichage
-  if ( arg_options == 1 ) lcd.print("No connection"); 
-  if ( arg_options == 2 ) {
+  if ( arg_options == "1" ) {
+    lcd.print("No connection");
+    lcd.setCursor(0,1);
+    lcd.print("on APU");
+  } 
+  if ( arg_options == "2" ) {
     lcd.print("!!Warning!!");
     lcd.setCursor(0,1);
-    lcd.print("Main low");
+    lcd.print("Energy low");
   }
-  if ( arg_options == 3 ) {
-    lcd.print("!!Warning!!");
+  if (arg_options == "3") {
+    lcd.print("APU in");
     lcd.setCursor(0,1);
-    lcd.print("RCS low");
+    lcd.print("progress...");
   }
-  if ( arg_options == 4 ) {
-    lcd.print("Main : ");
+  if ( arg_options == "4") {
+    lcd.print("Level : ");
     lcd.setCursor(0,1);
-    lcd.print("RCS : ");
-    lcd.setCursor(8,0);
-    lcd.print(arg_num1 + " L");
-    lcd.setCursor(10,1);
-    lcd.print(arg_num2 + " L");
+    lcd.print("Use : ");
+    lcd.setCursor(9,0);
+    lcd.print(arg_num1 + " %");
+    lcd.setCursor(9,1);
+    lcd.print(arg_num2 + " %");
   }   
 }
 

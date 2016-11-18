@@ -32,12 +32,12 @@ void loop() {
     if (ledBlink[i] == 1)
       digitalWrite(led[i], LOW);
   }
-  delay(300);
+  delay(200);
   for (int i = 0; i < sizeof(ledBlink); i++) {
     if (ledBlink[i] == 1)
       digitalWrite(led[i], HIGH);
   }
-  delay(300);
+  delay(200);
 }
 
 void serialEvent() {

@@ -1,10 +1,14 @@
 #include <Wire.h> 
 #include <LiquidCrystal_I2C.h>
 
-//constante des leds
-const int led[] = {A0,A1,A2,2,3,4,5,6,7,8,9,10,11,12,13};
-//donnée des clignotement pour les leds
-int ledBlink[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+//constante des inputs,TODO A REDEFINIR
+const int inputButton[] = {A0,A1,A2};
+const int inputSwitch[] = {A0,A1,A2};
+//constante des variables d'états des entrées, TODO A REDEFINIR
+int currentStateInputSwitch[] = {HIGH,HIGH,HIGH};//etat relaché par défaut
+int currentStateInputButton[] = {HIGH,HIGH,HIGH};
+
+int currentStateRead; 
 
 //donne entrant du port série
 String inputSerial = "";
@@ -12,57 +16,35 @@ String inputSerial = "";
 LiquidCrystal_I2C lcd(0x27,16,2);
 
 void setup() {
+  
   //mise en place de l'écran
   lcd.begin();
   lcd.backlight();
   lcd.setCursor(0,0);
-
+  
   //ecoute du port série
   Serial.begin(9600);
-
-  //initialisation des leds et leur mode
-  for (int i = 0; i < sizeof(led); i++) {
-    pinMode(led[i], OUTPUT);
-    digitalWrite(led[i], HIGH);
+  
+  //initialisation des entrées et leur mode
+  for (int i = 0; i < sizeof(inputsButton); i++) {
+    pinMode(inputButton[i], INPUT_PULLUP);
+  }
+  for (int i = 0; i < sizeof(inputsSwitch); i++) {
+    pinMode(inputsSwitch[i], INPUT_PULLUP);
   }
 }
 
 void loop() {
-  for (int i = 0; i < sizeof(ledBlink); i++) {
-    if (ledBlink[i] == 1)
-      digitalWrite(led[i], LOW);
+  
+  //lecture et interpretation pour les interrupteurs
+  for (int i = 0; i < sizeof(inputsSwitch); i++) {
+    if (inputsSwitch[i] 
   }
-  delay(200);
-  for (int i = 0; i < sizeof(ledBlink); i++) {
-    if (ledBlink[i] == 1)
-      digitalWrite(led[i], HIGH);
-  }
-  delay(200);
+  //TODO
 }
 
 void serialEvent() {
-  //récupération des données
-  inputSerial = "";
-  while (Serial.available() > 0)
-  {
-    inputSerial = inputSerial + ascii(Serial.read());
-  }
-
-  //lecture de la donnée entrante et allumage des LED
-  int i;
-  for (i = 0; i < sizeof(led); i++) {
-    if (inputSerial.substring(i, i+1) == "0") {
-      digitalWrite(led[i], HIGH);
-    } else if (inputSerial.substring(i, i+1) == "1") {
-      digitalWrite(led[i], LOW);
-    } else if (inputSerial.substring(i, i+1) == "2") {
-      ledBlink[i] = 1;
-    } else {
-      ledBlink[i] = 0;
-    }
-  }
-  //gestion de l'écran
-  setLcd(inputSerial.substring(i, i+1), inputSerial.substring(i, i+3), inputSerial.substring(i, i+5));
+  //TODO
 }
 
 /**
@@ -86,21 +68,21 @@ void setLcd(String arg_options, String arg_num1, String arg_num2) {
   if ( arg_options == "2" ) {
     lcd.print("!!Warning!!");
     lcd.setCursor(0,1);
-    lcd.print("Energy low");
+    lcd.print("O2/N2 low");
   }
   if (arg_options == "3") {
-    lcd.print("APU in");
+    lcd.print("!!Warning!!");
     lcd.setCursor(0,1);
-    lcd.print("progress...");
+    lcd.print("hoverheated");
   }
   if ( arg_options == "4") {
-    lcd.print("Level : ");
+    lcd.print("O2/N2 : ");
     lcd.setCursor(0,1);
-    lcd.print("Use : ");
+    lcd.print("System T° : ");
     lcd.setCursor(9,0);
     lcd.print(arg_num1 + " %");
     lcd.setCursor(9,1);
-    lcd.print(arg_num2 + " %");
+    lcd.print(arg_num2 + " C");
   }   
 }
 
@@ -119,5 +101,3 @@ String ascii(int arg_dec) {
   if (arg_dec == 56) return "8";
   if (arg_dec == 57) return "9";
 }
-
-

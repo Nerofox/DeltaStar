@@ -3,13 +3,16 @@
 
 //constante des inputs,TODO A REDEFINIR
 const int inputButton[] = {35,36,37,38,39,40,41,42,43,44,45};
-const int inputSwitch[] = {A0,A1,A2,A3,A4,A5,A6,A7,A8,A9,A10,A11,A12,A13,A14,A15,53,52,51,50,49,48,47,46};
+const int inputSwitch[] = {A0,34,A2,A3,A4,A5,A6,A7,A8,A9,A10,A11,A12,33,A14,A15,53,52,51,50,49,48,47,46};
+const int nbSwitch = 24;
+const int nbButton = 11;
 //constante des variables d'états des entrées
-//etat relaché par défaut HIGH
-int currentStateInputSwitch[] = {HIGH,HIGH,HIGH,HIGH,HIGH,HIGH,HIGH,HIGH,HIGH,HIGH,HIGH,HIGH,HIGH,HIGH,HIGH,HIGH,HIGH,HIGH,HIGH,HIGH,HIGH,HIGH,HIGH,HIGH};
-int currentStateInputButton[] = {HIGH,HIGH,HIGH,HIGH,HIGH,HIGH,HIGH,HIGH,HIGH,HIGH,HIGH};
+//etat relaché par défaut LOW
+int currentStateInputSwitch[] = {LOW,LOW,LOW,LOW,LOW,LOW,LOW,LOW,LOW,LOW,LOW,LOW,LOW,LOW,LOW,LOW,LOW,LOW,LOW,LOW,LOW,LOW,LOW,LOW};
+int currentStateInputButton[] = {LOW,LOW,LOW,LOW,LOW,LOW,LOW,LOW,LOW,LOW,LOW};
 
-int currentStateRead; 
+int currentStateRead;
+int currentPort;
 
 //donne entrant du port série
 String inputSerial = "";
@@ -26,11 +29,11 @@ void setup() {
   //ecoute du port série
   Serial.begin(9600);
   
-  //initialisation des entrées et leur mode
+  /*initialisation des entrées et leur mode
   for (int i = 0; i < sizeof(inputButton); i++) {
     pinMode(inputButton[i], INPUT_PULLUP);
-  }
-  for (int i = 0; i < sizeof(inputSwitch); i++) {
+  }*/
+  for (int i = 0; i < nbSwitch; i++) {
     pinMode(inputSwitch[i], INPUT_PULLUP);
   }
 }
@@ -38,22 +41,25 @@ void setup() {
 void loop() {
   
   //lecture et interpretation pour les interrupteurs
-  for (int i = 0; i < sizeof(inputSwitch); i++) {
+  for (int i = 0; i < nbSwitch; i++) {
     currentStateRead = digitalRead(inputSwitch[i]);
     if (currentStateRead != currentStateInputSwitch[i]) {
-      Serial.println(inputSwitch[i]+";"+currentStateRead);
+      Serial.println(i);
       currentStateInputSwitch[i] = currentStateRead;
     }
   }
-
+  delay(500);
+/*
+  currentPort = nbSwitch;
   //lecture et interprétation des boutons
-  for (int i = 0; i < sizeof(inputButton); i++) {
+  for (int i = 0; i < nbButton; i++) {
     currentStateRead = digitalRead(inputButton[i]);
-    if (currentStateRead == LOW && currentStateRead != currentStateInputButton[i]) {
-      Serial.println(inputButton[i]+";1");
+    if (currentStateRead == LOW) {
+      Serial.println(currentPort);
     }
     currentStateInputButton[i] = currentStateRead;
-  }
+    currentPort++;
+  }**/
 }
 
 void serialEvent() {

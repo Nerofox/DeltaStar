@@ -10,6 +10,7 @@ const int nbButton = 11;
 //etat relaché par défaut LOW
 int currentStateInputSwitch[] = {LOW,LOW,LOW,LOW,LOW,LOW,LOW,LOW,LOW,LOW,LOW,LOW,LOW,LOW,LOW,LOW,LOW,LOW,LOW,LOW,LOW,LOW,LOW,LOW};
 int currentStateInputButton[] = {LOW,LOW,LOW,LOW,LOW,LOW,LOW,LOW,LOW,LOW,LOW};
+int finalStateInputButton[] = {LOW,LOW,LOW,LOW,LOW,LOW,LOW,LOW,LOW,LOW,LOW};
 
 int currentStateRead;
 int currentPort;
@@ -29,13 +30,21 @@ void setup() {
   //ecoute du port série
   Serial.begin(9600);
   
-  /*initialisation des entrées et leur mode
-  for (int i = 0; i < sizeof(inputButton); i++) {
+  //initialisation des entrées et leur mode
+  for (int i = 0; i < nbButton; i++) {
     pinMode(inputButton[i], INPUT_PULLUP);
-  }*/
+  }
   for (int i = 0; i < nbSwitch; i++) {
     pinMode(inputSwitch[i], INPUT_PULLUP);
   }
+
+  //etalonnage des etats des boutons actuelles
+  for (int i = 0; i < nbButton; i++) {
+    currentStateRead = digitalRead(inputButton[i]);
+    currentStateInputButton[i] = currentStateRead;
+    finalStateInputButton[i] = currentStateRead;
+  }
+  Serial.println();
 }
 
 void loop() {
@@ -44,22 +53,22 @@ void loop() {
   for (int i = 0; i < nbSwitch; i++) {
     currentStateRead = digitalRead(inputSwitch[i]);
     if (currentStateRead != currentStateInputSwitch[i]) {
-      Serial.println(i);
+      Serial.print(i);
       currentStateInputSwitch[i] = currentStateRead;
     }
   }
   delay(500);
-/*
+
   currentPort = nbSwitch;
   //lecture et interprétation des boutons
   for (int i = 0; i < nbButton; i++) {
     currentStateRead = digitalRead(inputButton[i]);
-    if (currentStateRead == LOW) {
-      Serial.println(currentPort);
+    if (currentStateRead != currentStateInputButton[i] && finalStateInputButton[i] != currentStateRead) {
+      Serial.print(currentPort);
     }
     currentStateInputButton[i] = currentStateRead;
     currentPort++;
-  }**/
+  }
 }
 
 void serialEvent() {

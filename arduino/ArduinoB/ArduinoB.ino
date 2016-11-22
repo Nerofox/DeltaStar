@@ -3,6 +3,7 @@
 
 //constante des leds
 const int led[] = {A0,A1,A2,2,3,4,5,6,7,8,9,10,11,12,13};
+const int nbLed = 15;
 //donnée des clignotement pour les leds
 int ledBlink[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 
@@ -21,19 +22,19 @@ void setup() {
   Serial.begin(9600);
 
   //initialisation des leds et leur mode
-  for (int i = 0; i < sizeof(led); i++) {
+  for (int i = 0; i < nbLed; i++) {
     pinMode(led[i], OUTPUT);
     digitalWrite(led[i], HIGH);
   }
 }
 
 void loop() {
-  for (int i = 0; i < sizeof(ledBlink); i++) {
+  for (int i = 0; i < nbLed; i++) {
     if (ledBlink[i] == 1)
       digitalWrite(led[i], LOW);
   }
   delay(200);
-  for (int i = 0; i < sizeof(ledBlink); i++) {
+  for (int i = 0; i < nbLed; i++) {
     if (ledBlink[i] == 1)
       digitalWrite(led[i], HIGH);
   }
@@ -50,19 +51,19 @@ void serialEvent() {
 
   //lecture de la donnée entrante et allumage des LED
   int i;
-  for (i = 0; i < sizeof(led); i++) {
+  for (i = 0; i < nbLed; i++) {
     if (inputSerial.substring(i, i+1) == "0") {
       digitalWrite(led[i], HIGH);
+      ledBlink[i] = 0;
     } else if (inputSerial.substring(i, i+1) == "1") {
       digitalWrite(led[i], LOW);
+      ledBlink[i] = 0;
     } else if (inputSerial.substring(i, i+1) == "2") {
       ledBlink[i] = 1;
-    } else {
-      ledBlink[i] = 0;
     }
   }
   //gestion de l'écran
-  setLcd(inputSerial.substring(i, i+1), inputSerial.substring(i, i+3), inputSerial.substring(i, i+5));
+  setLcd(inputSerial.substring(i, i+1), inputSerial.substring(i+1, i+4), inputSerial.substring(i+4, i+7));
 }
 
 /**

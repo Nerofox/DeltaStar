@@ -3,6 +3,7 @@
 
 //constante des leds
 const int led[] = {A0,A1,A2,2,3,4,5,6,7,8,9,10,11};
+const int nbLed = 13;
 //donnée des clignotement pour les leds
 int ledBlink[] = {0,0,0,0,0,0,0,0,0,0,0,0,0};
 
@@ -21,19 +22,19 @@ void setup() {
   Serial.begin(9600);
 
   //initialisation des leds et leur mode
-  for (int i = 0; i < sizeof(led); i++) {
+  for (int i = 0; i < nbLed; i++) {
     pinMode(led[i], OUTPUT);
     digitalWrite(led[i], HIGH);
   }
 }
 
 void loop() {
-  for (int i = 0; i < sizeof(ledBlink); i++) {
+  for (int i = 0; i < nbLed; i++) {
     if (ledBlink[i] == 1)
       digitalWrite(led[i], LOW);
   }
   delay(200);
-  for (int i = 0; i < sizeof(ledBlink); i++) {
+  for (int i = 0; i < nbLed; i++) {
     if (ledBlink[i] == 1)
       digitalWrite(led[i], HIGH);
   }
@@ -50,19 +51,19 @@ void serialEvent() {
 
   //lecture de la donnée entrante et allumage des LED
   int i;
-  for (i = 0; i < sizeof(led); i++) {
+  for (i = 0; i < nbLed; i++) {
     if (inputSerial.substring(i, i+1) == "0") {
       digitalWrite(led[i], HIGH);
+      ledBlink[i] = 0;
     } else if (inputSerial.substring(i, i+1) == "1") {
       digitalWrite(led[i], LOW);
+      ledBlink[i] = 0;
     } else if (inputSerial.substring(i, i+1) == "2") {
       ledBlink[i] = 1;
-    } else {
-      ledBlink[i] = 0;
     }
   }
   //gestion de l'écran
-  setLcd(inputSerial.substring(i, i+1), inputSerial.substring(i, i+3), inputSerial.substring(i, i+5));
+  setLcd(inputSerial.substring(i, i+1), inputSerial.substring(i+1, i+5), inputSerial.substring(i+5, i+8));
 }
 
 /**
@@ -78,18 +79,22 @@ void setLcd(String arg_options, String arg_num1, String arg_num2) {
   lcd.setCursor(0,0);
   
   //message selon option si option 0 aucun affichage
-  if ( arg_options == 1 ) lcd.print("No connection"); 
-  if ( arg_options == 2 ) {
+  if ( arg_options == "1" ) {
+    lcd.print("No connection");
+    lcd.setCursor(0,1);
+    lcd.print("on APU");
+  } 
+  if ( arg_options == "2" ) {
     lcd.print("!!Warning!!");
     lcd.setCursor(0,1);
     lcd.print("Main low");
   }
-  if ( arg_options == 3 ) {
+  if ( arg_options == "3" ) {
     lcd.print("!!Warning!!");
     lcd.setCursor(0,1);
     lcd.print("RCS low");
   }
-  if ( arg_options == 4 ) {
+  if ( arg_options == "4" ) {
     lcd.print("Main : ");
     lcd.setCursor(0,1);
     lcd.print("RCS : ");

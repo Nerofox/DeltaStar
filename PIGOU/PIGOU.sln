@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PIGOU", "PIGOU\PIGOU.csproj", "{70DEBCD1-C439-4E96-9079-90AE91DA1C13}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeltaStarPanel", "DeltaStarPanel\DeltaStarPanel.csproj", "{3936E150-D417-4C6F-9056-841D0FAC09AD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{70DEBCD1-C439-4E96-9079-90AE91DA1C13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70DEBCD1-C439-4E96-9079-90AE91DA1C13}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70DEBCD1-C439-4E96-9079-90AE91DA1C13}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70DEBCD1-C439-4E96-9079-90AE91DA1C13}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3936E150-D417-4C6F-9056-841D0FAC09AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3936E150-D417-4C6F-9056-841D0FAC09AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3936E150-D417-4C6F-9056-841D0FAC09AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3936E150-D417-4C6F-9056-841D0FAC09AD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

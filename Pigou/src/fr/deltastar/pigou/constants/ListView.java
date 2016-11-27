@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package fr.deltastar.pigou.constants;
 
 /**
@@ -12,4 +7,7 @@ package fr.deltastar.pigou.constants;
 public class ListView {
     private final static String PATH = "/fr/deltastar/pigou/view/";
     public final static String WELCOME = PATH + "WelcomeView.fxml";
+    public final static String SETTINGS = PATH + "Settings.fxml";
+    public final static String SETTINGS_ARDUINO_COM = PATH + "SettingsArduinoCom.fxml";
+    public final static String SETTINGS_AUTO_CONFIG = PATH + "SettingsAutoConfig.fxml";
 }

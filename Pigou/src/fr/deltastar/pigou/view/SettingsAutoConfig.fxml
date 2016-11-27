@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.TreeTableColumn?>
+<?import javafx.scene.control.TreeTableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" fx:id="ap" prefHeight="600.0" prefWidth="800.0" stylesheets="@../resources/css/baseStyle.css" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.deltastar.pigou.controller.SettingsAutoConfigController">
+   <children>
+      <Pane prefHeight="608.0" prefWidth="813.0" style="-fx-background-color: #0F056B;">
+         <children>
+            <Button fx:id="btnBack" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#btnBackClick" prefHeight="48.0" prefWidth="61.0" text="&lt;" />
+            <ProgressBar layoutX="52.0" layoutY="430.0" prefHeight="35.0" prefWidth="287.0" progress="0.0" stylesheets="@../resources/css/baseStyle.css" />
+            <TreeTableView layoutX="52.0" layoutY="118.0" prefHeight="271.0" prefWidth="390.0">
+               <columns>
+                  <TreeTableColumn prefWidth="244.0" text="List" />
+                  <TreeTableColumn minWidth="6.0" prefWidth="121.0" text="Id port" />
+               </columns>
+            </TreeTableView>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="406.0" layoutX="460.0" layoutY="62.0" stroke="BLACK" strokeType="INSIDE" width="6.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="6.0" layoutX="24.0" layoutY="102.0" stroke="BLACK" strokeType="INSIDE" width="776.0" />
+            <Label layoutX="213.0" layoutY="51.0" styleClass="title" stylesheets="@../resources/css/baseStyle.css" text="Input" />
+            <Label layoutX="579.0" layoutY="51.0" styleClass="title" text="Output" />
+            <ProgressBar layoutX="494.0" layoutY="197.0" prefHeight="35.0" prefWidth="287.0" progress="0.0" stylesheets="@../resources/css/baseStyle.css" />
+            <Label layoutX="494.0" layoutY="118.0" prefHeight="48.0" prefWidth="287.0" text="Press switch for Gear" textFill="WHITE" wrapText="true">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <ProgressBar layoutX="52.0" layoutY="539.0" prefHeight="35.0" prefWidth="735.0" progress="0.0" stylesheets="@../resources/css/baseStyle.css" />
+            <Label layoutX="52.0" layoutY="404.0" text="1 / 40 output" textFill="WHITE" />
+            <Button layoutX="351.0" layoutY="424.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="92.0" text="Next" />
+            <Label layoutX="52.0" layoutY="510.0" text="Total progress 1 / 80 I/O" textFill="WHITE" />
+            <Label layoutX="494.0" layoutY="174.0" text="1 / 40 input" textFill="WHITE" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

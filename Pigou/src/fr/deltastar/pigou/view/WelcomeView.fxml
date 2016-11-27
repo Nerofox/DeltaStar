@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:controller="fr.deltastar.pigou.controller.WelcomeController" prefHeight="600.0" prefWidth="800.0" stylesheets="@../resources/css/baseStyle.css" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane id="AnchorPane" fx:id="ap" prefHeight="600.0" prefWidth="800.0" stylesheets="@../resources/css/baseStyle.css" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.deltastar.pigou.controller.WelcomeController">
    <children>
       <Pane layoutX="-3.0" prefHeight="603.0" prefWidth="809.0" style="-fx-background-color: #0F056B;">
          <children>
@@ -22,7 +22,7 @@
                   <Font size="68.0" />
                </font>
             </Label>
-            <Button layoutX="34.0" layoutY="504.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="220.0" stylesheets="@../resources/css/baseStyle.css" text="Settings" />
+            <Button fx:id="bSettings" layoutX="34.0" layoutY="504.0" mnemonicParsing="false" onAction="#bSettingsClick" prefHeight="64.0" prefWidth="220.0" stylesheets="@../resources/css/baseStyle.css" text="Settings" />
             <Button layoutX="556.0" layoutY="504.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="220.0" stylesheets="@../resources/css/baseStyle.css" text="Launch" />
          </children>
       </Pane>

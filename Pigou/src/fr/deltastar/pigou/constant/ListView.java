@@ -1,4 +1,4 @@
-package fr.deltastar.pigou.constants;
+package fr.deltastar.pigou.constant;
 
 /**
  *

@@ -1,7 +1,7 @@
 package fr.deltastar.pigou.application;
 
-import fr.deltastar.pigou.constants.Constants;
-import fr.deltastar.pigou.constants.ListView;
+import fr.deltastar.pigou.constant.Constants;
+import fr.deltastar.pigou.constant.ListView;
 import java.io.IOException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

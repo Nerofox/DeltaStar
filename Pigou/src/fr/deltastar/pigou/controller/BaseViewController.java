@@ -1,6 +1,6 @@
 package fr.deltastar.pigou.controller;
 
-import fr.deltastar.pigou.constants.Constants;
+import fr.deltastar.pigou.constant.Constants;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;

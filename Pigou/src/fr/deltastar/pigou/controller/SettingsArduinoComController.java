@@ -1,6 +1,6 @@
 package fr.deltastar.pigou.controller;
 
-import fr.deltastar.pigou.constants.ListView;
+import fr.deltastar.pigou.constant.ListView;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;

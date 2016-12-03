@@ -1,12 +1,15 @@
 package fr.deltastar.pigou.model;
 
+import java.util.List;
+
 /**
  *
  * @author Valentin
  */
 public interface ModuleInterface {
     /**
-     * Charge l'ensemble des objets components du module
+     * Récupère la liste des composants du module
+     * @return List
      */
-    public void loadComponent();
+    public List<Component> getListComponents();
 }

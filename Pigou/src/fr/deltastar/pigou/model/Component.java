@@ -1,14 +1,19 @@
 package fr.deltastar.pigou.model;
 
 /**
- * Classe de base pout l'ensemble des modules
+ * Classe pour un composant
  * @author Valentin
  */
-public abstract class BaseComponent {
+public class Component {
     /**
-     * Numéro du champ input
+     * Numéro du champ input ou position du champ output dans le code arduino
      */
     protected int idPos;
+    /**
+     * Indique le type de composant en question, input ou output
+     * utilise le ComponentConstants
+     */
+    protected int type;
     /**
      * Etat du composant, allumé ou éteint voir clignotant pour une led
      * utilise le ComponentConstants

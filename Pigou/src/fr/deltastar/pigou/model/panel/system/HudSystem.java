@@ -1,6 +1,10 @@
 package fr.deltastar.pigou.model.panel.system;
 
 import fr.deltastar.pigou.model.BaseSystem;
+import fr.deltastar.pigou.model.ModuleInterface;
+import fr.deltastar.pigou.model.panel.module.hud.HudModule;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -8,11 +12,16 @@ import fr.deltastar.pigou.model.BaseSystem;
  */
 public class HudSystem extends BaseSystem {
 
-    @Override
-    public void loadModule() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    private HudModule hudModule;
+    
+    public HudSystem() {
+        this.hudModule = new HudModule();
     }
 
+    public HudModule getHudModule() {
+        return hudModule;
+    }
+    
     @Override
     public void onActivateSystem() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -23,4 +32,15 @@ public class HudSystem extends BaseSystem {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
+    @Override
+    public String toString() {
+        return "Hud";
+    }
+
+    @Override
+    public List<ModuleInterface> getListModuleInterface() {
+        List<ModuleInterface> mi = new ArrayList<>();
+        mi.add(this.hudModule);
+        return mi;
+    }
 }

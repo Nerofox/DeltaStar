@@ -19,5 +19,14 @@ public class HudModule implements ModuleInterface {
     public List<Component> getListComponents() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
+    @Override
+    public void onAction(boolean activate) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String toString() {
+        return "HUD";
+    }
 }

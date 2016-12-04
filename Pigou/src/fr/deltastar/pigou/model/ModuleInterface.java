@@ -12,4 +12,9 @@ public interface ModuleInterface {
      * @return List
      */
     public List<Component> getListComponents();
+    /**
+     * Action exécutée si un input est activée ou désactivée
+     * @param activate 
+     */
+    public void onAction(boolean activate);
 }

@@ -24,6 +24,10 @@ public class Component {
      * utilise le ArduinoPortConstants
      */
     protected String arduinoCom;
+    /**
+     * Nom du composant
+     */
+    protected String title;
 
     public int getIdPos() {
         return idPos;
@@ -31,6 +35,14 @@ public class Component {
 
     public void setIdPos(int idPos) {
         this.idPos = idPos;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 
     public int getStatus() {
@@ -47,5 +59,13 @@ public class Component {
 
     public void setArduinoCom(String arduinoCom) {
         this.arduinoCom = arduinoCom;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

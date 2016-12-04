@@ -1,6 +1,10 @@
 package fr.deltastar.pigou.model.panel.system;
 
 import fr.deltastar.pigou.model.BaseSystem;
+import fr.deltastar.pigou.model.ModuleInterface;
+import fr.deltastar.pigou.model.panel.module.warning.WarningModule;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -8,9 +12,14 @@ import fr.deltastar.pigou.model.BaseSystem;
  */
 public class WarningSystem extends BaseSystem {
 
-    @Override
-    public void loadModule() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    private WarningModule warningModule;
+    
+    public WarningSystem() {
+        this.warningModule = new WarningModule();
+    }
+
+    public WarningModule getWarningModule() {
+        return warningModule;
     }
 
     @Override
@@ -23,4 +32,15 @@ public class WarningSystem extends BaseSystem {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
+    @Override
+    public String toString() {
+        return "Warning";
+    }
+
+    @Override
+    public List<ModuleInterface> getListModuleInterface() {
+        List<ModuleInterface> mi = new ArrayList<>();
+        mi.add(this.warningModule);
+        return mi;
+    }
 }

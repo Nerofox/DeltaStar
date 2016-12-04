@@ -1,4 +1,4 @@
-package fr.deltastar.pigou.model.panel.module.power;
+package fr.deltastar.pigou.model.panel.module.engine;
 
 import fr.deltastar.pigou.model.Component;
 import fr.deltastar.pigou.model.ModuleInterface;
@@ -8,7 +8,7 @@ import java.util.List;
  *
  * @author Valentin
  */
-public class EnginePowerModule implements ModuleInterface {
+public class TransfertLeftModule implements ModuleInterface {
 
     @Override
     public List<Component> getListComponents() {
@@ -22,6 +22,6 @@ public class EnginePowerModule implements ModuleInterface {
 
     @Override
     public String toString() {
-        return "Engine";
+        return "Transfert left";
     }
 }

@@ -12,6 +12,11 @@ public class MonitorModule implements ModuleInterface {
 
     @Override
     public List<Component> getListComponents() {
+        return null;
+    }
+
+    @Override
+    public void onAction(boolean activate) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

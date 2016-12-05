@@ -1,4 +1,4 @@
-package fr.deltastar.pigou.model;
+package fr.deltastar.pigou.model.panel;
 
 /**
  * Classe pour un composant
@@ -28,6 +28,11 @@ public class Component {
      * Nom du composant
      */
     protected String title;
+
+    public Component(int type, String title) {
+        this.type = type;
+        this.title = title;
+    }
 
     public int getIdPos() {
         return idPos;
@@ -61,11 +66,8 @@ public class Component {
         this.arduinoCom = arduinoCom;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
+    @Override
+    public String toString() {
+        return this.title;
     }
 }

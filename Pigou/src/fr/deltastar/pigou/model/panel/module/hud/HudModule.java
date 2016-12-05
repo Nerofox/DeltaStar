@@ -5,8 +5,10 @@
  */
 package fr.deltastar.pigou.model.panel.module.hud;
 
-import fr.deltastar.pigou.model.Component;
-import fr.deltastar.pigou.model.ModuleInterface;
+import fr.deltastar.pigou.model.constant.ComponentConstants;
+import fr.deltastar.pigou.model.panel.Component;
+import fr.deltastar.pigou.model.panel.ModuleInterface;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,9 +17,17 @@ import java.util.List;
  */
 public class HudModule implements ModuleInterface {
 
+    private Component button;
+
+    public HudModule() {
+        this.button = new Component(ComponentConstants.INPUT, "Button");
+    }
+    
     @Override
     public List<Component> getListComponents() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List<Component> c = new ArrayList<>();
+        c.add(this.button);
+        return c;
     }
 
     @Override

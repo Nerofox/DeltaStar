@@ -1,6 +1,8 @@
 package fr.deltastar.pigou.model.panel;
 
 import fr.deltastar.pigou.model.panel.system.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class regroupant l'ensemble des systèmes du panneau deltaStar
@@ -57,5 +59,15 @@ public class DeltaStar {
         return warningSystem;
     }
     
-    
+    public static List<BaseSystem> getListSystem() {
+        List<BaseSystem> s = new ArrayList<>();
+        s.add(DeltaStar.getAirlockSystem());
+        s.add(DeltaStar.getComputerSystem());
+        s.add(DeltaStar.getEngineSystem());
+        s.add(DeltaStar.getHudSystem());
+        s.add(DeltaStar.getLifePackSystem());
+        s.add(DeltaStar.getPowerSystem());
+        s.add(DeltaStar.getWarningSystem());
+        return s;
+    } 
 }

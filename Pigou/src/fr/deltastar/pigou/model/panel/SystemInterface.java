@@ -1,4 +1,4 @@
-package fr.deltastar.pigou.model;
+package fr.deltastar.pigou.model.panel;
 
 /**
  *

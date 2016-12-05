@@ -1,7 +1,7 @@
 package fr.deltastar.pigou.model.panel.module.computer;
 
-import fr.deltastar.pigou.model.Component;
-import fr.deltastar.pigou.model.ModuleInterface;
+import fr.deltastar.pigou.model.panel.Component;
+import fr.deltastar.pigou.model.panel.ModuleInterface;
 import java.util.List;
 
 /**

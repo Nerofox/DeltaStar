@@ -1,8 +1,8 @@
 
 package fr.deltastar.pigou.model.panel.system;
 
-import fr.deltastar.pigou.model.BaseSystem;
-import fr.deltastar.pigou.model.ModuleInterface;
+import fr.deltastar.pigou.model.panel.BaseSystem;
+import fr.deltastar.pigou.model.panel.ModuleInterface;
 import fr.deltastar.pigou.model.constant.ArduinoPortConstants;
 import fr.deltastar.pigou.model.panel.module.engine.*;
 import java.util.ArrayList;

@@ -24,8 +24,8 @@
             </TreeTableView>
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="406.0" layoutX="460.0" layoutY="62.0" stroke="BLACK" strokeType="INSIDE" width="6.0" />
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="6.0" layoutX="24.0" layoutY="102.0" stroke="BLACK" strokeType="INSIDE" width="776.0" />
-            <Label layoutX="213.0" layoutY="51.0" styleClass="title" stylesheets="@../resources/css/baseStyle.css" text="Input" />
-            <Label layoutX="579.0" layoutY="51.0" styleClass="title" text="Output" />
+            <Label layoutX="201.0" layoutY="51.0" styleClass="title" stylesheets="@../resources/css/baseStyle.css" text="Output" />
+            <Label layoutX="579.0" layoutY="51.0" styleClass="title" text="Input" />
             <ProgressBar layoutX="494.0" layoutY="197.0" prefHeight="35.0" prefWidth="287.0" progress="0.0" stylesheets="@../resources/css/baseStyle.css" />
             <Label layoutX="494.0" layoutY="118.0" prefHeight="48.0" prefWidth="287.0" text="Press switch for Gear" textFill="WHITE" wrapText="true">
                <font>

@@ -1,6 +1,8 @@
 package fr.deltastar.pigou.controller;
 
 import fr.deltastar.pigou.constant.ListView;
+import fr.deltastar.pigou.customcontrol.TreeTableViewPanel;
+import fr.deltastar.pigou.model.constant.ComponentConstants;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -13,12 +15,15 @@ import javafx.scene.control.Button;
  */
 public class SettingsController extends BaseViewController implements Initializable {
 
+    @FXML private TreeTableViewPanel ttvpInput;
+    @FXML private TreeTableViewPanel ttvpOutput;
     @FXML private Button btnSettingsArduino;
     @FXML private Button btnAutoConfig;
     
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        this.ttvpInput.loadTree(ComponentConstants.INPUT);
+        this.ttvpOutput.loadTree(ComponentConstants.OUTPUT);
     }
     
     @FXML

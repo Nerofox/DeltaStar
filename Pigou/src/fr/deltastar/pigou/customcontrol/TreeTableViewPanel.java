@@ -17,7 +17,9 @@ import javafx.util.Callback;
  * @author Valentin
  */
 public class TreeTableViewPanel extends TreeTableView<Object> {
-
+    
+    private Component currentComponentSeleted;
+    
     public TreeTableViewPanel() {
         super.setPrefWidth(365);
         //création colonne
@@ -40,6 +42,12 @@ public class TreeTableViewPanel extends TreeTableView<Object> {
             }
         });
         super.getColumns().addAll(columnList, columnId);
+        
+        //evenement quand on clic sur une ligne
+        super.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection.getValue() instanceof Component)
+                this.currentComponentSeleted = (Component)newSelection.getValue();
+        });
     }
     
     /**
@@ -67,5 +75,15 @@ public class TreeTableViewPanel extends TreeTableView<Object> {
         //configuration final du treeview
         super.setShowRoot(true);
         super.setRoot(root);
+    }
+    
+    public Component getSelectedComponent() {
+        return this.currentComponentSeleted;
+    }
+    
+    public void setPosForSelectedComponent(int pos) {
+        Component c = this.getSelectedComponent();
+        c.setIdPos(pos);
+        super.refresh();
     }
 }

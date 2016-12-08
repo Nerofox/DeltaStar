@@ -18,10 +18,12 @@
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="6.0" layoutX="23.0" layoutY="120.0" stroke="BLACK" strokeType="INSIDE" width="776.0" />
             <TreeTableViewPanel fx:id="ttvpInput" layoutX="23.0" layoutY="145.0" prefHeight="300" />
             <Label text="ID : " layoutX="20" layoutY="465" textFill="WHITE"/>
-            <TextField layoutX="43" layoutY="460" prefWidth="60"  /> 
+            <TextField fx:id="tfInput" layoutX="43" layoutY="460" prefWidth="60"  /> 
+            <Button fx:id="btnSaveInput" layoutX="115" layoutY="460"  prefHeight="48.0" prefWidth="80" text="Save" onAction="#btnInputClick" />
             <TreeTableViewPanel fx:id="ttvpOutput" layoutX="420.0" layoutY="145.0" prefHeight="300"/>
-            <Label text="ID : " layoutX="420" layoutY="465" textFill="WHITE"/>
-            <TextField layoutX="443" layoutY="460" prefWidth="60"  /> 
+            <Label text="Pos : " layoutX="420" layoutY="465" textFill="WHITE"/>
+            <TextField fx:id="tfOutput" layoutX="453" layoutY="460" prefWidth="60"  /> 
+            <Button fx:id="btnSaveOutput" layoutX="530" layoutY="460"  prefHeight="48.0" prefWidth="80" text="Save" onAction="#btnOutputClick" />
             <Button fx:id="btnAutoConfig" layoutX="590.0" layoutY="14.0" mnemonicParsing="false" onAction="#btnAutoConfigClick" prefHeight="48.0" prefWidth="209.0" text="Auto configuration" />
             <Button fx:id="btnSettingsArduino" layoutX="346.0" layoutY="14.0" mnemonicParsing="false" onAction="#btnSettingsArduinoClick" prefHeight="48.0" prefWidth="237.0" text="Settings Arduino port COM" />
             <Label layoutX="31.0" layoutY="78.0" styleClass="title" stylesheets="@../resources/css/baseStyle.css" text="Input" />

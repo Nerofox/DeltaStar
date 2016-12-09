@@ -1,6 +1,5 @@
 package fr.deltastar.pigou.communication;
 
-import com.sun.xml.internal.bind.v2.runtime.reflect.Lister;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -10,10 +9,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
+ * Gestion simple d'un client socket
  * @author Valentin
  */
-public class SocketClient {
+public class SocketClient implements ComClientInterface {
     private final String SERVER_IP = "127.0.0.1";
     private int port;
     
@@ -21,19 +20,20 @@ public class SocketClient {
     private Socket socket;
     private BufferedReader in;
     
-    private ListenerCom listenerCom;
+    private ListenerComInterface listenerCom;
 
     /**
-     * Constructeur
      * initialise la connection
      * @param port
      * @param listenerCom 
      */
-    public SocketClient(int port, ListenerCom listenerCom) {
-        this.port = port;
+    @Override
+    public void connect(String port, ListenerComInterface listenerCom) {
+        this.port = Integer.parseInt(port);
         this.listenerCom = listenerCom;
         try {
-            this.socket = new Socket(SERVER_IP, port);
+            this.socket = new Socket(SERVER_IP, this.port);
+            System.out.println("Connection established on " + SERVER_IP + ":" + this.port);
         } catch (IOException ex) {
             Logger.getLogger(SocketClient.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -43,6 +43,7 @@ public class SocketClient {
      * Lance un thread qui va ecouter les données potentiel entrante
      * retourne les données si existantes dans le ListenerCom
      */
+    @Override
     public void listenInput() {
         this.listenerInput = new Thread(new Runnable() {
             @Override
@@ -69,10 +70,12 @@ public class SocketClient {
      * Envoi des données au serveur socket
      * @param data 
      */
+    @Override
     public void sendData(String data) {
         try {
             PrintWriter out = new PrintWriter(this.socket.getOutputStream());
             out.write(data);
+            out.flush();
         } catch (IOException ex) {
             Logger.getLogger(SocketClient.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -81,11 +84,13 @@ public class SocketClient {
     /**
      * Ferme la connection
      */
+    @Override
     public void closeConnection() {
         try {
             this.listenerInput.stop();
             this.in.close();
             this.socket.close();
+            System.out.println("Close connection on " + SERVER_IP + ":" + this.port);
         } catch (IOException ex) {
             Logger.getLogger(SocketClient.class.getName()).log(Level.SEVERE, null, ex);
         }

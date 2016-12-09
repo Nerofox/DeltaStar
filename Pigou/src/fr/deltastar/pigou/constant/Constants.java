@@ -11,6 +11,8 @@ package fr.deltastar.pigou.constant;
  */
 public class Constants {
     public final static String TITLE_APPLICATION = "PIGOU";
+    public final static boolean MODE_VIRTUAL = true;
+    
     public final static int SIZE_WIDTH_APPLICATION = 800;
     public final static int SIZE_HEIGHT_APPLICATION = 600;
 }

@@ -5,6 +5,6 @@ package fr.deltastar.pigou.communication;
  * avec les class de communication
  * @author Valentin
  */
-public interface ListenerCom {
+public interface ListenerComInterface {
     public void onDataReceved(String data);
 }

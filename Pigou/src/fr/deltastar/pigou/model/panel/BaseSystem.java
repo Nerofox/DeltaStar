@@ -15,6 +15,8 @@ public abstract class BaseSystem {
      * Etat du champ lcd
      */
     protected int statusLcd;
+    protected int argOneLcd;
+    protected int argTwoLcd;
 
     public String getArduinoComLcd() {
         return arduinoComLcd;

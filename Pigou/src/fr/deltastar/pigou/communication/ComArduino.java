@@ -23,7 +23,7 @@ public class ComArduino implements ListenerComInterface {
     private String outputArgTwoLcd;
     private int sizeOutputArgTwoLcd;
     
-    public void start(String port, int modeInputOutput, int sizeArgOneLcd, int sizeArgTwoLcd) {
+    public void start(String port, int modeInputOutput, int nbOutput, int sizeArgOneLcd, int sizeArgTwoLcd) {
         this.statusLcd = 0;
        
         this.sizeOutputArgOneLcd = sizeArgOneLcd;
@@ -39,6 +39,11 @@ public class ComArduino implements ListenerComInterface {
         //on écoute les données entrante si souhaité
         if (modeInputOutput == ComponentConstants.INPUT) {
             this.com.listenInput();
+        }
+        //initialisation des led, par défaut 0 
+        this.outputCodeLed = new char[nbOutput];
+        for (int i = 0; i < nbOutput; i++) {
+            this.outputCodeLed[i] = '0';
         }
     }
     
@@ -72,7 +77,14 @@ public class ComArduino implements ListenerComInterface {
     }
     
     public void sendOutput() {
-        
+        StringBuilder sbOuput = new StringBuilder(String.valueOf(this.outputCodeLed));
+        sbOuput.append(this.statusLcd).append(this.outputArgOneLcd).append(this.outputArgTwoLcd);
+        this.com.sendData(sbOuput.toString());
+    }
+    
+    public void closeConnection() {
+        this.com.closeConnection();
+        System.out.println("Connection close");
     }
 
     @Override

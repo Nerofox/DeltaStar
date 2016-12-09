@@ -1,5 +1,7 @@
 package fr.deltastar.pigou.communication;
 
+import fr.deltastar.pigou.constant.Constants;
+import fr.deltastar.pigou.service.ServicePigou;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -13,7 +15,6 @@ import java.util.logging.Logger;
  * @author Valentin
  */
 public class SocketClient implements ComClientInterface {
-    private final String SERVER_IP = "127.0.0.1";
     private int port;
     
     private Thread listenerInput;
@@ -32,10 +33,10 @@ public class SocketClient implements ComClientInterface {
         this.port = Integer.parseInt(port);
         this.listenerCom = listenerCom;
         try {
-            this.socket = new Socket(SERVER_IP, this.port);
-            System.out.println("Connection established on " + SERVER_IP + ":" + this.port);
+            this.socket = new Socket(Constants.VIRTUAL_IP, this.port);
+            System.out.println("Connection established on " + this.port);
         } catch (IOException ex) {
-            Logger.getLogger(SocketClient.class.getName()).log(Level.SEVERE, null, ex);
+            ServicePigou.getMessageService().displayFatalError("Connection error on " + this.port);
         }
     }
     
@@ -59,7 +60,7 @@ public class SocketClient implements ComClientInterface {
                         }
                     }
                 } catch (IOException ex) {
-                    Logger.getLogger(SocketClient.class.getName()).log(Level.SEVERE, null, ex);
+                    System.out.println("Error listen input on " + port);
                 }
             }
         });
@@ -72,13 +73,21 @@ public class SocketClient implements ComClientInterface {
      */
     @Override
     public void sendData(String data) {
-        try {
-            PrintWriter out = new PrintWriter(this.socket.getOutputStream());
-            out.write(data);
-            out.flush();
-        } catch (IOException ex) {
-            Logger.getLogger(SocketClient.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                PrintWriter out = null;
+                try {
+                    out = new PrintWriter(socket.getOutputStream());
+                    out.write(data);
+                    out.flush();
+                } catch (IOException ex) {
+                    System.out.println("Error send output on " + port);
+                } finally {
+                    out.close();
+                }
+            }
+        }).start();
     }
     
     /**
@@ -90,7 +99,7 @@ public class SocketClient implements ComClientInterface {
             this.listenerInput.stop();
             this.in.close();
             this.socket.close();
-            System.out.println("Close connection on " + SERVER_IP + ":" + this.port);
+            System.out.println("Close connection on " + Constants.VIRTUAL_IP + ":" + this.port);
         } catch (IOException ex) {
             Logger.getLogger(SocketClient.class.getName()).log(Level.SEVERE, null, ex);
         }

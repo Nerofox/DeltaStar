@@ -1,6 +1,7 @@
 package fr.deltastar.pigou.controller;
 
 import fr.deltastar.pigou.constant.ListView;
+import fr.deltastar.pigou.service.ServicePigou;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -16,7 +17,9 @@ public class WelcomeController extends BaseViewController implements Initializab
     @FXML private Button btnSettings;
     
     @Override
-    public void initialize(URL location, ResourceBundle resources) {}
+    public void initialize(URL location, ResourceBundle resources) {
+        ServicePigou.getComArduinoService().launch();
+    }
     
     @FXML
     private void btnSettingsClick() {

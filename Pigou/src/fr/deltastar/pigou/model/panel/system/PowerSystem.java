@@ -4,6 +4,7 @@ import fr.deltastar.pigou.model.panel.BaseSystem;
 import fr.deltastar.pigou.model.panel.ModuleInterface;
 import fr.deltastar.pigou.model.constant.ArduinoPortConstants;
 import fr.deltastar.pigou.model.panel.module.power.*;
+import fr.deltastar.pigou.service.ServicePigou;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +34,7 @@ public class PowerSystem extends BaseSystem {
         this.hudPowerModule = new HudPowerModule();
         this.lifePackPowerModule = new LifePackPowerModule();
         this.starterModule = new StarterModule();
-        this.arduinoComLcd = ArduinoPortConstants.ARDUINO_B;
+        this.arduinoComLcd = ServicePigou.getComArduinoService().getArduinoB();;
     }
 
     public AirlockPowerModule getAirlockPowerModule() {

@@ -13,7 +13,7 @@ public class Constants {
     public final static String TITLE_APPLICATION = "PIGOU";
     
     public final static boolean MODE_VIRTUAL = true;
-    public final static String VIRTUAL_IP = "192.168.0.26";
+    public final static String VIRTUAL_IP = "127.0.0.1";
     public final static String VIRTUAL_PORT_A = "10000";
     public final static String VIRTUAL_PORT_B = "11000";
     public final static String VIRTUAL_PORT_C = "12000";

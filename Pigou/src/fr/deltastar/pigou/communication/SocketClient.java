@@ -36,7 +36,7 @@ public class SocketClient implements ComClientInterface {
             this.socket = new Socket(Constants.VIRTUAL_IP, this.port);
             System.out.println("Connection established on " + this.port);
         } catch (IOException ex) {
-            ServicePigou.getMessageService().displayFatalError("Connection error on " + this.port);
+            System.out.println("Connection error on " + this.port);
         }
     }
     
@@ -56,10 +56,9 @@ public class SocketClient implements ComClientInterface {
                         msg = in.readLine();
                         if (msg != null && !"".equals(msg.trim())) {
                             listenerCom.onDataReceved(msg);
-                            System.out.println("Data receved : " + msg);
                         }
                     }
-                } catch (IOException ex) {
+                } catch (Exception ex) {
                     System.out.println("Error listen input on " + port);
                 }
             }

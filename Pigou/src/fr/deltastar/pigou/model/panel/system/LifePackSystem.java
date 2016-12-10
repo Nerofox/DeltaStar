@@ -4,6 +4,7 @@ import fr.deltastar.pigou.model.panel.BaseSystem;
 import fr.deltastar.pigou.model.panel.ModuleInterface;
 import fr.deltastar.pigou.model.constant.ArduinoPortConstants;
 import fr.deltastar.pigou.model.panel.module.lifepack.*;
+import fr.deltastar.pigou.service.ServicePigou;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class LifePackSystem extends BaseSystem {
         this.heaterModule = new HeaterModule();
         this.lifePackModule = new LifePackModule();
         this.supplyModule = new SupplyModule();
-        this.arduinoComLcd = ArduinoPortConstants.ARDUINO_C;
+        this.arduinoComLcd = ServicePigou.getComArduinoService().getArduinoC();;
     }
 
     public HeaterModule getHeaterModule() {

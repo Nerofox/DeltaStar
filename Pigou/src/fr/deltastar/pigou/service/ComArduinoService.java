@@ -1,11 +1,13 @@
 package fr.deltastar.pigou.service;
 
 import fr.deltastar.pigou.communication.ComArduino;
+import fr.deltastar.pigou.communication.ListenerComInterface;
 import fr.deltastar.pigou.constant.Constants;
+import fr.deltastar.pigou.model.constant.ArduinoPortConstants;
 import fr.deltastar.pigou.model.constant.ComponentConstants;
 
 /**
- *
+ * Service de gestion de la communication avec arduino
  * @author Valentin
  */
 public class ComArduinoService {
@@ -24,18 +26,39 @@ public class ComArduinoService {
         this.arduinoC = new ComArduino();
     }
     
+    /**
+     * Lance les communications avec l'arduino avec le mode
+     * d'écoute standard pour l'arduino C
+     */
     public void launch() {
-        if (Constants.MODE_VIRTUAL) {
-            this.arduinoA.start(Constants.VIRTUAL_PORT_A, ComponentConstants.OUTPUT, 13, 4, 3);
-            this.arduinoB.start(Constants.VIRTUAL_PORT_B, ComponentConstants.OUTPUT, 15, 3, 3);
-            this.arduinoC.start(Constants.VIRTUAL_PORT_C, ComponentConstants.INPUT, 14, 4, 3);
-        } else {
-            this.arduinoA.start(this.portComA, ComponentConstants.OUTPUT, 13, 4, 3);
-            this.arduinoB.start(this.portComB, ComponentConstants.OUTPUT, 15, 3, 3);
-            this.arduinoC.start(this.portComC, ComponentConstants.INPUT, 14, 4, 3);
-        }
+        this.launch(this.arduinoC);
     }
     
+    /**
+     * Lance les communications avec l'arduino avec
+     * un écouteur d'entré personnalisé
+     * @param lci 
+     */
+    public void launch(ListenerComInterface lci) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                if (Constants.MODE_VIRTUAL) {
+                    arduinoA.start(Constants.VIRTUAL_PORT_A, ComponentConstants.OUTPUT, 13, 4, 3, lci);
+                    arduinoB.start(Constants.VIRTUAL_PORT_B, ComponentConstants.OUTPUT, 15, 3, 3, lci);
+                    arduinoC.start(Constants.VIRTUAL_PORT_C, ComponentConstants.INPUT, 14, 4, 3, lci);
+                } else {
+                    arduinoA.start(portComA, ComponentConstants.OUTPUT, 13, 4, 3, lci);
+                    arduinoB.start(portComB, ComponentConstants.OUTPUT, 15, 3, 3, lci);
+                    arduinoC.start(portComC, ComponentConstants.INPUT, 14, 4, 3, lci);
+                }
+            }
+        }).start();
+    }
+    
+    /**
+     * Stop la communication avec les arduinos
+     */
     public void stop() {
         this.arduinoA.closeConnection();
         this.arduinoB.closeConnection();

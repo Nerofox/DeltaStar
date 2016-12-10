@@ -1,5 +1,6 @@
 package fr.deltastar.pigou.model.panel;
 
+import fr.deltastar.pigou.model.constant.ComponentConstants;
 import fr.deltastar.pigou.model.panel.system.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -57,6 +58,18 @@ public class DeltaStar {
         if (warningSystem == null)
             warningSystem = new WarningSystem();
         return warningSystem;
+    }
+    
+    public static List<Component> getListComponents() {
+        List<Component> components = new ArrayList<>();
+        for (BaseSystem baseSystem : DeltaStar.getListSystem()) {
+            for (ModuleInterface module : baseSystem.getListModuleInterface()) {
+                for (Component c : module.getListComponents()) {
+                    components.add(c);
+                }
+            }
+        }
+        return components;
     }
     
     public static List<BaseSystem> getListSystem() {

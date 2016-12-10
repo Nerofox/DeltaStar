@@ -5,6 +5,7 @@ import fr.deltastar.pigou.model.panel.BaseSystem;
 import fr.deltastar.pigou.model.panel.ModuleInterface;
 import fr.deltastar.pigou.model.constant.ArduinoPortConstants;
 import fr.deltastar.pigou.model.panel.module.engine.*;
+import fr.deltastar.pigou.service.ServicePigou;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +29,7 @@ public class EngineSystem extends BaseSystem {
         this.supplyModule = new SupplyModule();
         this.transfertLeftModule = new TransfertLeftModule();
         this.transfertRightModule = new TransfertRightModule();
-        this.arduinoComLcd = ArduinoPortConstants.ARDUINO_A;
+        this.arduinoComLcd = ServicePigou.getComArduinoService().getArduinoA();
     }
 
     public MainDumpModule getMainDumpModule() {

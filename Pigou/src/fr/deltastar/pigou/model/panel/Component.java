@@ -1,5 +1,7 @@
 package fr.deltastar.pigou.model.panel;
 
+import fr.deltastar.pigou.communication.ComArduino;
+
 /**
  * Classe pour un composant
  * @author Valentin
@@ -20,10 +22,9 @@ public class Component {
      */
     protected int status;
     /**
-     * Numéro de com arduino associé au composant
-     * utilise le ArduinoPortConstants
+     * Com arduino associé au composant
      */
-    protected String arduinoCom;
+    protected ComArduino comArduino;
     /**
      * Nom du composant
      */
@@ -58,12 +59,12 @@ public class Component {
         this.status = status;
     }
 
-    public String getArduinoCom() {
-        return arduinoCom;
+    public ComArduino getComArduino() {
+        return comArduino;
     }
 
-    public void setArduinoCom(String arduinoCom) {
-        this.arduinoCom = arduinoCom;
+    public void setComArduino(ComArduino comArduino) {
+        this.comArduino = comArduino;
     }
 
     @Override

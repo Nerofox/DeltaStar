@@ -23,7 +23,16 @@ public class ComArduino implements ListenerComInterface {
     private String outputArgTwoLcd;
     private int sizeOutputArgTwoLcd;
     
-    public void start(String port, int modeInputOutput, int nbOutput, int sizeArgOneLcd, int sizeArgTwoLcd) {
+    /**
+     * Lance la communication avec un arduino
+     * @param port numéro de port ou port com
+     * @param modeInputOutput si l'arduino est en mode output ou input, être input correspond au deux modes
+     * @param nbOutput nombre de led que dispose l'arduino
+     * @param sizeArgOneLcd taille du premier argument envoyé a l'écran LCD
+     * @param sizeArgTwoLcd
+     * @param lci 
+     */
+    public void start(String port, int modeInputOutput, int nbOutput, int sizeArgOneLcd, int sizeArgTwoLcd, ListenerComInterface lci) {
         this.statusLcd = 0;
        
         this.sizeOutputArgOneLcd = sizeArgOneLcd;
@@ -35,7 +44,7 @@ public class ComArduino implements ListenerComInterface {
         } else {
             //TODO faire pour la commande série
         }
-        this.com.connect(port, this);
+        this.com.connect(port, lci);
         //on écoute les données entrante si souhaité
         if (modeInputOutput == ComponentConstants.INPUT) {
             this.com.listenInput();
@@ -89,7 +98,14 @@ public class ComArduino implements ListenerComInterface {
 
     @Override
     public void onDataReceved(String data) {
-        int numberInput = Integer.parseInt(data);
+        System.out.println("Data in coming : " + data);
+        int numberInput = 0;
+        try {
+            numberInput = Integer.parseInt(data);
+        } catch (NumberFormatException e) {
+            System.out.println("Data in not number");
+            return;
+        }
         for (BaseSystem baseSystem : DeltaStar.getListSystem()) {
             for (ModuleInterface module : baseSystem.getListModuleInterface()) {
                 for (Component c : module.getListComponents()) {

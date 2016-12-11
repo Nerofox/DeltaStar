@@ -11,7 +11,7 @@ import fr.deltastar.pigou.model.panel.ModuleInterface;
  * Effectue la communication logique avec l'arduino en input/output
  * @author Valentin
  */
-public class ComArduino implements ListenerComInterface {
+public class ComArduino implements ListenerComInputInterface {
     
     private ComClientInterface com;
     
@@ -32,7 +32,8 @@ public class ComArduino implements ListenerComInterface {
      * @param sizeArgTwoLcd
      * @param lci 
      */
-    public void start(String port, int modeInputOutput, int nbOutput, int sizeArgOneLcd, int sizeArgTwoLcd, ListenerComInterface lci) {
+    public void start(String port, int modeInputOutput, int nbOutput, int sizeArgOneLcd, int sizeArgTwoLcd, 
+                      ListenerComInputInterface lci, String arduinoId) {
         this.statusLcd = 0;
        
         this.sizeOutputArgOneLcd = sizeArgOneLcd;
@@ -44,7 +45,7 @@ public class ComArduino implements ListenerComInterface {
         } else {
             //TODO faire pour la commande série
         }
-        this.com.connect(port, lci);
+        this.com.connect(port, lci, arduinoId);
         //on écoute les données entrante si souhaité
         if (modeInputOutput == ComponentConstants.INPUT) {
             this.com.listenInput();
@@ -93,7 +94,6 @@ public class ComArduino implements ListenerComInterface {
     
     public void closeConnection() {
         this.com.closeConnection();
-        System.out.println("Connection close");
     }
 
     @Override

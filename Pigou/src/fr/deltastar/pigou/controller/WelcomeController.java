@@ -18,7 +18,7 @@ public class WelcomeController extends BaseViewController implements Initializab
     
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        ServicePigou.getComArduinoService().launch();
+        
     }
     
     @FXML

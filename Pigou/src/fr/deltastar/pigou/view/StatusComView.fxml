@@ -2,12 +2,16 @@
 
 <?import java.net.URL?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="145.0" prefWidth="528.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.60" fx:controller="fr.deltastar.pigou.controller.StatusComViewController">
+<AnchorPane id="AnchorPane" prefHeight="145.0" prefWidth="528.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.deltastar.pigou.controller.StatusComViewController">
     <stylesheets>
         <URL value="@/fr/deltastar/pigou/resources/css/baseStyle.css" />
     </stylesheets>
@@ -20,19 +24,59 @@
                </font>
             </Label>
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="6.0" layoutX="14.0" layoutY="46.0" stroke="BLACK" strokeType="INSIDE" width="508.0" />
-            <Label layoutX="14.0" layoutY="64.0" text="Arduino A" textFill="WHITE">
+            <Label layoutX="14.0" layoutY="69.0" text="Arduino A" textFill="WHITE">
                <font>
                   <Font size="15.0" />
                </font>
             </Label>
-            <Label layoutX="14.0" layoutY="100.0" text="Arduino B" textFill="WHITE">
+            <Label layoutX="14.0" layoutY="106.0" text="Arduino B" textFill="WHITE">
                <font>
                   <Font size="15.0" />
                </font>
             </Label>
-            <Label layoutX="14.0" layoutY="132.0" text="Arduino C" textFill="WHITE">
+            <Label layoutX="14.0" layoutY="142.0" text="Arduino C" textFill="WHITE">
                <font>
                   <Font size="15.0" />
+               </font>
+            </Label>
+            <ProgressIndicator fx:id="piProgressA" layoutX="103.0" layoutY="66.0" prefHeight="28.0" prefWidth="34.0" visible="false" />
+            <ProgressIndicator fx:id="piProgressB" layoutX="103.0" layoutY="103.0" prefHeight="28.0" prefWidth="34.0" visible="false" />
+            <ProgressIndicator fx:id="piProgressC" layoutX="103.0" layoutY="139.0" prefHeight="28.0" prefWidth="34.0" visible="false" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="151.0" layoutX="274.0" layoutY="51.0" stroke="BLACK" strokeType="INSIDE" width="8.0" />
+            <Label layoutX="291.0" layoutY="61.0" text="Input :" textFill="WHITE">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <ListView fx:id="lvDataInput" layoutX="291.0" layoutY="87.0" prefHeight="98.0" prefWidth="67.0" />
+            <ImageView fx:id="ivStatusA" fitHeight="28.0" fitWidth="34.0" layoutX="106.0" layoutY="66.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../resources/no.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="ivStatusB" fitHeight="28.0" fitWidth="34.0" layoutX="106.0" layoutY="103.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../resources/no.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="ivStatusC" fitHeight="28.0" fitWidth="34.0" layoutX="106.0" layoutY="139.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../resources/no.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="lStatusErrorA" layoutX="152.0" layoutY="61.0" prefHeight="39.0" prefWidth="111.0" textFill="WHITE" wrapText="true">
+               <font>
+                  <Font size="10.0" />
+               </font>
+            </Label>
+            <Label fx:id="lStatusErrorB" layoutX="152.0" layoutY="98.0" prefHeight="39.0" prefWidth="111.0" textFill="WHITE" wrapText="true">
+               <font>
+                  <Font size="10.0" />
+               </font>
+            </Label>
+            <Label fx:id="lStatusErrorC" layoutX="151.0" layoutY="134.0" prefHeight="39.0" prefWidth="111.0" textFill="WHITE" wrapText="true">
+               <font>
+                  <Font size="10.0" />
                </font>
             </Label>
          </children>

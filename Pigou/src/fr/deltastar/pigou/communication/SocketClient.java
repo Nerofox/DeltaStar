@@ -1,7 +1,7 @@
 package fr.deltastar.pigou.communication;
 
 import fr.deltastar.pigou.constant.Constants;
-import fr.deltastar.pigou.service.ServicePigou;
+import fr.deltastar.pigou.controller.StatusComViewController;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -16,12 +16,14 @@ import java.util.logging.Logger;
  */
 public class SocketClient implements ComClientInterface {
     private int port;
+    private String arduinoId;
     
     private Thread listenerInput;
     private Socket socket;
     private BufferedReader in;
     
-    private ListenerComInterface listenerCom;
+    private ListenerComInputInterface listenerCom;
+    private StatusComViewController statusComViewController;
 
     /**
      * initialise la connection
@@ -29,14 +31,21 @@ public class SocketClient implements ComClientInterface {
      * @param listenerCom 
      */
     @Override
-    public void connect(String port, ListenerComInterface listenerCom) {
+    public void connect(String port, ListenerComInputInterface listenerCom, String arduinoId) {
         this.port = Integer.parseInt(port);
         this.listenerCom = listenerCom;
+        this.arduinoId = arduinoId;
         try {
+            if (StatusComViewController.getInstance() != null)
+                StatusComViewController.getInstance().setStatusInProgress(this.arduinoId);
             this.socket = new Socket(Constants.VIRTUAL_IP, this.port);
             System.out.println("Connection established on " + this.port);
+            if (StatusComViewController.getInstance() != null)
+                StatusComViewController.getInstance().setStatusOk(this.arduinoId);
         } catch (IOException ex) {
             System.out.println("Connection error on " + this.port);
+            if (StatusComViewController.getInstance() != null)
+                StatusComViewController.getInstance().setStatusKo(this.arduinoId, "Connection error on " + this.port);
         }
     }
     
@@ -56,6 +65,8 @@ public class SocketClient implements ComClientInterface {
                         msg = in.readLine();
                         if (msg != null && !"".equals(msg.trim())) {
                             listenerCom.onDataReceved(msg);
+                            if (StatusComViewController.getInstance() != null)
+                                StatusComViewController.getInstance().addDataInput(msg);
                         }
                     }
                 } catch (Exception ex) {
@@ -82,6 +93,8 @@ public class SocketClient implements ComClientInterface {
                     out.flush();
                 } catch (IOException ex) {
                     System.out.println("Error send output on " + port);
+                    if (StatusComViewController.getInstance() != null)
+                        StatusComViewController.getInstance().setStatusKo(arduinoId, "Send error on " + port);
                 } finally {
                     out.close();
                 }
@@ -99,6 +112,8 @@ public class SocketClient implements ComClientInterface {
             this.in.close();
             this.socket.close();
             System.out.println("Close connection on " + Constants.VIRTUAL_IP + ":" + this.port);
+            if (StatusComViewController.getInstance() != null)
+                StatusComViewController.getInstance().setStatusKo(this.arduinoId, "Close connection on " + Constants.VIRTUAL_IP + ":" + this.port);
         } catch (IOException ex) {
             Logger.getLogger(SocketClient.class.getName()).log(Level.SEVERE, null, ex);
         }

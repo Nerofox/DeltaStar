@@ -1,16 +1,19 @@
 package fr.deltastar.pigou.service;
 
 import fr.deltastar.pigou.communication.ComArduino;
-import fr.deltastar.pigou.communication.ListenerComInterface;
 import fr.deltastar.pigou.constant.Constants;
-import fr.deltastar.pigou.model.constant.ArduinoPortConstants;
 import fr.deltastar.pigou.model.constant.ComponentConstants;
+import fr.deltastar.pigou.communication.ListenerComInputInterface;
+import fr.deltastar.pigou.controller.StatusComViewController;
+import fr.deltastar.pigou.model.constant.ArduinoPortConstants;
 
 /**
  * Service de gestion de la communication avec arduino
  * @author Valentin
  */
 public class ComArduinoService {
+    
+    private StatusComViewController controllerView;
     
     private ComArduino arduinoA;
     private ComArduino arduinoB;
@@ -39,18 +42,18 @@ public class ComArduinoService {
      * un écouteur d'entré personnalisé
      * @param lci 
      */
-    public void launch(ListenerComInterface lci) {
+    public void launch(ListenerComInputInterface lci) {
         new Thread(new Runnable() {
             @Override
             public void run() {
                 if (Constants.MODE_VIRTUAL) {
-                    arduinoA.start(Constants.VIRTUAL_PORT_A, ComponentConstants.OUTPUT, 13, 4, 3, lci);
-                    arduinoB.start(Constants.VIRTUAL_PORT_B, ComponentConstants.OUTPUT, 15, 3, 3, lci);
-                    arduinoC.start(Constants.VIRTUAL_PORT_C, ComponentConstants.INPUT, 14, 4, 3, lci);
+                    arduinoA.start(Constants.VIRTUAL_PORT_A, ComponentConstants.OUTPUT, 13, 4, 3, lci, ArduinoPortConstants.ARDUINO_A);
+                    arduinoB.start(Constants.VIRTUAL_PORT_B, ComponentConstants.OUTPUT, 15, 3, 3, lci, ArduinoPortConstants.ARDUINO_B);
+                    arduinoC.start(Constants.VIRTUAL_PORT_C, ComponentConstants.INPUT, 14, 4, 3, lci, ArduinoPortConstants.ARDUINO_C);
                 } else {
-                    arduinoA.start(portComA, ComponentConstants.OUTPUT, 13, 4, 3, lci);
-                    arduinoB.start(portComB, ComponentConstants.OUTPUT, 15, 3, 3, lci);
-                    arduinoC.start(portComC, ComponentConstants.INPUT, 14, 4, 3, lci);
+                    arduinoA.start(portComA, ComponentConstants.OUTPUT, 13, 4, 3, lci, ArduinoPortConstants.ARDUINO_A);
+                    arduinoB.start(portComB, ComponentConstants.OUTPUT, 15, 3, 3, lci, ArduinoPortConstants.ARDUINO_B);
+                    arduinoC.start(portComC, ComponentConstants.INPUT, 14, 4, 3, lci, ArduinoPortConstants.ARDUINO_C);
                 }
             }
         }).start();
@@ -87,5 +90,13 @@ public class ComArduinoService {
 
     public void setPortComC(String portComC) {
         this.portComC = portComC;
+    }
+
+    public StatusComViewController getControllerView() {
+        return controllerView;
+    }
+
+    public void setControllerView(StatusComViewController controllerView) {
+        this.controllerView = controllerView;
     }
 }

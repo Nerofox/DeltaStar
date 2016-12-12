@@ -3,6 +3,7 @@ package fr.deltastar.pigou.model.panel;
 import fr.deltastar.pigou.model.constant.ComponentConstants;
 import fr.deltastar.pigou.model.panel.system.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -70,6 +71,23 @@ public class DeltaStar {
             }
         }
         return components;
+    }
+    
+    public static List<Component> getListComponents(int inputOutput) {
+        List<Component> listC = DeltaStar.getListComponents();
+        for (int i = listC.size() - 1 ; i >= 0 ; i--) {
+            if (listC.get(i).getType() != inputOutput)
+                listC.remove(i);
+        }
+        return listC;
+    }
+    
+    public static int getNbComponent() {
+        return DeltaStar.getListComponents().size();
+    }
+    
+    public static int getNbComponent(int inputOutput) {
+        return DeltaStar.getListComponents(inputOutput).size();
     }
     
     public static List<BaseSystem> getListSystem() {

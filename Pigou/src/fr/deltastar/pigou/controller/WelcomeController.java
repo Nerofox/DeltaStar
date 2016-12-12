@@ -15,10 +15,15 @@ import javafx.scene.control.Button;
 public class WelcomeController extends BaseViewController implements Initializable {
     
     @FXML private Button btnSettings;
+    @FXML private Button btnExit;
     
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        
+    public void initialize(URL location, ResourceBundle resources) {}
+    
+    @FXML
+    private void btnExitClick() {
+        ServicePigou.getComArduinoService().stop();
+        System.exit(0);
     }
     
     @FXML

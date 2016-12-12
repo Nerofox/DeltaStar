@@ -33,5 +33,5 @@ public abstract class BaseViewController {
         }
     }
     
-    protected abstract void btnBackClick();
+    protected void btnBackClick() {};
 }

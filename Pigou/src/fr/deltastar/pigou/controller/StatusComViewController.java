@@ -49,7 +49,6 @@ public class StatusComViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         StatusComViewController.setInstance(this);
-        ServicePigou.getComArduinoService().launch();
     }
     
     public void setStatusOk(String arduinoId) {

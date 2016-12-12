@@ -3,9 +3,9 @@ package fr.deltastar.pigou.service;
 import fr.deltastar.pigou.communication.ComArduino;
 import fr.deltastar.pigou.constant.Constants;
 import fr.deltastar.pigou.model.constant.ComponentConstants;
-import fr.deltastar.pigou.communication.ListenerComInputInterface;
 import fr.deltastar.pigou.controller.StatusComViewController;
 import fr.deltastar.pigou.model.constant.ArduinoPortConstants;
+import fr.deltastar.pigou.communication.ListenerComInterface;
 
 /**
  * Service de gestion de la communication avec arduino
@@ -42,7 +42,7 @@ public class ComArduinoService {
      * un écouteur d'entré personnalisé
      * @param lci 
      */
-    public void launch(ListenerComInputInterface lci) {
+    public void launch(ListenerComInterface lci) {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -57,6 +57,16 @@ public class ComArduinoService {
                 }
             }
         }).start();
+    }
+    
+    /**
+     * Retourne si les arduinos sont tous connectés
+     */
+    public boolean isFullConnected() {
+        boolean result = false;
+        if (this.arduinoA.isConnect() && this.arduinoB.isConnect() && this.arduinoC.isConnect())
+            result = true;
+        return result;
     }
     
     /**

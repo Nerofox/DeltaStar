@@ -20,4 +20,9 @@ public class Constants {
     
     public final static int SIZE_WIDTH_APPLICATION = 800;
     public final static int SIZE_HEIGHT_APPLICATION = 600;
+    
+    //PARTIE AUTO CONFIG SETTING CONTROLLEUR
+    public static String AUTOCONFIG_VIEW_NB_INPUT = "%d / %d input";
+    public static String AUTOCONFIG_VIEW_NB_OUTPUT = "%d / %d output";
+    public static String AUTOCONFIG_VIEW_NB_TOTAL = "Total progress %d / %d I/O";
 }

@@ -23,7 +23,8 @@
                </font>
             </Label>
             <Button fx:id="btnSettings" layoutX="34.0" layoutY="504.0" mnemonicParsing="false" onAction="#btnSettingsClick" prefHeight="64.0" prefWidth="220.0" stylesheets="@../resources/css/baseStyle.css" text="Settings" />
-            <Button layoutX="556.0" layoutY="504.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="220.0" stylesheets="@../resources/css/baseStyle.css" text="Launch" />
+            <Button layoutX="295.0" layoutY="504.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="220.0" stylesheets="@../resources/css/baseStyle.css" text="Launch" />
+            <Button fx:id="btnExit" layoutX="556.0" layoutY="504.0" mnemonicParsing="false" onAction="#btnExitClick" prefHeight="64.0" prefWidth="220.0" stylesheets="@../resources/css/baseStyle.css" text="Exit" />
          </children>
       </Pane>
    </children>

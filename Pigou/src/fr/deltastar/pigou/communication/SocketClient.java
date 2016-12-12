@@ -22,7 +22,7 @@ public class SocketClient implements ComClientInterface {
     private Socket socket;
     private BufferedReader in;
     
-    private ListenerComInputInterface listenerCom;
+    private ListenerComInterface listenerCom;
     private StatusComViewController statusComViewController;
 
     /**
@@ -31,7 +31,7 @@ public class SocketClient implements ComClientInterface {
      * @param listenerCom 
      */
     @Override
-    public void connect(String port, ListenerComInputInterface listenerCom, String arduinoId) {
+    public void connect(String port, ListenerComInterface listenerCom, String arduinoId) {
         this.port = Integer.parseInt(port);
         this.listenerCom = listenerCom;
         this.arduinoId = arduinoId;
@@ -42,6 +42,7 @@ public class SocketClient implements ComClientInterface {
             System.out.println("Connection established on " + this.port);
             if (StatusComViewController.getInstance() != null)
                 StatusComViewController.getInstance().setStatusOk(this.arduinoId);
+            this.listenerCom.onConnectArduino(this.arduinoId);
         } catch (IOException ex) {
             System.out.println("Connection error on " + this.port);
             if (StatusComViewController.getInstance() != null)
@@ -108,14 +109,22 @@ public class SocketClient implements ComClientInterface {
     @Override
     public void closeConnection() {
         try {
-            this.listenerInput.stop();
-            this.in.close();
-            this.socket.close();
+            if (this.listenerInput != null)
+                this.listenerInput.stop();
+            if (this.in != null)
+                this.in.close();
+            if (this.socket != null)
+                this.socket.close();
             System.out.println("Close connection on " + Constants.VIRTUAL_IP + ":" + this.port);
             if (StatusComViewController.getInstance() != null)
                 StatusComViewController.getInstance().setStatusKo(this.arduinoId, "Close connection on " + Constants.VIRTUAL_IP + ":" + this.port);
         } catch (IOException ex) {
             Logger.getLogger(SocketClient.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    @Override
+    public boolean isConnect() {
+        return this.socket.isConnected();
     }
 }

@@ -1,6 +1,7 @@
 package fr.deltastar.pigou.model.panel;
 
 import fr.deltastar.pigou.communication.ComArduino;
+import fr.deltastar.pigou.model.constant.ComponentConstants;
 
 /**
  * Classe pour un composant
@@ -33,6 +34,33 @@ public class Component {
     public Component(int type, String title) {
         this.type = type;
         this.title = title;
+    }
+    
+    /**
+     * Bascule la sortie état allumé si possible
+     */
+    public void switchOn() {
+        if (this.type == ComponentConstants.OUTPUT) {
+            this.comArduino.setValueLed(this.idPos, ComponentConstants.ON);
+        }
+    }
+    
+    /**
+     * Bascule la sortie en état éteinte si possible
+     */
+    public void switchOff() {
+        if (this.type == ComponentConstants.OUTPUT) {
+            this.comArduino.setValueLed(this.idPos, ComponentConstants.OFF);
+        }
+    }
+    
+    /**
+     * Bascule la sortie en état clignotant si possible
+     */
+    public void switchBlink() {
+        if (this.type == ComponentConstants.OUTPUT) {
+            this.comArduino.setValueLed(this.idPos, ComponentConstants.BLINK);
+        }
     }
 
     public int getIdPos() {

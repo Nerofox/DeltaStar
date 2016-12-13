@@ -6,6 +6,8 @@ import fr.deltastar.pigou.model.constant.ComponentConstants;
 import fr.deltastar.pigou.controller.StatusComViewController;
 import fr.deltastar.pigou.model.constant.ArduinoPortConstants;
 import fr.deltastar.pigou.communication.ListenerComInterface;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Service de gestion de la communication avec arduino
@@ -76,6 +78,14 @@ public class ComArduinoService {
         this.arduinoA.closeConnection();
         this.arduinoB.closeConnection();
         this.arduinoC.closeConnection();
+    }
+    
+    public List<ComArduino> getAllArduino() {
+        List<ComArduino> l = new ArrayList<ComArduino>();
+        l.add(this.getArduinoA());
+        l.add(this.getArduinoB());
+        l.add(this.getArduinoC());
+        return l;
     }
 
     public ComArduino getArduinoA() {

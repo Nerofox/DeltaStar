@@ -16,6 +16,7 @@ public class ComArduino implements ListenerComInterface {
     private ComClientInterface com;
     
     private char[] outputCodeLed;
+    private int nbOutputLed;
     
     private char statusLcd;
     private String outputArgOneLcd;
@@ -35,6 +36,7 @@ public class ComArduino implements ListenerComInterface {
     public void start(String port, int modeInputOutput, int nbOutput, int sizeArgOneLcd, int sizeArgTwoLcd, 
                       ListenerComInterface lci, String arduinoId) {
         this.statusLcd = 0;
+        this.nbOutputLed = nbOutput;
        
         this.sizeOutputArgOneLcd = sizeArgOneLcd;
         this.sizeOutputArgTwoLcd = sizeArgTwoLcd;
@@ -58,11 +60,15 @@ public class ComArduino implements ListenerComInterface {
     }
     
     public void setValueLed(int pos, int status) {
-        this.outputCodeLed[pos] = (char)status;
+        this.outputCodeLed[pos] = Integer.toString(status).charAt(0);
     }
     
     public void setLcdMod(int statusLcd) {
         this.statusLcd = (char)statusLcd;
+    }
+
+    public int getNbOutputLed() {
+        return nbOutputLed;
     }
     
     public void setLcdArg(int argOne, int argTwo) {

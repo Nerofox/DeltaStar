@@ -21,6 +21,7 @@ public class SocketClient implements ComClientInterface {
     private Thread listenerInput;
     private Socket socket;
     private BufferedReader in;
+    private PrintWriter out;
     
     private ListenerComInterface listenerCom;
     private StatusComViewController statusComViewController;
@@ -87,17 +88,18 @@ public class SocketClient implements ComClientInterface {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                PrintWriter out = null;
                 try {
-                    out = new PrintWriter(socket.getOutputStream());
+                    if (out == null)
+                        out = new PrintWriter(socket.getOutputStream());
                     out.write(data);
+                    System.out.println("Data send on " + arduinoId + " : " + data);
                     out.flush();
                 } catch (IOException ex) {
                     System.out.println("Error send output on " + port);
                     if (StatusComViewController.getInstance() != null)
                         StatusComViewController.getInstance().setStatusKo(arduinoId, "Send error on " + port);
-                } finally {
-                    out.close();
+                    if (out != null)
+                        out.close();
                 }
             }
         }).start();
@@ -111,10 +113,12 @@ public class SocketClient implements ComClientInterface {
         try {
             if (this.listenerInput != null)
                 this.listenerInput.stop();
-            if (this.in != null)
-                this.in.close();
+            if (this.out != null)
+                this.out.close();
             if (this.socket != null)
                 this.socket.close();
+            if (this.in != null)
+                this.in.close();
             System.out.println("Close connection on " + Constants.VIRTUAL_IP + ":" + this.port);
             if (StatusComViewController.getInstance() != null)
                 StatusComViewController.getInstance().setStatusKo(this.arduinoId, "Close connection on " + Constants.VIRTUAL_IP + ":" + this.port);

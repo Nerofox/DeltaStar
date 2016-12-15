@@ -47,6 +47,8 @@ public class TreeTableViewPanel extends TreeTableView<Object> {
         super.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection.getValue() instanceof Component)
                 this.currentComponentSeleted = (Component)newSelection.getValue();
+            else
+                this.currentComponentSeleted = null;
         });
     }
     

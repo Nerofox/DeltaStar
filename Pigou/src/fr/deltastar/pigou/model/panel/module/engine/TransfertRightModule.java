@@ -12,18 +12,15 @@ import java.util.List;
  */
 public class TransfertRightModule implements ModuleInterface {
 
-    private Component ledGreen;
     private Component switchOnOff;
 
     public TransfertRightModule() {
-        this.ledGreen = new Component(ComponentConstants.OUTPUT, "Led green");
         this.switchOnOff = new Component(ComponentConstants.INPUT, "Switch");
     }
     
     @Override
     public List<Component> getListComponents() {
         List<Component> c = new ArrayList<>();
-        c.add(this.ledGreen);
         c.add(this.switchOnOff);
         return c;
     }

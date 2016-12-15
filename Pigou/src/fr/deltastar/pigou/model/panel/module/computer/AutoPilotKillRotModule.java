@@ -12,18 +12,15 @@ import java.util.List;
  */
 public class AutoPilotKillRotModule implements ModuleInterface {
 
-    private Component ledGreen;
     private Component button;
 
     public AutoPilotKillRotModule() {
-        this.ledGreen = new Component(ComponentConstants.OUTPUT, "Led green");
         this.button = new Component(ComponentConstants.INPUT, "Button");
     }
     
     @Override
     public List<Component> getListComponents() {
         List<Component> c = new ArrayList<>();
-        c.add(this.ledGreen);
         c.add(this.button);
         return c;
     }

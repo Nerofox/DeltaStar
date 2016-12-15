@@ -68,15 +68,14 @@ public class SettingsAutoConfigController extends BaseViewController implements 
         
         this.totalNbInput = this.listComponentsInput.size();
         this.totalNb = this.listComponentsInput.size() + this.listComponentsOutput.size();
-        this.totalNbOutput = this.listComponentsOutput.size();
+        this.totalNbOutput = this.listComponentsOutput.size() + 1;
         
         this.lNbOutput.setText(String.format(Constants.AUTOCONFIG_VIEW_NB_OUTPUT, this.currentNbOutputArduino, this.totalNbOutput));
         this.lNbInput.setText(String.format(Constants.AUTOCONFIG_VIEW_NB_INPUT, this.currentNbInput, this.totalNbInput));
         this.lNbTotal.setText(String.format(Constants.AUTOCONFIG_VIEW_NB_TOTAL, this.currentNbTotal, this.totalNb));
         
-        if (!ServicePigou.getComArduinoService().isFullConnected()) {
+        if (!ServicePigou.getComArduinoService().isFullConnected())
             ServicePigou.getComArduinoService().launch(this);
-        }
     }
     
     /**
@@ -84,12 +83,21 @@ public class SettingsAutoConfigController extends BaseViewController implements 
      */
     @FXML
     public void btnNextClick() {
-        //TODO inscrire le numéro dans le composant choisi de la liste output
-        if (this.currentPosOutputArduino > 0) {
-            //remise a zero de l'output précédent
-            this.listComArduino.get(this.currentArduino).setValueLed(this.currentPosOutputArduino - 1, ComponentConstants.OFF);
+        //recupere output selectionné
+        Component cSelect = this.ttvpOutput.getSelectedComponent();
+        if (cSelect != null) {
+            //inscri le numéro et le composant arduino dans le composant choisi de la liste output
+            cSelect.setComArduino(this.listComArduino.get(this.currentArduino));
+            cSelect.setIdPos(this.currentPosOutputArduino);
+            
+            if (this.currentPosOutputArduino > 0) {
+                //remise a zero de l'output précédent
+                this.listComArduino.get(this.currentArduino).setValueLed(this.currentPosOutputArduino - 1, ComponentConstants.OFF);
+            }
+            this.nextStep();
+        } else {
+            ServicePigou.getMessageService().displayInfo("Please choose a output before next");
         }
-        this.nextStep();
     }
 
     /**
@@ -98,8 +106,11 @@ public class SettingsAutoConfigController extends BaseViewController implements 
      */
     @Override
     public void onDataReceved(String data) {
-        //TODO insérer le numéro 'data' dans le composant actuelle input de la liste 
-        this.nextStep();
+        //empèche une étape suivante tant qu'on a pas finis le mode output
+        if (this.totalNbOutput == this.currentNbOutput) {
+            //TODO insérer le numéro 'data' dans le composant actuelle input de la liste 
+            this.nextStep();
+        }
     }
     
     /**
@@ -108,7 +119,7 @@ public class SettingsAutoConfigController extends BaseViewController implements 
      */
     public void nextStep() {
         if (this.totalNb > this.currentNbTotal) {
-            if (this.totalNbOutput - 2 > this.currentNbOutput) {
+            if (this.totalNbOutput > this.currentNbOutput) {
                 //PARAMETRAGE OUTPUT
                 //si on atteint la limite pour l'envoi des outputs sur l'arduino en cours, on change
                 if (this.currentPosOutputArduino > this.listComArduino.get(this.currentArduino).getNbOutputLed() - 1) {
@@ -123,7 +134,13 @@ public class SettingsAutoConfigController extends BaseViewController implements 
                 this.currentPosOutputArduino++;
                 this.currentNbOutputArduino++;
                 this.currentNbOutput++;
+                this.currentNbTotal++;
+
                 //TODO faire évoluer la progressbar output et total
+                this.lNbOutput.setText(String.format(Constants.AUTOCONFIG_VIEW_NB_OUTPUT, this.currentNbOutput, this.totalNbOutput));
+                this.lNbTotal.setText(String.format(Constants.AUTOCONFIG_VIEW_NB_TOTAL, this.currentNbOutput + this.currentNbInput, this.totalNb));
+                this.pbOutput.setProgress((double)this.currentNbOutput / (double)this.totalNbOutput);
+                this.pbTotal.setProgress((double)this.currentNbTotal / (double)this.totalNb);
             } else {
                 //remise a zéro de la précédente led output avant paramétrage input
                 if (this.currentNbOutputArduino > 0) {

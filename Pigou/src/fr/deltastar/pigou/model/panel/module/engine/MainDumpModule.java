@@ -17,7 +17,7 @@ public class MainDumpModule implements ModuleInterface {
 
     public MainDumpModule() {
         this.ledGreen = new Component(ComponentConstants.OUTPUT, "Led green");
-        this.switchOnOff = new Component(ComponentConstants.INPUT, "Switch");
+        this.switchOnOff = new Component(ComponentConstants.INPUT, "Main dump - Switch");
     }
     
     @Override

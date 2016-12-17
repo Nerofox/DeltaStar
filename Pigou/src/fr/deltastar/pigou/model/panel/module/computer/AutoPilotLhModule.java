@@ -17,7 +17,7 @@ public class AutoPilotLhModule implements ModuleInterface {
 
     public AutoPilotLhModule() {
         this.ledGreen = new Component(ComponentConstants.OUTPUT, "Led green");
-        this.button = new Component(ComponentConstants.INPUT, "Button");
+        this.button = new Component(ComponentConstants.INPUT, "AP level horizon - Button");
     }
     
     @Override

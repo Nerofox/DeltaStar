@@ -17,7 +17,7 @@ public class SupplyModule implements ModuleInterface {
 
     public SupplyModule() {
         this.ledGreen = new Component(ComponentConstants.OUTPUT, "Led green");
-        this.switchOnOff = new Component(ComponentConstants.INPUT, "Switch");
+        this.switchOnOff = new Component(ComponentConstants.INPUT, "Supply life-pack - Switch");
     }
     
     @Override

@@ -24,6 +24,8 @@ public class ComArduino implements ListenerComInterface {
     private String outputArgTwoLcd;
     private int sizeOutputArgTwoLcd;
     
+    private String arduinoId;
+    
     /**
      * Lance la communication avec un arduino
      * @param port numéro de port ou port com
@@ -32,11 +34,13 @@ public class ComArduino implements ListenerComInterface {
      * @param sizeArgOneLcd taille du premier argument envoyé a l'écran LCD
      * @param sizeArgTwoLcd
      * @param lci 
+     * @param arduinoId
      */
     public void start(String port, int modeInputOutput, int nbOutput, int sizeArgOneLcd, int sizeArgTwoLcd, 
                       ListenerComInterface lci, String arduinoId) {
         this.statusLcd = 0;
         this.nbOutputLed = nbOutput;
+        this.arduinoId = arduinoId;
        
         this.sizeOutputArgOneLcd = sizeArgOneLcd;
         this.sizeOutputArgTwoLcd = sizeArgTwoLcd;
@@ -135,6 +139,10 @@ public class ComArduino implements ListenerComInterface {
                 }
             }
         }
+    }
+
+    public String getArduinoId() {
+        return arduinoId;
     }
 
     @Override

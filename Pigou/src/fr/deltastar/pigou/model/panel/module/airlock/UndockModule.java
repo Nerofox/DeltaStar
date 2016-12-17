@@ -17,7 +17,7 @@ public class UndockModule implements ModuleInterface {
 
     public UndockModule() {
         this.ledRed = new Component(ComponentConstants.OUTPUT, "Led red");
-        this.button = new Component(ComponentConstants.INPUT, "Big button");
+        this.button = new Component(ComponentConstants.INPUT, "Undock - Big button");
     }
     
     @Override

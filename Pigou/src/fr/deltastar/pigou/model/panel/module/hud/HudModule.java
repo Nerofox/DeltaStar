@@ -20,7 +20,7 @@ public class HudModule implements ModuleInterface {
     private Component button;
 
     public HudModule() {
-        this.button = new Component(ComponentConstants.INPUT, "Button");
+        this.button = new Component(ComponentConstants.INPUT, "HUD - Button");
     }
     
     @Override

@@ -17,7 +17,7 @@ public class MainValveModule implements ModuleInterface {
 
     public MainValveModule() {
         this.ledGreen = new Component(ComponentConstants.OUTPUT, "Led green");
-        this.switchOnOff = new Component(ComponentConstants.INPUT, "Switch");
+        this.switchOnOff = new Component(ComponentConstants.INPUT, "Main valve - Switch");
     }
     
     @Override

@@ -15,7 +15,7 @@ public class StarterModule implements ModuleInterface {
     private Component keyOnOff;
 
     public StarterModule() {
-        this.keyOnOff = new Component(ComponentConstants.INPUT, "Key");
+        this.keyOnOff = new Component(ComponentConstants.INPUT, "Starter - Key");
     }
     
     @Override

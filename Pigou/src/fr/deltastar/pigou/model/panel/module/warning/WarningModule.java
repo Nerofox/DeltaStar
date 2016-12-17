@@ -22,6 +22,7 @@ public class WarningModule implements ModuleInterface {
     private Component ledRed8;
     private Component ledRed9;
     private Component ledRed10;
+    private Component buttonReset;
 
     public WarningModule() {
         this.ledRed1 = new Component(ComponentConstants.OUTPUT, "Led red 1");
@@ -34,6 +35,7 @@ public class WarningModule implements ModuleInterface {
         this.ledRed8 = new Component(ComponentConstants.OUTPUT, "Led red 8");
         this.ledRed9 = new Component(ComponentConstants.OUTPUT, "Led red 9");
         this.ledRed10 = new Component(ComponentConstants.OUTPUT, "Led red 10");
+        this.buttonReset = new Component(ComponentConstants.INPUT, "Warning reset - Button");
     }
     
     @Override
@@ -49,6 +51,7 @@ public class WarningModule implements ModuleInterface {
         c.add(this.ledRed8);
         c.add(this.ledRed9);
         c.add(this.ledRed10);
+        c.add(this.buttonReset);
         return c;
     }
 

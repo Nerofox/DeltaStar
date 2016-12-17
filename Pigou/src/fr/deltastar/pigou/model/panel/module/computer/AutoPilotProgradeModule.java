@@ -17,7 +17,7 @@ public class AutoPilotProgradeModule implements ModuleInterface {
 
     public AutoPilotProgradeModule() {
         this.ledGreen = new Component(ComponentConstants.OUTPUT, "Led green");
-        this.button = new Component(ComponentConstants.INPUT, "Button");
+        this.button = new Component(ComponentConstants.INPUT, "AP prograde - Button");
     }
     
     @Override

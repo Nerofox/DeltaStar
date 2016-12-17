@@ -12,6 +12,8 @@ package fr.deltastar.pigou.constant;
 public class RessourcesConstants {
     public final static String PATH = "/fr/deltastar/pigou/resources/";
     
+    public final static String ICON = PATH + "logoPigou.png";
+    
     public final static String OK = PATH + "yes.png";
     public final static String KO = PATH + "no.png";
 }

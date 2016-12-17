@@ -22,7 +22,7 @@ public class HeaterModule implements ModuleInterface {
         this.ledGreenCoolingPanel = new Component(ComponentConstants.OUTPUT, "Led green deploy heater");
         this.ledGreenCoolerGood = new Component(ComponentConstants.OUTPUT, "Led green cooler good");
         this.ledRedCoolerBad = new Component(ComponentConstants.OUTPUT, "Led green cooler bad");
-        this.switchOnOff = new Component(ComponentConstants.INPUT, "Switch");
+        this.switchOnOff = new Component(ComponentConstants.INPUT, "Heater - Switch");
     }
     
     @Override

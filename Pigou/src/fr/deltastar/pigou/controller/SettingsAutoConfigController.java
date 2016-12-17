@@ -9,6 +9,8 @@ import fr.deltastar.pigou.model.constant.ComponentConstants;
 import fr.deltastar.pigou.model.panel.Component;
 import fr.deltastar.pigou.model.panel.DeltaStar;
 import fr.deltastar.pigou.service.ServicePigou;
+import fr.deltastar.pigou.utils.FileManager;
+import java.io.File;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -34,6 +36,7 @@ public class SettingsAutoConfigController extends BaseViewController implements 
     //utiliser pour la boucle de paramétrage
     private int currentPosOutputArduino;
     private int currentIdInputArduino;
+    private Component currentComponentInput;
     private int currentArduino;
 
     @FXML private TreeTableViewPanel ttvpOutput;
@@ -68,7 +71,7 @@ public class SettingsAutoConfigController extends BaseViewController implements 
         
         this.totalNbInput = this.listComponentsInput.size();
         this.totalNb = this.listComponentsInput.size() + this.listComponentsOutput.size();
-        this.totalNbOutput = this.listComponentsOutput.size() + 1;
+        this.totalNbOutput = this.listComponentsOutput.size();
         
         this.lNbOutput.setText(String.format(Constants.AUTOCONFIG_VIEW_NB_OUTPUT, this.currentNbOutputArduino, this.totalNbOutput));
         this.lNbInput.setText(String.format(Constants.AUTOCONFIG_VIEW_NB_INPUT, this.currentNbInput, this.totalNbInput));
@@ -89,6 +92,7 @@ public class SettingsAutoConfigController extends BaseViewController implements 
             //inscri le numéro et le composant arduino dans le composant choisi de la liste output
             cSelect.setComArduino(this.listComArduino.get(this.currentArduino));
             cSelect.setIdPos(this.currentPosOutputArduino);
+            this.ttvpOutput.refresh();
             
             if (this.currentPosOutputArduino > 0) {
                 //remise a zero de l'output précédent
@@ -96,7 +100,7 @@ public class SettingsAutoConfigController extends BaseViewController implements 
             }
             this.nextStep();
         } else {
-            ServicePigou.getMessageService().displayInfo("Please choose a output before next");
+            ServicePigou.getMessageService().displayInfo(Constants.AUTOCONFIG_MSG_CHOOSEOUTPUT);
         }
     }
 
@@ -108,7 +112,9 @@ public class SettingsAutoConfigController extends BaseViewController implements 
     public void onDataReceved(String data) {
         //empèche une étape suivante tant qu'on a pas finis le mode output
         if (this.totalNbOutput == this.currentNbOutput) {
-            //TODO insérer le numéro 'data' dans le composant actuelle input de la liste 
+            //Arduino C est le seul a fournir les entrées
+            this.currentComponentInput.setComArduino(ServicePigou.getComArduinoService().getArduinoC());
+            this.currentComponentInput.setIdPos(Integer.parseInt(data));
             this.nextStep();
         }
     }
@@ -118,7 +124,7 @@ public class SettingsAutoConfigController extends BaseViewController implements 
      * commence par les output puis par les input
      */
     public void nextStep() {
-        if (this.totalNb > this.currentNbTotal) {
+        if (this.totalNbInput > this.currentNbInput) {
             if (this.totalNbOutput > this.currentNbOutput) {
                 //PARAMETRAGE OUTPUT
                 //si on atteint la limite pour l'envoi des outputs sur l'arduino en cours, on change
@@ -136,7 +142,7 @@ public class SettingsAutoConfigController extends BaseViewController implements 
                 this.currentNbOutput++;
                 this.currentNbTotal++;
 
-                //TODO faire évoluer la progressbar output et total
+                //fait évoluer la progressbar output et total
                 this.lNbOutput.setText(String.format(Constants.AUTOCONFIG_VIEW_NB_OUTPUT, this.currentNbOutput, this.totalNbOutput));
                 this.lNbTotal.setText(String.format(Constants.AUTOCONFIG_VIEW_NB_TOTAL, this.currentNbOutput + this.currentNbInput, this.totalNb));
                 this.pbOutput.setProgress((double)this.currentNbOutput / (double)this.totalNbOutput);
@@ -147,27 +153,53 @@ public class SettingsAutoConfigController extends BaseViewController implements 
                     this.listComArduino.get(this.currentArduino).setValueLed(this.currentPosOutputArduino - 1, ComponentConstants.OFF);
                     this.listComArduino.get(this.currentArduino).sendOutput();
                     this.currentNbOutputArduino = 0;
+                    
                     //changement affichage
                     Platform.runLater(new Runnable() {
                         @Override
                         public void run() {
-                            //TODO plantage nummpointer lol
                             btnNext.setVisible(false);
                             pbInput.setVisible(true);
+                            lNbInput.setVisible(true);
                         }
                     });
+                    ServicePigou.getMessageService().displayInfo(Constants.AUTO_CONFIG_MSG_OUTPUTFINISH);
                     this.nextStep();
                     return;
                 }
-                System.out.println("input");
                 //PARAMETRAGE INPUT
-                //TODO bascule sur le composant suivant et demande a l'utilisateur de le presser
-                //TODO faire évoluer la progressbar input et total
-                this.currentNbInput++;
+                //bascule sur le composant suivant et demande a l'utilisateur de le presser
+                //dernière erreur java.lang.IndexOutOfBoundsException: Index: 34, Size: 34
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        lNbInput.setText(String.format(Constants.AUTOCONFIG_VIEW_NB_INPUT, currentNbInput + 1, totalNbInput));
+                        lNbTotal.setText(String.format(Constants.AUTOCONFIG_VIEW_NB_TOTAL, currentNbOutput + currentNbInput + 1, totalNb));
+                        pbInput.setProgress(((double)(currentNbInput + 1)) / (double)totalNbInput);
+                        pbTotal.setProgress((double)currentNbTotal / (double)totalNb);
+                        lCurrentInput.setText(currentComponentInput.toString());
+                        currentNbInput++;
+                        currentNbTotal++;
+                    }
+                });
+                this.currentComponentInput = this.listComponentsInput.get(this.currentNbInput);
             }
         } else {
             //FINISSION DU PARAMETRAGE
-            System.out.println("finish !");
+            //finish, création du tableau de config
+            List<Component> listAllComponents = DeltaStar.getListComponents();
+            String[] componentsConf = new String[listAllComponents.size()];
+            Component c;
+            for (int i = 0; i < listAllComponents.size(); i++) {
+                c = listAllComponents.get(i);
+                componentsConf[i] = c.getComArduino().getArduinoId() + Constants.FILENAME_DELIMITER + c.getIdPos(); 
+            }
+            //sauvegarde, écrase le fichier de conf existant
+            File f = new File(Constants.FILENAME_CONFIG);
+            if (f.exists())
+                f.delete();
+            FileManager.save(Constants.FILENAME_CONFIG, componentsConf);
+            ServicePigou.getMessageService().displayInfo(Constants.AUTO_CONFIG_MSG_FINISH);
         }
     }
 
@@ -176,7 +208,7 @@ public class SettingsAutoConfigController extends BaseViewController implements 
         //une fois connecté on démarre le paramétrage
         if (ServicePigou.getComArduinoService().isFullConnected()) {
             this.listComArduino = ServicePigou.getComArduinoService().getAllArduino();
-            ServicePigou.getMessageService().displayInfo("Configuration output in progress look at Deltastar and clic on the component on");
+            ServicePigou.getMessageService().displayInfo(Constants.AUTO_CONFIG_MSG_OUTPUTPROGRESS);
             this.nextStep();
         }
     }

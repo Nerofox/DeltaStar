@@ -1,7 +1,10 @@
 package fr.deltastar.pigou.controller;
 
+import fr.deltastar.pigou.constant.Constants;
 import fr.deltastar.pigou.constant.ListView;
 import fr.deltastar.pigou.service.ServicePigou;
+import fr.deltastar.pigou.utils.FileManager;
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -18,7 +21,11 @@ public class WelcomeController extends BaseViewController implements Initializab
     @FXML private Button btnExit;
     
     @Override
-    public void initialize(URL location, ResourceBundle resources) {}
+    public void initialize(URL location, ResourceBundle resources) {
+        if (!new File(Constants.FILENAME_CONFIG).exists()) {
+            ServicePigou.getMessageService().displayInfo(Constants.FILENAME_NOTFOUND_CONFIG_MSG);
+        }
+    }
     
     @FXML
     private void btnExitClick() {

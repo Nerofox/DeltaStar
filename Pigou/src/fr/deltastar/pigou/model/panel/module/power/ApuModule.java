@@ -22,7 +22,7 @@ public class ApuModule implements ModuleInterface {
         this.ledGreen = new Component(ComponentConstants.OUTPUT, "Led green");
         this.ledYellow = new Component(ComponentConstants.OUTPUT, "Led yellow");
         this.ledRed = new Component(ComponentConstants.OUTPUT, "Led red");
-        this.switchOnOff = new Component(ComponentConstants.INPUT, "Switch");
+        this.switchOnOff = new Component(ComponentConstants.INPUT, "APU - Switch");
     }
     
     @Override

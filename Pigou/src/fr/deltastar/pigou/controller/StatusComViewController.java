@@ -1,16 +1,9 @@
 package fr.deltastar.pigou.controller;
 
-import fr.deltastar.pigou.constant.Constants;
 import fr.deltastar.pigou.constant.RessourcesConstants;
 import fr.deltastar.pigou.model.constant.ArduinoPortConstants;
-import fr.deltastar.pigou.model.constant.ComponentConstants;
-import fr.deltastar.pigou.service.ServicePigou;
-import java.io.File;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

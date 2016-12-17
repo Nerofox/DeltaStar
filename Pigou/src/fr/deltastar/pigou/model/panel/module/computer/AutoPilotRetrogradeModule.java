@@ -17,7 +17,7 @@ public class AutoPilotRetrogradeModule implements ModuleInterface {
 
     public AutoPilotRetrogradeModule() {
         this.ledGreen = new Component(ComponentConstants.OUTPUT, "Led green");
-        this.button = new Component(ComponentConstants.INPUT, "Button");
+        this.button = new Component(ComponentConstants.INPUT, "AP retrograde - Button");
     }
     
     @Override

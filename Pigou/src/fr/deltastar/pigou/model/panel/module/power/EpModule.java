@@ -17,7 +17,7 @@ public class EpModule implements ModuleInterface {
 
     public EpModule() {
         this.ledRed = new Component(ComponentConstants.OUTPUT, "Led red");
-        this.switchOnOff = new Component(ComponentConstants.INPUT, "Switch");
+        this.switchOnOff = new Component(ComponentConstants.INPUT, "EP - Switch");
     }
     
     @Override

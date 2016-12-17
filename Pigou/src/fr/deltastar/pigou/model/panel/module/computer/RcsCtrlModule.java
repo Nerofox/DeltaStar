@@ -15,7 +15,7 @@ public class RcsCtrlModule implements ModuleInterface {
     private Component button;
 
     public RcsCtrlModule() {
-        this.button = new Component(ComponentConstants.INPUT, "Button");
+        this.button = new Component(ComponentConstants.INPUT, "RCS control - Button");
     }
     
     @Override

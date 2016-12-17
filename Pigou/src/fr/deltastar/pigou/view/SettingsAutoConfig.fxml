@@ -22,7 +22,7 @@
             <Label layoutX="201.0" layoutY="51.0" styleClass="title" stylesheets="@../resources/css/baseStyle.css" text="Output" />
             <Label layoutX="579.0" layoutY="51.0" styleClass="title" text="Input" />
             <ProgressBar fx:id="pbInput" layoutX="494.0" layoutY="197.0" prefHeight="35.0" prefWidth="287.0" progress="0.0" stylesheets="@../resources/css/baseStyle.css" visible="false" />
-            <Label fx:id="lCurrentInput" layoutX="494.0" layoutY="118.0" prefHeight="48.0" prefWidth="287.0" text="Press switch for Gear" textFill="WHITE" wrapText="true" visible="false" >
+            <Label fx:id="lCurrentInput" layoutX="494.0" layoutY="118.0" prefHeight="48.0" prefWidth="287.0" text="" textFill="WHITE" wrapText="true" >
                <font>
                   <Font size="18.0" />
                </font>

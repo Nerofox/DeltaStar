@@ -17,7 +17,7 @@ public class RcsValveModule implements ModuleInterface {
 
     public RcsValveModule() {
         this.ledGreen = new Component(ComponentConstants.OUTPUT, "Led green");
-        this.switchOnOff = new Component(ComponentConstants.INPUT, "Switch");
+        this.switchOnOff = new Component(ComponentConstants.INPUT, "RCS valve - Switch");
     }
     
     @Override

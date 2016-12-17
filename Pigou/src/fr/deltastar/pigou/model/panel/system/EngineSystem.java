@@ -17,6 +17,7 @@ public class EngineSystem extends BaseSystem {
 
     private MainDumpModule mainDumpModule;
     private MainValveModule mainValveModule;
+    private RcsValveModule rcsValveModule;
     private RcsDumpModule rcsDumpModule;
     private SupplyModule supplyModule;
     private TransfertLeftModule transfertLeftModule;
@@ -29,6 +30,7 @@ public class EngineSystem extends BaseSystem {
         this.supplyModule = new SupplyModule();
         this.transfertLeftModule = new TransfertLeftModule();
         this.transfertRightModule = new TransfertRightModule();
+        this.rcsValveModule = new RcsValveModule();
         this.arduinoComLcd = ServicePigou.getComArduinoService().getArduinoA();
     }
 
@@ -80,6 +82,7 @@ public class EngineSystem extends BaseSystem {
         mi.add(this.supplyModule);
         mi.add(this.transfertLeftModule);
         mi.add(this.transfertRightModule);
+        mi.add(this.rcsValveModule);
         return mi;
     }
     

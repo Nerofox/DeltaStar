@@ -72,7 +72,10 @@ public class SocketClient implements ComClientInterface {
                         }
                     }
                 } catch (Exception ex) {
+                    ex.printStackTrace();
                     System.out.println("Error listen input on " + port);
+                    if (StatusComViewController.getInstance() != null)
+                        StatusComViewController.getInstance().setStatusKo(arduinoId, "Connection error on " + port);
                 }
             }
         });

@@ -17,7 +17,7 @@ public class ComputerPowerModule implements ModuleInterface {
 
     public ComputerPowerModule() {
         this.ledGreen = new Component(ComponentConstants.OUTPUT, "Led green");
-        this.switchOnOff = new Component(ComponentConstants.INPUT, "Switch");
+        this.switchOnOff = new Component(ComponentConstants.INPUT, "Computer power - Switch");
     }
     
     @Override

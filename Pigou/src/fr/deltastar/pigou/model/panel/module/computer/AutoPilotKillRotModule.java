@@ -15,7 +15,7 @@ public class AutoPilotKillRotModule implements ModuleInterface {
     private Component button;
 
     public AutoPilotKillRotModule() {
-        this.button = new Component(ComponentConstants.INPUT, "Button");
+        this.button = new Component(ComponentConstants.INPUT, "AP kill rotation - Button");
     }
     
     @Override

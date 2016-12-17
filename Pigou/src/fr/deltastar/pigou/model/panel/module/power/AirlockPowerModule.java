@@ -17,7 +17,7 @@ public class AirlockPowerModule implements ModuleInterface {
 
     public AirlockPowerModule() {
         this.ledGreen = new Component(ComponentConstants.OUTPUT, "Led green");
-        this.switchOnOff = new Component(ComponentConstants.INPUT, "Switch");
+        this.switchOnOff = new Component(ComponentConstants.INPUT, "Airlock power - Switch");
     }
     
     @Override

@@ -17,7 +17,7 @@ public class OuterDoorModule implements ModuleInterface {
 
     public OuterDoorModule() {
         this.ledGreen = new Component(ComponentConstants.OUTPUT, "Led green");
-        this.switchOnOff = new Component(ComponentConstants.INPUT, "Switch");
+        this.switchOnOff = new Component(ComponentConstants.INPUT, "Outer door - Switch");
     }
     
     @Override

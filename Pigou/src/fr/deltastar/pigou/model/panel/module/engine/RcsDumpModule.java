@@ -17,7 +17,7 @@ public class RcsDumpModule implements ModuleInterface {
 
     public RcsDumpModule() {
         this.ledGreen = new Component(ComponentConstants.OUTPUT, "Led green");
-        this.switchOnOff = new Component(ComponentConstants.INPUT, "Switch");
+        this.switchOnOff = new Component(ComponentConstants.INPUT, "RCS dump - Switch");
     }
     
     @Override

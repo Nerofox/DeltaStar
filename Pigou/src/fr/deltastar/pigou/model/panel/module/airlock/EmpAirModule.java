@@ -17,7 +17,7 @@ public class EmpAirModule implements ModuleInterface {
 
     public EmpAirModule() {
         this.ledGreen = new Component(ComponentConstants.OUTPUT, "Led green");
-        this.switchOnOff = new Component(ComponentConstants.INPUT, "Switch");
+        this.switchOnOff = new Component(ComponentConstants.INPUT, "Emp air - Switch");
     }
     
     @Override

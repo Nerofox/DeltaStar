@@ -17,7 +17,7 @@ public class InnerDoorModule implements ModuleInterface {
 
     public InnerDoorModule() {
         this.ledGreen = new Component(ComponentConstants.OUTPUT, "Led green");
-        this.switchOnOff = new Component(ComponentConstants.INPUT, "Switch");
+        this.switchOnOff = new Component(ComponentConstants.INPUT, "Inner door - Switch");
     }
     
     @Override

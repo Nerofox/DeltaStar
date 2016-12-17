@@ -15,7 +15,7 @@ public class TransfertRightModule implements ModuleInterface {
     private Component switchOnOff;
 
     public TransfertRightModule() {
-        this.switchOnOff = new Component(ComponentConstants.INPUT, "Switch");
+        this.switchOnOff = new Component(ComponentConstants.INPUT, "Transfert right - Switch");
     }
     
     @Override

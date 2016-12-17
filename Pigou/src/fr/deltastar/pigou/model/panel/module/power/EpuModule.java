@@ -17,7 +17,7 @@ public class EpuModule implements ModuleInterface {
 
     public EpuModule() {
         this.ledGreen = new Component(ComponentConstants.OUTPUT, "Led green");
-        this.switchOnOff = new Component(ComponentConstants.INPUT, "Switch");
+        this.switchOnOff = new Component(ComponentConstants.INPUT, "EPU - Switch");
     }
     
     @Override

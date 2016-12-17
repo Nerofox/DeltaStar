@@ -17,7 +17,7 @@ public class NoseConeModule implements ModuleInterface {
 
     public NoseConeModule() {
         this.ledGreen = new Component(ComponentConstants.OUTPUT, "Led green");
-        this.switchOnOff = new Component(ComponentConstants.INPUT, "Switch");
+        this.switchOnOff = new Component(ComponentConstants.INPUT, "Nose cone - Switch");
     }
     
     @Override

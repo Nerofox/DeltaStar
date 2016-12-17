@@ -17,7 +17,7 @@ public class LifePackModule implements ModuleInterface {
 
     public LifePackModule() {
         this.ledGreen = new Component(ComponentConstants.OUTPUT, "Led green");
-        this.switchOnOff = new Component(ComponentConstants.INPUT, "Switch");
+        this.switchOnOff = new Component(ComponentConstants.INPUT, "Life-pack - Switch");
     }
     
     @Override

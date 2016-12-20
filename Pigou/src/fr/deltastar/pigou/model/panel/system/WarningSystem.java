@@ -16,6 +16,7 @@ public class WarningSystem extends BaseSystem {
     
     public WarningSystem() {
         this.warningModule = new WarningModule();
+        super.isOnline = true; //ce système est toujours disponible
     }
 
     public WarningModule getWarningModule() {
@@ -23,14 +24,10 @@ public class WarningSystem extends BaseSystem {
     }
 
     @Override
-    public void onActivateSystem() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    public void onActivateSystem() {}
 
     @Override
-    public void onDeactivateSystem() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    public void onDeactivateSystem() {}
     
     @Override
     public String toString() {

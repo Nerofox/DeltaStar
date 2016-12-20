@@ -2,8 +2,8 @@ package fr.deltastar.pigou.controller;
 
 import fr.deltastar.pigou.constant.Constants;
 import fr.deltastar.pigou.constant.ListView;
+import fr.deltastar.pigou.constant.SoundConstants;
 import fr.deltastar.pigou.service.ServicePigou;
-import fr.deltastar.pigou.utils.FileManager;
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -17,6 +17,7 @@ import javafx.scene.control.Button;
  */
 public class WelcomeController extends BaseViewController implements Initializable {
     
+    @FXML private Button btnLaunch;
     @FXML private Button btnSettings;
     @FXML private Button btnExit;
     
@@ -25,6 +26,11 @@ public class WelcomeController extends BaseViewController implements Initializab
         if (!new File(Constants.FILENAME_CONFIG).exists()) {
             ServicePigou.getMessageService().displayInfo(Constants.FILENAME_NOTFOUND_CONFIG_MSG);
         }
+    }
+    
+    @FXML
+    private void btnLaunchClick() {
+        super.navigate(ListView.LAUNCH_MISSION);
     }
     
     @FXML

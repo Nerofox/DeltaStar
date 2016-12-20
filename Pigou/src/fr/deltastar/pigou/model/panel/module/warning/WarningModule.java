@@ -56,8 +56,12 @@ public class WarningModule implements ModuleInterface {
     }
 
     @Override
+    /**
+     * Lancé par le bouton reset
+     * Desactive tout les voyants
+     */
     public void onAction(boolean activate) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 
     @Override

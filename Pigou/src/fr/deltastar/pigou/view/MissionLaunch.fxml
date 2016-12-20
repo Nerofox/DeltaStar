@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" fx:id="ap" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.deltastar.pigou.controller.MissionLaunchController">
+   <children>
+      <Pane layoutX="-7.0" layoutY="-4.0" prefHeight="603.0" prefWidth="809.0" style="-fx-background-color: #0F056B;">
+         <children>
+            <Label layoutX="183.0" layoutY="151.0" text="Mission in progress..." textFill="WHITE">
+               <font>
+                  <Font size="48.0" />
+               </font>
+            </Label>
+            <ProgressIndicator layoutX="301.0" layoutY="230.0" prefHeight="159.0" prefWidth="206.0" />
+            <Button fx:id="btnStop" layoutX="294.0" layoutY="472.0" mnemonicParsing="false" onAction="#btnStopClick" prefHeight="64.0" prefWidth="220.0" stylesheets="@../resources/css/baseStyle.css" text="Stop" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

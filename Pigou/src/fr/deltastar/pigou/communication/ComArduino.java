@@ -63,18 +63,28 @@ public class ComArduino implements ListenerComInterface {
         }
     }
     
+    /**
+     * Incris un état d'une led a une position donnée
+     * @param pos
+     * @param status 
+     */
     public void setValueLed(int pos, int status) {
         this.outputCodeLed[pos] = Integer.toString(status).charAt(0);
     }
     
+    /**
+     * Inscris le mode dans lequel le LCD doit se mettre
+     * @param statusLcd 
+     */
     public void setLcdMod(int statusLcd) {
         this.statusLcd = (char)statusLcd;
     }
-
-    public int getNbOutputLed() {
-        return nbOutputLed;
-    }
     
+    /**
+     * Inscris les arguments pour l'écran LCD, varie selon le type d'affichage
+     * @param argOne
+     * @param argTwo 
+     */
     public void setLcdArg(int argOne, int argTwo) {
         String argOneString = String.valueOf(argOne);
         int nbZeroArgOne = this.sizeOutputArgOneLcd - argOneString.length();
@@ -96,24 +106,39 @@ public class ComArduino implements ListenerComInterface {
         this.outputArgTwoLcd = sb.toString();
     }
     
+    /**
+     * Envoi a l'arduino le code de sortie complet
+     */
     public void sendOutput() {
         StringBuilder sbOuput = new StringBuilder(String.valueOf(this.outputCodeLed));
         sbOuput.append(this.statusLcd).append(this.outputArgOneLcd).append(this.outputArgTwoLcd);
         this.com.sendData(sbOuput.toString());
     }
     
+    /**
+     * Ferme l'ensemble de la connection
+     */
     public void closeConnection() {
         if (this.com != null)
             this.com.closeConnection();
         this.com = null;
     }
     
+    /**
+     * Vérifie la connection a l'arduino
+     * @return 
+     */
     public Boolean isConnect() {
         if (this.com == null)
             return false;
         return this.com.isConnect();
     }
 
+    /**
+     * Déclenchée par défaut quand une donnée arrive sur l'arduino
+     * execute le onAction correspondant au module lié a l'input
+     * @param data 
+     */
     @Override
     public void onDataReceved(String data) {
         System.out.println("Data in coming : " + data);
@@ -140,7 +165,11 @@ public class ComArduino implements ListenerComInterface {
             }
         }
     }
-
+    
+    public int getNbOutputLed() {
+        return nbOutputLed;
+    }
+    
     public String getArduinoId() {
         return arduinoId;
     }

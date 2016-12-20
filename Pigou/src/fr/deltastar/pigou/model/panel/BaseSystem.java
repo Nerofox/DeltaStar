@@ -18,6 +18,11 @@ public abstract class BaseSystem {
     protected int statusLcd;
     protected int argOneLcd;
     protected int argTwoLcd;
+    
+    /**
+     * Etat du système si celui est disponible ou pas
+     */
+    protected boolean isOnline;
 
     public ComArduino getArduinoComLcd() {
         return arduinoComLcd;
@@ -50,6 +55,14 @@ public abstract class BaseSystem {
     public void setArgTwoLcd(int argTwoLcd) {
         this.argTwoLcd = argTwoLcd;
     }
+
+    public boolean isIsOnline() {
+        return isOnline;
+    }
+
+    public void setIsOnline(boolean isOnline) {
+        this.isOnline = isOnline;
+    }
     
     /**
      * Récupère la liste des modules du system, uniquement les configurables
@@ -59,9 +72,13 @@ public abstract class BaseSystem {
     /**
      * Ce qui se passe lors de l'activation du systeme
      */
-    public abstract void onActivateSystem();
+    public void onActivateSystem() {
+        this.isOnline = true;
+    }
     /**
      * Ce qui se passe lors de la désactivation du systeme
      */
-    public abstract void onDeactivateSystem();
+    public void onDeactivateSystem() {
+        this.isOnline = false;
+    }
 }

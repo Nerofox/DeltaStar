@@ -3,7 +3,6 @@ package fr.deltastar.pigou.service;
 import fr.deltastar.pigou.communication.ComArduino;
 import fr.deltastar.pigou.constant.Constants;
 import fr.deltastar.pigou.model.constant.ComponentConstants;
-import fr.deltastar.pigou.controller.StatusComViewController;
 import fr.deltastar.pigou.model.constant.ArduinoPortConstants;
 import fr.deltastar.pigou.communication.ListenerComInterface;
 import java.util.ArrayList;
@@ -15,7 +14,7 @@ import java.util.List;
  */
 public class ComArduinoService {
     
-    private StatusComViewController controllerView;
+    private Thread backRunSynchroArduino;
     
     private ComArduino arduinoA;
     private ComArduino arduinoB;
@@ -59,6 +58,41 @@ public class ComArduinoService {
                 }
             }
         }).start();
+    }
+    
+    /**
+     * Démarre la synchronisation entre les données PIGOU et les arduinos
+     */
+    public void startRefreshArduino() {
+        if (this.backRunSynchroArduino == null) {
+            this.backRunSynchroArduino = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    while(true) {
+                        try {
+                            Thread.sleep(500);
+                            if (arduinoA.isConnect())
+                                arduinoA.sendOutput();
+                            if (arduinoB.isConnect())
+                                arduinoB.sendOutput();
+                            if (arduinoC.isConnect())
+                                arduinoC.sendOutput();
+                        } catch (InterruptedException ex) {
+                            System.err.println("Error synch");
+                        }
+                    }
+                }
+            });
+        }
+        this.backRunSynchroArduino.start();
+    }
+    
+    /**
+     * Stop la synchronisation entre les données PIGOU et les arduinos
+     */
+    public void stopRefreshArduino() {
+        if (this.backRunSynchroArduino.isAlive())
+            this.backRunSynchroArduino.stop();
     }
     
     /**
@@ -110,13 +144,5 @@ public class ComArduinoService {
 
     public void setPortComC(String portComC) {
         this.portComC = portComC;
-    }
-
-    public StatusComViewController getControllerView() {
-        return controllerView;
-    }
-
-    public void setControllerView(StatusComViewController controllerView) {
-        this.controllerView = controllerView;
     }
 }

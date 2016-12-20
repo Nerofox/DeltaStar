@@ -13,4 +13,5 @@ public class ListView {
     public final static String SETTINGS = PATH + "Settings.fxml";
     public final static String SETTINGS_ARDUINO_COM = PATH + "SettingsArduinoCom.fxml";
     public final static String SETTINGS_AUTO_CONFIG = PATH + "SettingsAutoConfig.fxml";
+    public final static String LAUNCH_MISSION = PATH + "MissionLaunch.fxml";
 }

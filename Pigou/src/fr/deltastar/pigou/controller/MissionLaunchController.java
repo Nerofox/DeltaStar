@@ -35,6 +35,7 @@ public class MissionLaunchController extends BaseViewController implements Initi
     
     @FXML
     private void btnStopClick() {
+        ServicePigou.getComArduinoService().stopRefreshArduino();
         super.navigate(ListView.WELCOME);
     }
 }

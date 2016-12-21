@@ -12,6 +12,11 @@ package fr.deltastar.pigou.constant;
 public class Constants {
     public final static String TITLE_APPLICATION = "PIGOU";
     
+    //CONFIG POUR LA COMMUNICATION AVEC ORBITER
+    public final static String IP_ORBITER_SOCKET = "127.0.0.1";
+    public final static String PORT_ORBITER_SOCKET = "10";
+    
+    //CONFIG POUR LE DELTASTAR VIRTUEL
     public final static boolean MODE_VIRTUAL = true;
     public final static String VIRTUAL_IP = "127.0.0.1";
     public final static String VIRTUAL_PORT_A = "10000";
@@ -25,7 +30,6 @@ public class Constants {
     public static String FILENAME_CONFIG = "config.pf";
     public static String FILENAME_DELIMITER = ";";
     public static String FILENAME_NOTFOUND_CONFIG_MSG = "WARNING : Config PIGOU is missing for DeltaStar, please config the I/O";
-    
     public static String AUTOCONFIG_VIEW_NB_INPUT = "%d / %d input";
     public static String AUTOCONFIG_VIEW_NB_OUTPUT = "%d / %d output";
     public static String AUTOCONFIG_VIEW_NB_TOTAL = "Total progress %d / %d I/O";

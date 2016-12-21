@@ -15,5 +15,5 @@ public interface ListenerComInterface {
      * Déclenché dés qu'un arduino s'est connecté avec succès
      * @param arduinoId 
      */
-    public void onConnectArduino(String arduinoId);
+    public void onConnect(String arduinoId);
 }

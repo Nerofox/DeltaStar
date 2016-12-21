@@ -204,7 +204,7 @@ public class SettingsAutoConfigController extends BaseViewController implements 
     }
 
     @Override
-    public void onConnectArduino(String arduinoId) {
+    public void onConnect(String arduinoId) {
         //une fois connecté on démarre le paramétrage
         if (ServicePigou.getComArduinoService().isFullConnected()) {
             this.listComArduino = ServicePigou.getComArduinoService().getAllArduino();

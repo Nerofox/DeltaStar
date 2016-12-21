@@ -16,7 +16,7 @@ import java.util.logging.Logger;
  */
 public class SocketClient implements ComClientInterface {
     private int port;
-    private String arduinoId;
+    private String nameCom;
     
     private Thread listenerInput;
     private Socket socket;
@@ -24,30 +24,31 @@ public class SocketClient implements ComClientInterface {
     private PrintWriter out;
     
     private ListenerComInterface listenerCom;
-    private StatusComViewController statusComViewController;
 
     /**
      * initialise la connection
+     * @param ip
      * @param port
      * @param listenerCom 
+     * @param nameCom
      */
     @Override
-    public void connect(String port, ListenerComInterface listenerCom, String arduinoId) {
+    public void connect(String ip, String port, ListenerComInterface listenerCom, String nameCom) {
         this.port = Integer.parseInt(port);
         this.listenerCom = listenerCom;
-        this.arduinoId = arduinoId;
+        this.nameCom = nameCom;
         try {
             if (StatusComViewController.getInstance() != null)
-                StatusComViewController.getInstance().setStatusInProgress(this.arduinoId);
-            this.socket = new Socket(Constants.VIRTUAL_IP, this.port);
+                StatusComViewController.getInstance().setStatusInProgress(this.nameCom);
+            this.socket = new Socket(ip, this.port);
             System.out.println("Connection established on " + this.port);
             if (StatusComViewController.getInstance() != null)
-                StatusComViewController.getInstance().setStatusOk(this.arduinoId);
-            this.listenerCom.onConnectArduino(this.arduinoId);
+                StatusComViewController.getInstance().setStatusOk(this.nameCom);
+            this.listenerCom.onConnect(this.nameCom);
         } catch (IOException ex) {
             System.out.println("Connection error on " + this.port);
             if (StatusComViewController.getInstance() != null)
-                StatusComViewController.getInstance().setStatusKo(this.arduinoId, "Connection error on " + this.port);
+                StatusComViewController.getInstance().setStatusKo(this.nameCom, "Connection error on " + this.port);
         }
     }
     
@@ -75,7 +76,7 @@ public class SocketClient implements ComClientInterface {
                     ex.printStackTrace();
                     System.out.println("Error listen input on " + port);
                     if (StatusComViewController.getInstance() != null)
-                        StatusComViewController.getInstance().setStatusKo(arduinoId, "Connection error on " + port);
+                        StatusComViewController.getInstance().setStatusKo(nameCom, "Connection error on " + port);
                 }
             }
         });
@@ -95,12 +96,12 @@ public class SocketClient implements ComClientInterface {
                     if (out == null)
                         out = new PrintWriter(socket.getOutputStream());
                     out.write(data);
-                    System.out.println("Data send on " + arduinoId + " : " + data);
+                    System.out.println("Data send on " + nameCom + " : " + data);
                     out.flush();
                 } catch (IOException ex) {
                     System.out.println("Error send output on " + port);
                     if (StatusComViewController.getInstance() != null)
-                        StatusComViewController.getInstance().setStatusKo(arduinoId, "Send error on " + port);
+                        StatusComViewController.getInstance().setStatusKo(nameCom, "Send error on " + port);
                     if (out != null)
                         out.close();
                 }
@@ -124,7 +125,7 @@ public class SocketClient implements ComClientInterface {
                 this.in.close();
             System.out.println("Close connection on " + Constants.VIRTUAL_IP + ":" + this.port);
             if (StatusComViewController.getInstance() != null)
-                StatusComViewController.getInstance().setStatusKo(this.arduinoId, "Close connection on " + Constants.VIRTUAL_IP + ":" + this.port);
+                StatusComViewController.getInstance().setStatusKo(this.nameCom, "Close connection on " + Constants.VIRTUAL_IP + ":" + this.port);
         } catch (IOException ex) {
             Logger.getLogger(SocketClient.class.getName()).log(Level.SEVERE, null, ex);
         }

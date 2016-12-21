@@ -16,8 +16,6 @@ public abstract class BaseSystem {
      * Etat du champ lcd
      */
     protected int statusLcd;
-    protected int argOneLcd;
-    protected int argTwoLcd;
     
     /**
      * Etat du système si celui est disponible ou pas
@@ -38,22 +36,6 @@ public abstract class BaseSystem {
 
     public void setStatusLcd(int statusLcd) {
         this.statusLcd = statusLcd;
-    }
-
-    public int getArgOneLcd() {
-        return argOneLcd;
-    }
-
-    public void setArgOneLcd(int argOneLcd) {
-        this.argOneLcd = argOneLcd;
-    }
-
-    public int getArgTwoLcd() {
-        return argTwoLcd;
-    }
-
-    public void setArgTwoLcd(int argTwoLcd) {
-        this.argTwoLcd = argTwoLcd;
     }
 
     public boolean isIsOnline() {

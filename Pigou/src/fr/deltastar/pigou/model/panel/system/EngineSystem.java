@@ -3,7 +3,7 @@ package fr.deltastar.pigou.model.panel.system;
 
 import fr.deltastar.pigou.model.panel.BaseSystem;
 import fr.deltastar.pigou.model.panel.ModuleInterface;
-import fr.deltastar.pigou.model.constant.ArduinoPortConstants;
+import fr.deltastar.pigou.model.panel.SystemLcdInterface;
 import fr.deltastar.pigou.model.panel.module.engine.*;
 import fr.deltastar.pigou.service.ServicePigou;
 import java.util.ArrayList;
@@ -13,7 +13,7 @@ import java.util.List;
  *
  * @author Valentin
  */
-public class EngineSystem extends BaseSystem {
+public class EngineSystem extends BaseSystem implements SystemLcdInterface {
 
     private MainDumpModule mainDumpModule;
     private MainValveModule mainValveModule;
@@ -22,6 +22,15 @@ public class EngineSystem extends BaseSystem {
     private SupplyModule supplyModule;
     private TransfertLeftModule transfertLeftModule;
     private TransfertRightModule transfertRightModule;
+    
+    /**
+     * Réservoir restant pour le moteur principal
+     */
+    private int qtyMainFuel;
+    /**
+     * Réservoir restant pour les RCS
+     */
+    private int qtyRcsFuel;
 
     public EngineSystem() {
         this.mainDumpModule = new MainDumpModule();
@@ -59,6 +68,26 @@ public class EngineSystem extends BaseSystem {
     }
     
     @Override
+    public int getArgOne() {
+        return this.qtyMainFuel;
+    }
+
+    @Override
+    public void setArgOne(int argOne) {
+        this.qtyMainFuel = argOne;
+    }
+
+    @Override
+    public int getArgTwo() {
+        return this.qtyRcsFuel;
+    }
+
+    @Override
+    public void setArgTwo(int argTwo) {
+        this.qtyRcsFuel = argTwo;
+    }
+    
+    @Override
     public void onActivateSystem() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
@@ -85,5 +114,4 @@ public class EngineSystem extends BaseSystem {
         mi.add(this.rcsValveModule);
         return mi;
     }
-    
 }

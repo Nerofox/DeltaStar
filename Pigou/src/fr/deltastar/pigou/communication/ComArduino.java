@@ -38,12 +38,20 @@ public class ComArduino implements ListenerComInterface {
      */
     public void start(String port, int modeInputOutput, int nbOutput, int sizeArgOneLcd, int sizeArgTwoLcd, 
                       ListenerComInterface lci, String arduinoId) {
-        this.statusLcd = 0;
+        this.statusLcd = '0';
         this.nbOutputLed = nbOutput;
         this.arduinoId = arduinoId;
        
+        //initialisation des valeurs de l'argument 1 et 2 des LCD
         this.sizeOutputArgOneLcd = sizeArgOneLcd;
+        this.outputArgOneLcd = "";
+        for (int i = 0; i < this.sizeOutputArgOneLcd; i++)
+            this.outputArgOneLcd += "0";
+        
         this.sizeOutputArgTwoLcd = sizeArgTwoLcd;
+        this.outputArgTwoLcd = "";
+        for (int i = 0; i < this.sizeOutputArgTwoLcd; i++)
+            this.outputArgTwoLcd += "0";
         
         //selon le mode paramétré on utilise le panel virtuel ou réelle
         if (Constants.MODE_VIRTUAL) {
@@ -51,7 +59,7 @@ public class ComArduino implements ListenerComInterface {
         } else {
             //TODO faire pour la commande série
         }
-        this.com.connect(port, lci, arduinoId);
+        this.com.connect(Constants.VIRTUAL_IP, port, lci, arduinoId);
         //on écoute les données entrante si souhaité
         if (modeInputOutput == ComponentConstants.INPUT) {
             this.com.listenInput();
@@ -82,28 +90,33 @@ public class ComArduino implements ListenerComInterface {
     
     /**
      * Inscris les arguments pour l'écran LCD, varie selon le type d'affichage
-     * @param argOne
-     * @param argTwo 
+     * @param argOne : inscrire -1 pour ignorer l'argument 1
+     * @param argTwo : inscrire -1 pour ignorer l'argument 2
      */
     public void setLcdArg(int argOne, int argTwo) {
-        String argOneString = String.valueOf(argOne);
-        int nbZeroArgOne = this.sizeOutputArgOneLcd - argOneString.length();
+        StringBuilder sb = null;
         
-        StringBuilder sb = new StringBuilder("");
-        for (int i = 0; i < nbZeroArgOne; i++)
-            sb.append("0");
-        sb.append(argOneString);
-        this.outputArgOneLcd = sb.toString();
+        if (argOne != -1) {
+            String argOneString = String.valueOf(argOne);
+            int nbZeroArgOne = this.sizeOutputArgOneLcd - argOneString.length();
+
+            sb = new StringBuilder("");
+            for (int i = 0; i < nbZeroArgOne; i++)
+                sb.append("0");
+            sb.append(argOneString);
+            this.outputArgOneLcd = sb.toString();
+        }
         
-        
-        String argTwoString = String.valueOf(argTwo);
-        int nbZeroArgTwo = this.sizeOutputArgTwoLcd - argTwoString.length();
-        
-        sb = new StringBuilder("");
-        for (int i = 0; i < nbZeroArgTwo; i++)
-            sb.append("0");
-        sb.append(argTwoString);
-        this.outputArgTwoLcd = sb.toString();
+        if (argTwo != -1) {
+            String argTwoString = String.valueOf(argTwo);
+            int nbZeroArgTwo = this.sizeOutputArgTwoLcd - argTwoString.length();
+
+            sb = new StringBuilder("");
+            for (int i = 0; i < nbZeroArgTwo; i++)
+                sb.append("0");
+            sb.append(argTwoString);
+            this.outputArgTwoLcd = sb.toString();
+        }
     }
     
     /**
@@ -175,5 +188,5 @@ public class ComArduino implements ListenerComInterface {
     }
 
     @Override
-    public void onConnectArduino(String arduinoId) {}
+    public void onConnect(String arduinoId) {}
 }

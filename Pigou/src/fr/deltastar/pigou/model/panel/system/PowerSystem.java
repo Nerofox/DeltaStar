@@ -3,6 +3,7 @@ package fr.deltastar.pigou.model.panel.system;
 import fr.deltastar.pigou.model.panel.BaseSystem;
 import fr.deltastar.pigou.model.panel.ModuleInterface;
 import fr.deltastar.pigou.model.constant.ArduinoPortConstants;
+import fr.deltastar.pigou.model.panel.SystemLcdInterface;
 import fr.deltastar.pigou.model.panel.module.power.*;
 import fr.deltastar.pigou.service.ServicePigou;
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ import java.util.List;
  *
  * @author Valentin
  */
-public class PowerSystem extends BaseSystem {
+public class PowerSystem extends BaseSystem implements SystemLcdInterface {
 
     private AirlockPowerModule airlockPowerModule;
     private ApuModule apuModule;
@@ -23,6 +24,15 @@ public class PowerSystem extends BaseSystem {
     private HudPowerModule hudPowerModule;
     private LifePackPowerModule lifePackPowerModule;
     private StarterModule starterModule;
+    
+    /**
+     * Taux en pourcentage de l'utilisation de la puissance electrique
+     */
+    private int usePower;
+    /**
+     * Taux en pourcentage de la quantité restante en énergie de l'APU
+     */
+    private int qtyPower;
 
     public PowerSystem() {
         this.airlockPowerModule = new AirlockPowerModule();
@@ -71,6 +81,26 @@ public class PowerSystem extends BaseSystem {
 
     public StarterModule getStarterModule() {
         return starterModule;
+    }
+    
+    @Override
+    public int getArgOne() {
+        return this.qtyPower;
+    }
+
+    @Override
+    public void setArgOne(int argOne) {
+        this.qtyPower = argOne;
+    }
+
+    @Override
+    public int getArgTwo() {
+        return this.usePower;
+    }
+
+    @Override
+    public void setArgTwo(int argTwo) {
+        this.usePower = argTwo;
     }
 
     @Override

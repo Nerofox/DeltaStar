@@ -47,15 +47,21 @@ public class ComArduinoService {
         new Thread(new Runnable() {
             @Override
             public void run() {
+                String portA;
+                String portB;
+                String portC;
                 if (Constants.MODE_VIRTUAL) {
-                    arduinoA.start(Constants.VIRTUAL_PORT_A, ComponentConstants.OUTPUT, 13, 4, 3, lci, ArduinoPortConstants.ARDUINO_A);
-                    arduinoB.start(Constants.VIRTUAL_PORT_B, ComponentConstants.OUTPUT, 15, 3, 3, lci, ArduinoPortConstants.ARDUINO_B);
-                    arduinoC.start(Constants.VIRTUAL_PORT_C, ComponentConstants.INPUT, 14, 4, 3, lci, ArduinoPortConstants.ARDUINO_C);
+                    portA = Constants.VIRTUAL_PORT_A;
+                    portB = Constants.VIRTUAL_PORT_B;
+                    portC = Constants.VIRTUAL_PORT_C;
                 } else {
-                    arduinoA.start(portComA, ComponentConstants.OUTPUT, 13, 4, 3, lci, ArduinoPortConstants.ARDUINO_A);
-                    arduinoB.start(portComB, ComponentConstants.OUTPUT, 15, 3, 3, lci, ArduinoPortConstants.ARDUINO_B);
-                    arduinoC.start(portComC, ComponentConstants.INPUT, 14, 4, 3, lci, ArduinoPortConstants.ARDUINO_C);
+                    portA = portComA;
+                    portB = portComB;
+                    portC = portComC;
                 }
+                arduinoA.start(portA, ComponentConstants.OUTPUT, 13, 4, 3, lci, ArduinoPortConstants.ARDUINO_A);
+                arduinoB.start(portB, ComponentConstants.OUTPUT, 15, 3, 3, lci, ArduinoPortConstants.ARDUINO_B);
+                arduinoC.start(portC, ComponentConstants.INPUT, 14, 3, 3, lci, ArduinoPortConstants.ARDUINO_C);
             }
         }).start();
     }

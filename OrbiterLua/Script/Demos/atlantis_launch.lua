@@ -1,0 +1,2 @@
+run('atlantis/launch')
+launch()

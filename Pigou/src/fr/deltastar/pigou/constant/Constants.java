@@ -13,7 +13,6 @@ public class Constants {
     public final static String TITLE_APPLICATION = "PIGOU";
     
     //CONFIG POUR LA COMMUNICATION AVEC ORBITER
-    public final static String IP_ORBITER_SOCKET = "127.0.0.1";
     public final static String PORT_ORBITER_SOCKET = "14000";
     
     //CONFIG POUR LE DELTASTAR VIRTUEL

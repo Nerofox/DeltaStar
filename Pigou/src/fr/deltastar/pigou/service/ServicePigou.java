@@ -8,8 +8,15 @@ package fr.deltastar.pigou.service;
 public class ServicePigou {
     private static MessageService messageService;
     private static ComArduinoService comArduinoService;
+    private static ComOrbiterService comOrbiterService;
     private static SoundService soundService;
 
+    public static ComOrbiterService getComOrbiterService() {
+        if (comOrbiterService == null)
+            comOrbiterService = new ComOrbiterService();
+        return comOrbiterService;
+    }
+    
     public static SoundService getSoundService() {
         if (soundService == null)
             soundService = new SoundService();

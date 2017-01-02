@@ -1,6 +1,5 @@
 package fr.deltastar.pigou.communication;
 
-import fr.deltastar.pigou.controller.StatusComViewController;
 import fr.deltastar.pigou.service.ServicePigou;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -8,8 +7,6 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -35,12 +32,14 @@ public class SocketServer {
             @Override
             public void run() {
                 try {
+                    System.out.println("Wait a connection from Orbiter...");
                     serverSocket = new ServerSocket(port);
                     //ligne bloquante tant que non connection
                     client = serverSocket.accept();
                     //une fois connection établi
                     out = new PrintWriter(client.getOutputStream());
                     in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+                    System.out.println("Connection established to Orbiter");
                 } catch (IOException ex) {
                     ServicePigou.getMessageService().displayFatalError("Error connection Orbiter");
                 }
@@ -75,6 +74,7 @@ public class SocketServer {
                     try {
                         msg = in.readLine();
                         if (msg != null && !"".equals(msg.trim())) {
+                            System.out.println("Data in on Orbiter : " + msg);
                             lci.onDataReceved(msg);
                         }
                     } catch (IOException ex) {
@@ -87,17 +87,20 @@ public class SocketServer {
     }
     
     public void close() {
+        System.out.println("Stoping connection on Orbiter");
         try {
-            if (this.tConnect.isAlive())
+            if (this.tConnect != null && this.tConnect.isAlive())
                 this.tConnect.stop();
-            if (this.tListen.isAlive())
-                this.tConnect.stop();
+            if (this.tListen != null && this.tListen.isAlive())
+                this.tListen.stop();
             if (this.in != null)
                 this.in.close();
             if (this.out != null)
                 this.out.close();
-        } catch (IOException ex) {
-            
-        }
+            if (this.client != null && this.client.isConnected())
+                this.client.close();
+            if (this.serverSocket != null)
+                this.serverSocket.close();
+        } catch (IOException ex) {}
     }
 }

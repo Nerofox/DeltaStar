@@ -1,2 +1,0 @@
-run('atlantis/launch')
-launch()

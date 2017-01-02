@@ -58,6 +58,8 @@ public class SocketClient implements ComClientInterface {
      */
     @Override
     public void listenInput() {
+        if (this.socket == null || !this.socket.isConnected())
+            return;
         this.listenerInput = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -133,6 +135,8 @@ public class SocketClient implements ComClientInterface {
 
     @Override
     public boolean isConnect() {
+        if (this.socket == null)
+            return false;
         return this.socket.isConnected();
     }
 }

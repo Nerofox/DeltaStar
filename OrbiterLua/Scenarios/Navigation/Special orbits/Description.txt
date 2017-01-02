@@ -1,3 +1,0 @@
-BEGIN_DESC
-A collection of interesting orbits.
-END_DESC

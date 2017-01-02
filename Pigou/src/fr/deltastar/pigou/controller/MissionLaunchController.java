@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package fr.deltastar.pigou.controller;
 
 import fr.deltastar.pigou.constant.ListView;
@@ -31,11 +26,13 @@ public class MissionLaunchController extends BaseViewController implements Initi
             ServicePigou.getComArduinoService().launch();
         }
         ServicePigou.getComArduinoService().startRefreshArduino();
+        ServicePigou.getComOrbiterService().launch();
     }    
     
     @FXML
     private void btnStopClick() {
         ServicePigou.getComArduinoService().stopRefreshArduino();
+        ServicePigou.getComOrbiterService().stop();
         super.navigate(ListView.WELCOME);
     }
 }

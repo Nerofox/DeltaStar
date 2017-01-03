@@ -1,7 +1,7 @@
 package fr.deltastar.pigou.constant;
 
 /**
- *
+ * Liste des sons disponibles pour le programme
  * @author Valentin
  */
 public class SoundConstants {

@@ -18,6 +18,11 @@
             </Label>
             <ProgressIndicator layoutX="301.0" layoutY="230.0" prefHeight="159.0" prefWidth="206.0" />
             <Button fx:id="btnStop" layoutX="294.0" layoutY="472.0" mnemonicParsing="false" onAction="#btnStopClick" prefHeight="64.0" prefWidth="220.0" stylesheets="@../resources/css/baseStyle.css" text="Stop" />
+            <Label layoutX="245.0" layoutY="415.0" text="Please launch a scenario PIGOU on Orbiter" textFill="WHITE">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
    </children>

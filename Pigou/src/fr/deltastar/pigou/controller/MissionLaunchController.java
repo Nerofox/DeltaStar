@@ -26,13 +26,13 @@ public class MissionLaunchController extends BaseViewController implements Initi
             ServicePigou.getComArduinoService().launch();
         }
         ServicePigou.getComArduinoService().startRefreshArduino();
-        ServicePigou.getComOrbiterService().launch();
+        ServicePigou.getOrbiterService().launch();
     }    
     
     @FXML
     private void btnStopClick() {
         ServicePigou.getComArduinoService().stopRefreshArduino();
-        ServicePigou.getComOrbiterService().stop();
+        ServicePigou.getOrbiterService().stop();
         super.navigate(ListView.WELCOME);
     }
 }

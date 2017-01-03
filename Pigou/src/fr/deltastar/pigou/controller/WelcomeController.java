@@ -29,7 +29,11 @@ public class WelcomeController extends BaseViewController implements Initializab
     
     @FXML
     private void btnLaunchClick() {
-        super.navigate(ListView.LAUNCH_MISSION);
+        if (!ServicePigou.getOrbiterService().isOrbiterPathExist()) {
+            ServicePigou.getOrbiterService().choosePathOrbiter(super.getStage());
+        } else {
+            super.navigate(ListView.LAUNCH_MISSION);
+        }
     }
     
     @FXML

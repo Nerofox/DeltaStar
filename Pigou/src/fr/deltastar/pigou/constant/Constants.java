@@ -13,7 +13,14 @@ public class Constants {
     public final static String TITLE_APPLICATION = "PIGOU";
     
     //CONFIG POUR LA COMMUNICATION AVEC ORBITER
+    public final static String FILENAME_CONFIG_ORBITER = "configOrbiter.pf";
     public final static String PORT_ORBITER_SOCKET = "14000";
+    public final static String DELIMITER_CMD_ORBITER = ","; //delimiteur utilisé pour l'envoi des commandes à Orbiter
+    public final static String TITLE_ORBITER_DIRECTORY_CHOOSER = "Choose Orbiter directory";
+    public final static String MSG_CONFIG_ORBITER_SUCCESS = "Configuration done for orbiter";
+    public final static String MSG_CONFIG_ORBITER_BAD = "Configuration Orbiter not found";
+    public final static String PATHS_ORBITER_SCENARIO_PIGOU = "\\Scenarios\\PIGOU\\";
+    public final static String ORBITER_MISSION_ONE = "Mission1.scn";
     
     //CONFIG POUR LE DELTASTAR VIRTUEL
     public final static boolean MODE_VIRTUAL = true;

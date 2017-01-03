@@ -33,5 +33,9 @@ public abstract class BaseViewController {
         }
     }
     
+    protected Stage getStage() {
+        return (Stage)ap.getScene().getWindow();
+    }
+    
     protected void btnBackClick() {};
 }

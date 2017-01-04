@@ -55,9 +55,9 @@ public class SocketServer {
             @Override
             public void run() {
                 try {
-                    out.write(msg);
-                    System.out.println("Data send on Orbiter : " + msg);
+                    out.write(msg + "\n");
                     out.flush();
+                    System.out.println("Data send on Orbiter : " + msg);
                 } catch (Exception e) {
                     System.out.println("Error send output on Orbiter");
                 }

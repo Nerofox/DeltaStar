@@ -42,6 +42,7 @@ public class Component {
     public void switchOn() {
         if (this.type == ComponentConstants.OUTPUT) {
             this.comArduino.setValueLed(this.idPos, ComponentConstants.ON);
+            this.status = ComponentConstants.ON;
         }
     }
     
@@ -51,6 +52,7 @@ public class Component {
     public void switchOff() {
         if (this.type == ComponentConstants.OUTPUT) {
             this.comArduino.setValueLed(this.idPos, ComponentConstants.OFF);
+            this.status = ComponentConstants.OFF;
         }
     }
     
@@ -60,6 +62,7 @@ public class Component {
     public void switchBlink() {
         if (this.type == ComponentConstants.OUTPUT) {
             this.comArduino.setValueLed(this.idPos, ComponentConstants.BLINK);
+            this.status = ComponentConstants.BLINK;
         }
     }
 

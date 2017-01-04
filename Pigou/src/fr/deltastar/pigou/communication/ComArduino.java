@@ -6,6 +6,7 @@ import fr.deltastar.pigou.model.panel.BaseSystem;
 import fr.deltastar.pigou.model.panel.Component;
 import fr.deltastar.pigou.model.panel.DeltaStar;
 import fr.deltastar.pigou.model.panel.ModuleInterface;
+import java.util.List;
 
 /**
  * Effectue la communication logique avec l'arduino en input/output
@@ -162,10 +163,11 @@ public class ComArduino implements ListenerComInterface {
             System.out.println("Data in not number");
             return;
         }
+        List<Component> cs = DeltaStar.getAirlockSystem().getGearModule().getListComponents();
         for (BaseSystem baseSystem : DeltaStar.getListSystem()) {
             for (ModuleInterface module : baseSystem.getListModuleInterface()) {
                 for (Component c : module.getListComponents()) {
-                    if (c.getStatus() == ComponentConstants.INPUT && c.getIdPos() == numberInput) {
+                    if (c.getType()== ComponentConstants.INPUT && c.getIdPos() == numberInput) {
                         if (c.getStatus() == ComponentConstants.ON) {
                             c.setStatus(ComponentConstants.OFF);
                             module.onAction(false);

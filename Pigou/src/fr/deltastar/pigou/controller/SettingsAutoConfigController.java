@@ -91,7 +91,7 @@ public class SettingsAutoConfigController extends BaseViewController implements 
         if (cSelect != null) {
             //inscri le numéro et le composant arduino dans le composant choisi de la liste output
             cSelect.setComArduino(this.listComArduino.get(this.currentArduino));
-            cSelect.setIdPos(this.currentPosOutputArduino);
+            cSelect.setIdPos(this.currentPosOutputArduino - 1);
             this.ttvpOutput.refresh();
             
             if (this.currentPosOutputArduino > 0) {

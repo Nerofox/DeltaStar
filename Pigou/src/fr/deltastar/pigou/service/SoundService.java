@@ -31,6 +31,10 @@ public class SoundService {
         if (mp == null) {
             mp = new MediaPlayer(media);
             this.mediaList.put(song, mp);
+        } else {
+            this.mediaList.remove(mp);
+            mp = new MediaPlayer(media);
+            this.mediaList.put(song, mp);
         }
         //dans tout les cas on la joue
         mp.play();

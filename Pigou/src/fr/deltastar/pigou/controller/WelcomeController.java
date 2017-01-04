@@ -1,7 +1,9 @@
 package fr.deltastar.pigou.controller;
 
+import fr.deltastar.pigou.constant.CmdOrbiterConstants;
 import fr.deltastar.pigou.constant.Constants;
 import fr.deltastar.pigou.constant.ListView;
+import fr.deltastar.pigou.constant.SoundConstants;
 import fr.deltastar.pigou.service.ServicePigou;
 import java.io.File;
 import java.net.URL;
@@ -29,11 +31,7 @@ public class WelcomeController extends BaseViewController implements Initializab
     
     @FXML
     private void btnLaunchClick() {
-        if (!ServicePigou.getOrbiterService().isOrbiterPathExist()) {
-            ServicePigou.getOrbiterService().choosePathOrbiter(super.getStage());
-        } else {
-            super.navigate(ListView.LAUNCH_MISSION);
-        }
+        super.navigate(ListView.LAUNCH_MISSION);
     }
     
     @FXML

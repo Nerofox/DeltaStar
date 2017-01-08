@@ -12,10 +12,19 @@ package fr.deltastar.pigou.constant;
 public class Constants {
     public final static String TITLE_APPLICATION = "PIGOU";
     
+    //CONFIG SYSTEMES ELECTRIQUES
+    //interval de decompte de l'énergie en millisecondes
+    public final static int INTERVAL_POWER = 5000;
+    //consommation de base toute les secondes du systèmes electriques
+    public final static int NB_CONSOMMATION_BASE = 1;
+    //consommation d'un systeme annexe
+    public final static int CONSOMMATION_SYSTEM = 3;
+    
     //CONFIG POUR LA COMMUNICATION AVEC ORBITER
     public final static String FILENAME_CONFIG_ORBITER = "configOrbiter.pf";
     public final static String PORT_ORBITER_SOCKET = "14000";
     public final static String DELIMITER_CMD_ORBITER = ","; //delimiteur utilisé pour l'envoi des commandes à Orbiter
+    public final static int ALTITUDE_MINIMAL_FORLANDING = 300; //altitude en mètre minimum pour le considéré comme atterit
     public final static String TITLE_ORBITER_DIRECTORY_CHOOSER = "Choose Orbiter directory";
     public final static String MSG_CONFIG_ORBITER_SUCCESS = "Configuration done for orbiter";
     public final static String MSG_CONFIG_ORBITER_BAD = "Configuration Orbiter not found";

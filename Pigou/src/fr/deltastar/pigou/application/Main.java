@@ -56,10 +56,13 @@ public class Main extends Application {
                 confSplit = conf[i].split(Constants.FILENAME_DELIMITER);
                 if (confSplit[0].equals(ArduinoPortConstants.ARDUINO_A)) {
                     listAllComponents.get(i).setComArduino(ServicePigou.getComArduinoService().getArduinoA());
+                    listAllComponents.get(i).getComArduino().setArduinoId(ArduinoPortConstants.ARDUINO_A);
                 } else if (confSplit[0].equals(ArduinoPortConstants.ARDUINO_B)) {
                     listAllComponents.get(i).setComArduino(ServicePigou.getComArduinoService().getArduinoB());
+                    listAllComponents.get(i).getComArduino().setArduinoId(ArduinoPortConstants.ARDUINO_B);
                 } else if (confSplit[0].equals(ArduinoPortConstants.ARDUINO_C)) {
                     listAllComponents.get(i).setComArduino(ServicePigou.getComArduinoService().getArduinoC());
+                    listAllComponents.get(i).getComArduino().setArduinoId(ArduinoPortConstants.ARDUINO_C);
                 }
                 listAllComponents.get(i).setIdPos(Integer.parseInt(confSplit[1]));
             }

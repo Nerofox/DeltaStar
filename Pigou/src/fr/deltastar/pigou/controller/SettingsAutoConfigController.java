@@ -186,19 +186,7 @@ public class SettingsAutoConfigController extends BaseViewController implements 
             }
         } else {
             //FINISSION DU PARAMETRAGE
-            //finish, création du tableau de config
-            List<Component> listAllComponents = DeltaStar.getListComponents();
-            String[] componentsConf = new String[listAllComponents.size()];
-            Component c;
-            for (int i = 0; i < listAllComponents.size(); i++) {
-                c = listAllComponents.get(i);
-                componentsConf[i] = c.getComArduino().getArduinoId() + Constants.FILENAME_DELIMITER + c.getIdPos(); 
-            }
-            //sauvegarde, écrase le fichier de conf existant
-            File f = new File(Constants.FILENAME_CONFIG);
-            if (f.exists())
-                f.delete();
-            FileManager.save(Constants.FILENAME_CONFIG, componentsConf);
+            SettingsController.saveConfig();
             ServicePigou.getMessageService().displayInfo(Constants.AUTO_CONFIG_MSG_FINISH);
         }
     }

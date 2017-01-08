@@ -1,6 +1,7 @@
 package fr.deltastar.pigou.model.panel.system;
 
 import fr.deltastar.pigou.model.panel.BaseSystem;
+import fr.deltastar.pigou.model.panel.DeltaStar;
 import fr.deltastar.pigou.model.panel.ModuleInterface;
 import fr.deltastar.pigou.model.panel.SystemLcdInterface;
 import fr.deltastar.pigou.model.panel.module.lifepack.*;
@@ -32,6 +33,7 @@ public class LifePackSystem extends BaseSystem implements SystemLcdInterface {
         this.lifePackModule = new LifePackModule();
         this.supplyModule = new SupplyModule();
         this.arduinoComLcd = ServicePigou.getComArduinoService().getArduinoC();
+        this.arduinoComLcd.setSli(this);
     }
 
     public int getTemperature() {
@@ -72,7 +74,9 @@ public class LifePackSystem extends BaseSystem implements SystemLcdInterface {
     
     @Override
     public void onActivateSystem() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        super.setIsOnline(true);
+        DeltaStar.getPowerSystem().onAuxSystem(true);
+        DeltaStar.getPowerSystem().getLifePackPowerModule().getLedGreen().switchOn();
     }
 
     @Override

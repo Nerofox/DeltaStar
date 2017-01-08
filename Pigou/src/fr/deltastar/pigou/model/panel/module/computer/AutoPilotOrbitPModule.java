@@ -1,7 +1,9 @@
 package fr.deltastar.pigou.model.panel.module.computer;
 
+import fr.deltastar.pigou.constant.CmdOrbiterConstants;
 import fr.deltastar.pigou.model.constant.ComponentConstants;
 import fr.deltastar.pigou.model.panel.Component;
+import fr.deltastar.pigou.model.panel.DeltaStar;
 import fr.deltastar.pigou.model.panel.ModuleInterface;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +32,7 @@ public class AutoPilotOrbitPModule implements ModuleInterface {
 
     @Override
     public void onAction(boolean activate) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        DeltaStar.getComputerSystem().changeAp(CmdOrbiterConstants.OPTION_APORBITMORE, this.ledGreen);
     }
 
     @Override

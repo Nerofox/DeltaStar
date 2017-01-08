@@ -11,7 +11,6 @@ import javafx.scene.media.MediaPlayer;
  */
 public class SoundService {
     
-    private MediaPlayer mp;
     private HashMap<String, MediaPlayer> mediaList;
 
     public SoundService() {

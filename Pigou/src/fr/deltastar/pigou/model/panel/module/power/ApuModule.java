@@ -1,17 +1,22 @@
 package fr.deltastar.pigou.model.panel.module.power;
 
+import fr.deltastar.pigou.constant.SoundConstants;
 import fr.deltastar.pigou.model.constant.ComponentConstants;
 import fr.deltastar.pigou.model.panel.Component;
+import fr.deltastar.pigou.model.panel.DeltaStar;
 import fr.deltastar.pigou.model.panel.ModuleInterface;
+import fr.deltastar.pigou.service.ServicePigou;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author Valentin
  */
 public class ApuModule implements ModuleInterface {
-
+    
     private Component ledGreen;
     private Component ledYellow;
     private Component ledRed;
@@ -35,9 +40,50 @@ public class ApuModule implements ModuleInterface {
         return c;
     }
 
+    public Component getLedGreen() {
+        return ledGreen;
+    }
+
+    public Component getLedYellow() {
+        return ledYellow;
+    }
+
+    public Component getLedRed() {
+        return ledRed;
+    }
+
+    public Component getSwitchOnOff() {
+        return switchOnOff;
+    }
+
     @Override
     public void onAction(boolean activate) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //si système non activé ou EPU non branché on bloque
+        if (DeltaStar.getPowerSystem().getEpuModule().isConnected() && DeltaStar.getPowerSystem().getStarterModule().isIsOnline()) {
+            if (activate) {
+                ServicePigou.getSoundService().play(SoundConstants.APU_START);
+                this.ledRed.switchOff();
+                this.ledYellow.switchBlink();
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            Thread.sleep(12000);
+                            ledYellow.switchOff();
+                            ledGreen.switchOn();
+                            ServicePigou.getSoundService().play(SoundConstants.MAIN_AMBIANCE);
+                            DeltaStar.getPowerSystem().onActivateSystem();
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(ApuModule.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                }).start();
+            } else {
+
+            }
+        } else {
+            ServicePigou.getSoundService().play(SoundConstants.BAD_ACTION);
+        }
     }
 
     @Override

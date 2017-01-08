@@ -177,6 +177,9 @@ repeat
 			if value == "APKILLROT" then
 				v:send_bufferedkey(OAPI_KEY.NUMPAD5)
 			end
+			if value == "APHOLDALTITUDE" then
+				v:send_bufferedkey(OAPI_KEY.A)
+			end
 
 			--ouverture/fermeture nez de l'appareil
 			if value == "NOSE" then

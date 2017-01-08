@@ -2,6 +2,8 @@ package fr.deltastar.pigou.model.panel;
 
 import fr.deltastar.pigou.communication.ComArduino;
 import fr.deltastar.pigou.model.constant.ComponentConstants;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Classe pour un composant
@@ -35,6 +37,50 @@ public class Component {
         this.type = type;
         this.title = title;
     }
+    
+    /**
+     * Effectue une transition du output de éteint a allumé
+     * avec clignotement
+     * @param delay : spécifie le délai de clignotement avant mise sur on
+     */
+    public void switchTransitionToOn(long delay) {
+        if (this.type == ComponentConstants.OUTPUT) {
+            this.switchBlink();
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Thread.sleep(delay);
+                        switchOn();
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(Component.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }).start();
+        }
+    }
+    
+    /**
+     * Effectue une transition du output de allumé a éteint
+     * avec clignotement
+     * @param delay : spécifie le délai de clignotement avant mise sur off
+     */
+    public void switchTransitionToOff(long delay) {
+        if (this.type == ComponentConstants.OUTPUT) {
+            this.switchBlink();
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Thread.sleep(delay);
+                        switchOff();
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(Component.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }).start();
+        }
+    };
     
     /**
      * Bascule la sortie état allumé si possible

@@ -1,8 +1,13 @@
 package fr.deltastar.pigou.model.panel.system;
 
+import fr.deltastar.pigou.constant.CmdOrbiterConstants;
+import fr.deltastar.pigou.constant.SoundConstants;
 import fr.deltastar.pigou.model.panel.BaseSystem;
+import fr.deltastar.pigou.model.panel.Component;
+import fr.deltastar.pigou.model.panel.DeltaStar;
 import fr.deltastar.pigou.model.panel.ModuleInterface;
 import fr.deltastar.pigou.model.panel.module.computer.*;
+import fr.deltastar.pigou.service.ServicePigou;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +26,15 @@ public class ComputerSystem extends BaseSystem {
     private AutoPilotRetrogradeModule autoPilotRetrogradeModule;
     private MonitorModule monitorModule;
     private RcsCtrlModule rcsCtrlModule;
+    
+    /**
+     * Contiens le dernié auto pilot choisi
+     */
+    private String lastApUse;
+    /**
+     * Dernière led de l'auto pilot choisi
+     */
+    private Component lastLed;
 
     public ComputerSystem() {
         this.autoPilotHoldAltitudeModule = new AutoPilotHoldAltitudeModule();
@@ -70,9 +84,35 @@ public class ComputerSystem extends BaseSystem {
         return rcsCtrlModule;
     }
     
+    /**
+     * Démarre ou arrête un auto pilote et desactive le précédent AP si enclenché
+     * Effectue un arrêt de kill rotation apres un temps donnée
+     * @param nameAp 
+     * @param cLed
+     */
+    public void changeAp(String nameAp, Component cLed) {
+        if (this.isOnline) {
+            if (nameAp.equals(this.lastApUse))
+                this.stopLastAp();
+            else {
+                //TODO probleme pour le hold altitude qui est un Ap permanent
+                if (this.lastLed != null)
+                    this.lastLed.switchOff();
+                this.lastApUse = new String(nameAp);
+                this.lastLed = cLed;
+                ServicePigou.getOrbiterService().sendCmdToOrbiter(CmdOrbiterConstants.MODE_CMD, this.lastApUse);
+                if (this.lastLed != null)
+                    this.lastLed.switchOn();
+                ServicePigou.getSoundService().play(SoundConstants.AUTOPILOT_ON);
+            }
+        }
+    }
+    
     @Override
     public void onActivateSystem() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        super.setIsOnline(true);
+        DeltaStar.getPowerSystem().onAuxSystem(true);
+        DeltaStar.getPowerSystem().getComputerPowerModule().getLedGreen().switchOn();
     }
 
     @Override
@@ -99,4 +139,17 @@ public class ComputerSystem extends BaseSystem {
         return mi;
     }
     
+    /**
+     * Coupe le dernié auto pilote utilisée
+     */
+    private void stopLastAp() {
+        if (this.lastApUse != null) {
+            if (this.lastLed != null)
+                this.lastLed.switchOff();
+            ServicePigou.getOrbiterService().sendCmdToOrbiter(CmdOrbiterConstants.MODE_CMD, this.lastApUse);
+            ServicePigou.getSoundService().play(SoundConstants.AUTOPILOT_OFF);
+            this.lastApUse = null;
+            this.lastLed = null;
+        }
+    }
 }

@@ -2,7 +2,10 @@ package fr.deltastar.pigou.service;
 
 import fr.deltastar.pigou.communication.ListenerComInterface;
 import fr.deltastar.pigou.communication.SocketServer;
+import fr.deltastar.pigou.constant.CmdOrbiterConstants;
 import fr.deltastar.pigou.constant.Constants;
+import fr.deltastar.pigou.model.panel.DeltaStar;
+import fr.deltastar.pigou.model.panel.system.EngineSystem;
 import fr.deltastar.pigou.utils.FileManager;
 import java.io.File;
 import javafx.stage.DirectoryChooser;
@@ -15,13 +18,14 @@ import javafx.stage.Stage;
 public class OrbiterService implements ListenerComInterface {
     
     private SocketServer serverSocket;
-    private String pathOrbiter;
+    
+    /**
+     * Altitude du vaisseau actuellement
+     */
+    private long altitude;
 
     public OrbiterService() {
         this.serverSocket = new SocketServer(this);
-        //si fichier de conf présent on récupère le path d'Orbiter
-        if (this.isOrbiterPathExist())
-            this.pathOrbiter = FileManager.open(Constants.FILENAME_CONFIG_ORBITER)[0];
     }
     
     public boolean isOrbiterPathExist() {
@@ -34,30 +38,12 @@ public class OrbiterService implements ListenerComInterface {
         directoryChooser.setTitle(Constants.TITLE_ORBITER_DIRECTORY_CHOOSER);
         if(selectedDirectory != null){
             FileManager.save(Constants.FILENAME_CONFIG_ORBITER, new String[]{selectedDirectory.getAbsolutePath()});
-            this.pathOrbiter = selectedDirectory.getAbsolutePath();
             ServicePigou.getMessageService().displayInfo(Constants.MSG_CONFIG_ORBITER_SUCCESS);
         }
     }
     
     public void launch() {
-        if (this.pathOrbiter == null) {
-            ServicePigou.getMessageService().displayFatalError(Constants.MSG_CONFIG_ORBITER_BAD);
-        } else {
-            this.serverSocket.launch(Integer.parseInt(Constants.PORT_ORBITER_SOCKET));
-            /*try {
-                //lancement du scénario orbiter
-                //plantage d'Orbiter en cas de lancement direct on passe par un .bat
-                String[] bat = new String[2];
-                bat[0] = "cd " + this.pathOrbiter;
-                bat[1] = "orbiter.exe -s " + this.pathOrbiter + Constants.PATHS_ORBITER_SCENARIO_PIGOU + Constants.ORBITER_MISSION_ONE;
-                FileManager.save(this.pathOrbiter + "\\startOrbiter.bat", bat);
-                //lancement du bat
-                Runtime rt = Runtime.getRuntime();
-                Process pr = rt.exec(this.pathOrbiter + "\\startOrbiter");
-            } catch (IOException ex) {
-                Logger.getLogger(OrbiterService.class.getName()).log(Level.SEVERE, null, ex);
-            }*/
-        }
+        this.serverSocket.launch(Integer.parseInt(Constants.PORT_ORBITER_SOCKET));
     }
     
     public void stop() {
@@ -68,14 +54,43 @@ public class OrbiterService implements ListenerComInterface {
         if (this.serverSocket != null)
             this.serverSocket.send(mode + Constants.DELIMITER_CMD_ORBITER + option);
     }
+    
+    /**
+     * Retourne si le vaisseau est posé
+     * on le considère comme atterit si il se trouve a moins de 200 mètres
+     * @return 
+     */
+    public boolean isLanding() {
+        return (this.altitude < Constants.ALTITUDE_MINIMAL_FORLANDING);
+    }
 
     @Override
     public void onDataReceved(String data) {
+        //RECUPERATION VALEURS RECU PAR ORBITER
+        String[] dataSplit = data.split(Constants.DELIMITER_CMD_ORBITER);
+        this.altitude = Long.parseLong(dataSplit[0]);
+        int fuelMain = Integer.parseInt(dataSplit[1]);
+        int fuelRcs = Integer.parseInt(dataSplit[2]);
+        
+        //OPERATION AVEC MAJ DES VALEURS RECU PAR ORBITER
+        
+        //maj carburant si système en place
+        EngineSystem es = DeltaStar.getEngineSystem();
+        if (es.isOnline()) {
+            es.setArgOne(fuelMain);
+            es.setArgTwo(fuelRcs);
+        }
         
     }
 
     @Override
     public void onConnect(String arduinoId) {
         this.serverSocket.listen();
+        
+        //CONFIG PAR DEFAUT AU DEMARRAGE DORBITER
+        
+        //blocage carburant car les moteurs ne tourne pas !
+        this.sendCmdToOrbiter(CmdOrbiterConstants.MODE_FUELLOCK, CmdOrbiterConstants.OPTION_MAIN);
+        this.sendCmdToOrbiter(CmdOrbiterConstants.MODE_FUELLOCK, CmdOrbiterConstants.OPTION_RCS);
     }
 }

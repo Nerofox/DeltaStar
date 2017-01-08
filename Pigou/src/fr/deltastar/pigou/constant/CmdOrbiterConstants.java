@@ -22,13 +22,15 @@ public class CmdOrbiterConstants {
     public final static String OPTION_APORBITMORE = "APORBITMORE";
     public final static String OPTION_APORBITLESS = "APORBITLESS";
     public final static String OPTION_APKILLROT = "APKILLROT";
+    public final static String OPTION_APHOLDALTITUDE = "APHOLDALTITUDE";
     public final static String OPTION_NOSE = "NOSE";
     public final static String OPTION_GEAR = "GEAR";
     
     //MODE FUELSUPPLY OR FUELDUMP
+    public final static String MODE_FUELLOCK = "FUELLOCK";
     public final static String MODE_FUELSUPPLY = "FUELSUPPLY";
     public final static String MODE_FUELDUMP = "FUELDUMP";
-    //option pour les deux modes ci dessus
+    //option pour les trois modes ci dessus
     public final static String OPTION_MAIN = "MAIN";
     public final static String OPTION_RCS = "RCS";
     

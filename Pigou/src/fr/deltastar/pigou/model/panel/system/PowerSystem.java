@@ -1,13 +1,17 @@
 package fr.deltastar.pigou.model.panel.system;
 
+import fr.deltastar.pigou.constant.Constants;
+import fr.deltastar.pigou.model.constant.LcdSystemPowerConstants;
 import fr.deltastar.pigou.model.panel.BaseSystem;
+import fr.deltastar.pigou.model.panel.DeltaStar;
 import fr.deltastar.pigou.model.panel.ModuleInterface;
-import fr.deltastar.pigou.model.constant.ArduinoPortConstants;
 import fr.deltastar.pigou.model.panel.SystemLcdInterface;
 import fr.deltastar.pigou.model.panel.module.power.*;
 import fr.deltastar.pigou.service.ServicePigou;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -25,6 +29,8 @@ public class PowerSystem extends BaseSystem implements SystemLcdInterface {
     private LifePackPowerModule lifePackPowerModule;
     private StarterModule starterModule;
     
+    private Thread consoPower;
+    
     /**
      * Taux en pourcentage de l'utilisation de la puissance electrique
      */
@@ -33,6 +39,12 @@ public class PowerSystem extends BaseSystem implements SystemLcdInterface {
      * Taux en pourcentage de la quantité restante en énergie de l'APU
      */
     private int qtyPower;
+    
+    /**
+     * Consommation suplémentaire du systèmes electrique, selon les systèmes
+     * annexes
+     */
+    private int consoSupp;
 
     public PowerSystem() {
         this.airlockPowerModule = new AirlockPowerModule();
@@ -44,7 +56,10 @@ public class PowerSystem extends BaseSystem implements SystemLcdInterface {
         this.hudPowerModule = new HudPowerModule();
         this.lifePackPowerModule = new LifePackPowerModule();
         this.starterModule = new StarterModule();
-        this.arduinoComLcd = ServicePigou.getComArduinoService().getArduinoB();;
+        this.arduinoComLcd = ServicePigou.getComArduinoService().getArduinoB();
+        this.arduinoComLcd.setSli(this);
+        this.qtyPower = 100;
+        this.usePower = 0;
     }
 
     public AirlockPowerModule getAirlockPowerModule() {
@@ -105,7 +120,43 @@ public class PowerSystem extends BaseSystem implements SystemLcdInterface {
 
     @Override
     public void onActivateSystem() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        super.setIsOnline(true);
+        this.getArduinoComLcd().setLcdMod(LcdSystemPowerConstants.DISPLAY_STATUS);
+        //TODO penser a faire la boucle de décompte pour le courant électrique en fonction de la puissance
+        this.consoPower = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while(true) {
+                    try {
+                        Thread.sleep(Constants.INTERVAL_POWER);
+                        qtyPower = qtyPower - (Constants.NB_CONSOMMATION_BASE + consoSupp);
+                        //plus de jus on coupe tout !
+                        if (qtyPower <= 0) {
+                            qtyPower = 0;
+                            //TODO GENERER ALERTE
+                            DeltaStar.getPowerSystem().onDeactivateSystem();
+                        }
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(PowerSystem.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        });
+        this.consoPower.start();
+    }
+    
+    /**
+     * Appellé par les système annexes pour informer le systemes electriques l'activation/desactivation d'un systeme
+     * @param activate 
+     */
+    public void onAuxSystem(boolean activate) {
+        if (activate) {
+            this.usePower += 20;
+            this.consoSupp += Constants.CONSOMMATION_SYSTEM;
+        } else {
+            this.usePower -= 20;
+            this.consoSupp -= Constants.CONSOMMATION_SYSTEM;
+        }
     }
 
     @Override

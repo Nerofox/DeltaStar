@@ -38,7 +38,7 @@ public abstract class BaseSystem {
         this.statusLcd = statusLcd;
     }
 
-    public boolean isIsOnline() {
+    public boolean isOnline() {
         return isOnline;
     }
 

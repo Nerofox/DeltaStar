@@ -6,6 +6,7 @@ import fr.deltastar.pigou.model.panel.BaseSystem;
 import fr.deltastar.pigou.model.panel.Component;
 import fr.deltastar.pigou.model.panel.DeltaStar;
 import fr.deltastar.pigou.model.panel.ModuleInterface;
+import fr.deltastar.pigou.model.panel.SystemLcdInterface;
 import java.util.List;
 
 /**
@@ -15,6 +16,7 @@ import java.util.List;
 public class ComArduino implements ListenerComInterface {
     
     private ComClientInterface com;
+    private SystemLcdInterface sli;
     
     private char[] outputCodeLed;
     private int nbOutputLed;
@@ -86,44 +88,17 @@ public class ComArduino implements ListenerComInterface {
      * @param statusLcd 
      */
     public void setLcdMod(int statusLcd) {
-        this.statusLcd = (char)statusLcd;
-    }
-    
-    /**
-     * Inscris les arguments pour l'écran LCD, varie selon le type d'affichage
-     * @param argOne : inscrire -1 pour ignorer l'argument 1
-     * @param argTwo : inscrire -1 pour ignorer l'argument 2
-     */
-    public void setLcdArg(int argOne, int argTwo) {
-        StringBuilder sb = null;
-        
-        if (argOne != -1) {
-            String argOneString = String.valueOf(argOne);
-            int nbZeroArgOne = this.sizeOutputArgOneLcd - argOneString.length();
-
-            sb = new StringBuilder("");
-            for (int i = 0; i < nbZeroArgOne; i++)
-                sb.append("0");
-            sb.append(argOneString);
-            this.outputArgOneLcd = sb.toString();
-        }
-        
-        if (argTwo != -1) {
-            String argTwoString = String.valueOf(argTwo);
-            int nbZeroArgTwo = this.sizeOutputArgTwoLcd - argTwoString.length();
-
-            sb = new StringBuilder("");
-            for (int i = 0; i < nbZeroArgTwo; i++)
-                sb.append("0");
-            sb.append(argTwoString);
-            this.outputArgTwoLcd = sb.toString();
-        }
+        this.statusLcd = Integer.toString(statusLcd).charAt(0);
     }
     
     /**
      * Envoi a l'arduino le code de sortie complet
      */
     public void sendOutput() {
+        //si on utilise un écran LCD, MAJ auto des valeurs de l'écran LCD
+        if (this.sli != null) {
+            this.setLcdArg(this.sli.getArgOne(), this.sli.getArgTwo());
+        }
         StringBuilder sbOuput = new StringBuilder(String.valueOf(this.outputCodeLed));
         sbOuput.append(this.statusLcd).append(this.outputArgOneLcd).append(this.outputArgTwoLcd);
         this.com.sendData(sbOuput.toString());
@@ -180,9 +155,17 @@ public class ComArduino implements ListenerComInterface {
             }
         }
     }
+
+    public void setSli(SystemLcdInterface sli) {
+        this.sli = sli;
+    }
     
     public int getNbOutputLed() {
         return nbOutputLed;
+    }
+
+    public void setArduinoId(String arduinoId) {
+        this.arduinoId = arduinoId;
     }
     
     public String getArduinoId() {
@@ -191,4 +174,35 @@ public class ComArduino implements ListenerComInterface {
 
     @Override
     public void onConnect(String arduinoId) {}
+    
+    /**
+     * Inscris les arguments pour l'écran LCD, varie selon le type d'affichage
+     * @param argOne : inscrire -1 pour ignorer l'argument 1
+     * @param argTwo : inscrire -1 pour ignorer l'argument 2
+     */
+    private void setLcdArg(int argOne, int argTwo) {
+        StringBuilder sb = null;
+        
+        if (argOne != -1) {
+            String argOneString = String.valueOf(argOne);
+            int nbZeroArgOne = this.sizeOutputArgOneLcd - argOneString.length();
+
+            sb = new StringBuilder("");
+            for (int i = 0; i < nbZeroArgOne; i++)
+                sb.append("0");
+            sb.append(argOneString);
+            this.outputArgOneLcd = sb.toString();
+        }
+        
+        if (argTwo != -1) {
+            String argTwoString = String.valueOf(argTwo);
+            int nbZeroArgTwo = this.sizeOutputArgTwoLcd - argTwoString.length();
+
+            sb = new StringBuilder("");
+            for (int i = 0; i < nbZeroArgTwo; i++)
+                sb.append("0");
+            sb.append(argTwoString);
+            this.outputArgTwoLcd = sb.toString();
+        }
+    }
 }

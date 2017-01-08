@@ -1,6 +1,7 @@
 package fr.deltastar.pigou.model.panel.system;
 
 import fr.deltastar.pigou.model.panel.BaseSystem;
+import fr.deltastar.pigou.model.panel.DeltaStar;
 import fr.deltastar.pigou.model.panel.ModuleInterface;
 import fr.deltastar.pigou.model.panel.module.airlock.*;
 import java.util.ArrayList;
@@ -54,12 +55,14 @@ public class AirlockSystem extends BaseSystem {
 
     @Override
     public void onActivateSystem() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        super.setIsOnline(true);
+        DeltaStar.getPowerSystem().onAuxSystem(true);
+        DeltaStar.getPowerSystem().getAirlockPowerModule().getLedGreen().switchOn();
     }
 
     @Override
     public void onDeactivateSystem() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 
     @Override

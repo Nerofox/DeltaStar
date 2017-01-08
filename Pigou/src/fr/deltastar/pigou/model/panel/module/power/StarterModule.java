@@ -1,8 +1,15 @@
 package fr.deltastar.pigou.model.panel.module.power;
 
+import fr.deltastar.pigou.constant.SoundConstants;
 import fr.deltastar.pigou.model.constant.ComponentConstants;
+import fr.deltastar.pigou.model.constant.LcdSystemPowerConstants;
 import fr.deltastar.pigou.model.panel.Component;
+import fr.deltastar.pigou.model.panel.DeltaStar;
 import fr.deltastar.pigou.model.panel.ModuleInterface;
+import fr.deltastar.pigou.model.panel.system.EngineSystem;
+import fr.deltastar.pigou.model.panel.system.LifePackSystem;
+import fr.deltastar.pigou.model.panel.system.PowerSystem;
+import fr.deltastar.pigou.service.ServicePigou;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +19,7 @@ import java.util.List;
  */
 public class StarterModule implements ModuleInterface {
 
+    private boolean isOnline;
     private Component keyOnOff;
 
     public StarterModule() {
@@ -27,7 +35,25 @@ public class StarterModule implements ModuleInterface {
 
     @Override
     public void onAction(boolean activate) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        PowerSystem ps = DeltaStar.getPowerSystem();
+        EngineSystem es = DeltaStar.getEngineSystem();
+        LifePackSystem lps = DeltaStar.getLifePackSystem();
+        if (activate) {
+            ServicePigou.getSoundService().play(SoundConstants.WELCOME);
+            this.isOnline = true;
+            //changement texte des LCD
+            ps.getArduinoComLcd().setLcdMod(LcdSystemPowerConstants.NO_CONNECTION_APU);
+            es.getArduinoComLcd().setLcdMod(LcdSystemPowerConstants.NO_CONNECTION_APU);
+            lps.getArduinoComLcd().setLcdMod(LcdSystemPowerConstants.NO_CONNECTION_APU);
+            //allumage led rouge apu
+            ps.getApuModule().getLedRed().switchOn();
+        } else {
+            this.isOnline = false;
+        }
+    }
+
+    public boolean isIsOnline() {
+        return isOnline;
     }
 
     @Override

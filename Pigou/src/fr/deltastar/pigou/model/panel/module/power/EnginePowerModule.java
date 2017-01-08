@@ -1,8 +1,11 @@
 package fr.deltastar.pigou.model.panel.module.power;
 
+import fr.deltastar.pigou.constant.SoundConstants;
 import fr.deltastar.pigou.model.constant.ComponentConstants;
 import fr.deltastar.pigou.model.panel.Component;
+import fr.deltastar.pigou.model.panel.DeltaStar;
 import fr.deltastar.pigou.model.panel.ModuleInterface;
+import fr.deltastar.pigou.service.ServicePigou;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +22,10 @@ public class EnginePowerModule implements ModuleInterface {
         this.ledGreen = new Component(ComponentConstants.OUTPUT, "Led green");
         this.switchOnOff = new Component(ComponentConstants.INPUT, "Engine power - Switch");
     }
+
+    public Component getLedGreen() {
+        return ledGreen;
+    }
     
     @Override
     public List<Component> getListComponents() {
@@ -30,7 +37,15 @@ public class EnginePowerModule implements ModuleInterface {
 
     @Override
     public void onAction(boolean activate) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (DeltaStar.getPowerSystem().isOnline()) {
+            if (activate) {
+                DeltaStar.getEngineSystem().onActivateSystem();
+            } else {
+                DeltaStar.getEngineSystem().onDeactivateSystem();
+            }
+        } else {
+            ServicePigou.getSoundService().play(SoundConstants.BAD_ACTION);
+        }
     }
 
     @Override

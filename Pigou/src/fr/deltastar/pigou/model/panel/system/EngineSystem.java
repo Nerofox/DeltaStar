@@ -1,7 +1,10 @@
 
 package fr.deltastar.pigou.model.panel.system;
 
+import fr.deltastar.pigou.constant.CmdOrbiterConstants;
+import fr.deltastar.pigou.model.constant.LcdSystemEngineConstants;
 import fr.deltastar.pigou.model.panel.BaseSystem;
+import fr.deltastar.pigou.model.panel.DeltaStar;
 import fr.deltastar.pigou.model.panel.ModuleInterface;
 import fr.deltastar.pigou.model.panel.SystemLcdInterface;
 import fr.deltastar.pigou.model.panel.module.engine.*;
@@ -41,6 +44,7 @@ public class EngineSystem extends BaseSystem implements SystemLcdInterface {
         this.transfertRightModule = new TransfertRightModule();
         this.rcsValveModule = new RcsValveModule();
         this.arduinoComLcd = ServicePigou.getComArduinoService().getArduinoA();
+        this.arduinoComLcd.setSli(this);
     }
 
     public MainDumpModule getMainDumpModule() {
@@ -89,7 +93,12 @@ public class EngineSystem extends BaseSystem implements SystemLcdInterface {
     
     @Override
     public void onActivateSystem() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        super.setIsOnline(true);
+        this.getArduinoComLcd().setLcdMod(LcdSystemEngineConstants.DISPLAY_FUEL);
+        ServicePigou.getOrbiterService().sendCmdToOrbiter(CmdOrbiterConstants.MODE_FUELLOCK, CmdOrbiterConstants.OPTION_MAIN);
+        ServicePigou.getOrbiterService().sendCmdToOrbiter(CmdOrbiterConstants.MODE_FUELLOCK, CmdOrbiterConstants.OPTION_RCS);
+        DeltaStar.getPowerSystem().onAuxSystem(true);
+        DeltaStar.getPowerSystem().getEnginePowerModule().getLedGreen().switchOn();
     }
 
     @Override

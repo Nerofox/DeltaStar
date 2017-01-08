@@ -9,8 +9,6 @@ import fr.deltastar.pigou.model.panel.ModuleInterface;
 import fr.deltastar.pigou.service.ServicePigou;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -36,34 +34,13 @@ public class GearModule implements ModuleInterface {
 
     @Override
     public void onAction(boolean activate) {
-        ServicePigou.getOrbiterService().sendCmdToOrbiter(CmdOrbiterConstants.MODE_CMD, CmdOrbiterConstants.OPTION_GEAR);
-        ServicePigou.getSoundService().play(SoundConstants.GEAR_PROGRESS_CLOSEOPEN);
-        if (activate) {
-            this.ledGreen.switchBlink();
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        Thread.sleep(6000);
-                        ledGreen.switchOn();
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(GearModule.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-            }).start();
-        } else {
-            this.ledGreen.switchBlink();
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        Thread.sleep(6000);
-                        ledGreen.switchOff();
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(GearModule.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-            }).start();
+        if (DeltaStar.getAirlockSystem().isOnline()) {
+            ServicePigou.getOrbiterService().sendCmdToOrbiter(CmdOrbiterConstants.MODE_CMD, CmdOrbiterConstants.OPTION_GEAR);
+            ServicePigou.getSoundService().play(SoundConstants.GEAR_PROGRESS_CLOSEOPEN);
+            if (activate)
+                this.ledGreen.switchTransitionToOn(6000);
+            else
+                this.ledGreen.switchTransitionToOff(6000);
         }
     }
 

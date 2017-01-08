@@ -1,9 +1,7 @@
 package fr.deltastar.pigou.model.panel;
 
-import fr.deltastar.pigou.model.constant.ComponentConstants;
 import fr.deltastar.pigou.model.panel.system.*;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**

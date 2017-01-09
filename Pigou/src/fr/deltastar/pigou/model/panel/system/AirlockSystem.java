@@ -1,11 +1,16 @@
 package fr.deltastar.pigou.model.panel.system;
 
+import fr.deltastar.pigou.constant.SoundConstants;
 import fr.deltastar.pigou.model.panel.BaseSystem;
+import fr.deltastar.pigou.model.panel.Component;
 import fr.deltastar.pigou.model.panel.DeltaStar;
 import fr.deltastar.pigou.model.panel.ModuleInterface;
 import fr.deltastar.pigou.model.panel.module.airlock.*;
+import fr.deltastar.pigou.service.ServicePigou;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -51,6 +56,26 @@ public class AirlockSystem extends BaseSystem {
 
     public UndockModule getUndockModule() {
         return undockModule;
+    }
+    
+    /**
+     * En fonction des états des portes
+     * le systèmes indique si il est possible de faire des sorties
+     * du module dans le vaisseau
+     * @return 
+     */
+    public boolean isPossibleToExit() {
+        return (this.outerDoorModule.isIsOpen() && this.noseConeModule.isIsOpen());
+    }
+    
+    /**
+     * En fonction des états des portes
+     * le systèmes indique si il est possible de faire des entrées
+     * du module dans le vaisseau
+     * @return 
+     */
+    public boolean isPossibleToEnter() {
+        return (this.innerDoorModule.isIsOpen());
     }
 
     @Override

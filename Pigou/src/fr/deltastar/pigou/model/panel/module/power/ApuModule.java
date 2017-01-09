@@ -2,6 +2,7 @@ package fr.deltastar.pigou.model.panel.module.power;
 
 import fr.deltastar.pigou.constant.SoundConstants;
 import fr.deltastar.pigou.model.constant.ComponentConstants;
+import fr.deltastar.pigou.model.constant.LcdSystemPowerConstants;
 import fr.deltastar.pigou.model.panel.Component;
 import fr.deltastar.pigou.model.panel.DeltaStar;
 import fr.deltastar.pigou.model.panel.ModuleInterface;
@@ -62,6 +63,7 @@ public class ApuModule implements ModuleInterface {
         if (DeltaStar.getPowerSystem().getEpuModule().isConnected() && DeltaStar.getPowerSystem().getStarterModule().isIsOnline()) {
             if (activate) {
                 ServicePigou.getSoundService().play(SoundConstants.APU_START);
+                DeltaStar.getPowerSystem().getArduinoComLcd().setLcdMod(LcdSystemPowerConstants.APU_IN_PROGRESS);
                 this.ledRed.switchOff();
                 this.ledYellow.switchBlink();
                 new Thread(new Runnable() {

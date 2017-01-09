@@ -130,7 +130,22 @@ public class PowerSystem extends BaseSystem implements SystemLcdInterface {
                     try {
                         Thread.sleep(Constants.INTERVAL_POWER);
                         qtyPower = qtyPower - (Constants.NB_CONSOMMATION_BASE + consoSupp);
-                        //plus de jus on coupe tout !
+                        //on atteint le seuil on avertis
+                        if (qtyPower <= Constants.LIMIT_POWER_BEFORE_ALERT) {
+                            DeltaStar.getPowerSystem().getArduinoComLcd().setLcdMod(LcdSystemPowerConstants.APU_LOW);
+                            new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    try {
+                                        Thread.sleep(Constants.TIME_DISPLAY_ALERT_POWER);
+                                        DeltaStar.getPowerSystem().getArduinoComLcd().setLcdMod(LcdSystemPowerConstants.DISPLAY_STATUS);
+                                    } catch (InterruptedException ex) {
+                                        Logger.getLogger(PowerSystem.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
+                                }
+                            }).start();
+                        }
+                        //plus de jus on coupe tout et ça craint !
                         if (qtyPower <= 0) {
                             qtyPower = 0;
                             //TODO GENERER ALERTE

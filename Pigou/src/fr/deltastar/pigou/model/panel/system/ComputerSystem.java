@@ -95,7 +95,6 @@ public class ComputerSystem extends BaseSystem {
             if (nameAp.equals(this.lastApUse))
                 this.stopLastAp();
             else {
-                //TODO probleme pour le hold altitude qui est un Ap permanent
                 if (this.lastLed != null)
                     this.lastLed.switchOff();
                 this.lastApUse = new String(nameAp);

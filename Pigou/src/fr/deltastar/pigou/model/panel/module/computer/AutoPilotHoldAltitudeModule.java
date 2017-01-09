@@ -5,6 +5,7 @@ import fr.deltastar.pigou.model.constant.ComponentConstants;
 import fr.deltastar.pigou.model.panel.Component;
 import fr.deltastar.pigou.model.panel.DeltaStar;
 import fr.deltastar.pigou.model.panel.ModuleInterface;
+import fr.deltastar.pigou.service.ServicePigou;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +17,7 @@ public class AutoPilotHoldAltitudeModule implements ModuleInterface {
 
     private Component ledGreen;
     private Component button;
+    private boolean isActivate;
 
     public AutoPilotHoldAltitudeModule() {
         this.ledGreen = new Component(ComponentConstants.OUTPUT, "Led green");
@@ -30,9 +32,22 @@ public class AutoPilotHoldAltitudeModule implements ModuleInterface {
         return c;
     }
 
+    /**
+     * Le hold altitude fonctionne en parralèle au autre AP
+     * @param activate 
+     */
     @Override
     public void onAction(boolean activate) {
-        DeltaStar.getComputerSystem().changeAp(CmdOrbiterConstants.OPTION_APHOLDALTITUDE, this.ledGreen);
+        if (DeltaStar.getComputerSystem().isOnline()) {
+            if (isActivate) {
+                this.ledGreen.switchOff();
+                this.isActivate = false;
+            } else {
+                this.ledGreen.switchOn();
+                this.isActivate = true;
+            }
+            ServicePigou.getOrbiterService().sendCmdToOrbiter(CmdOrbiterConstants.MODE_CMD, CmdOrbiterConstants.OPTION_APHOLDALTITUDE);
+        }
     }
 
     @Override

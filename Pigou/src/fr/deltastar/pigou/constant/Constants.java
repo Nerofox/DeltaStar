@@ -19,6 +19,10 @@ public class Constants {
     public final static int NB_CONSOMMATION_BASE = 1;
     //consommation d'un systeme annexe
     public final static int CONSOMMATION_SYSTEM = 3;
+    //seuil avant alert du systèmes electriques sur 100
+    public final static int LIMIT_POWER_BEFORE_ALERT = 10;
+    //temps d'apparition du message d'alerte
+    public final static int TIME_DISPLAY_ALERT_POWER = 5000;
     
     //CONFIG POUR LA COMMUNICATION AVEC ORBITER
     public final static String FILENAME_CONFIG_ORBITER = "configOrbiter.pf";

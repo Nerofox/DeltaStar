@@ -197,8 +197,8 @@ repeat
 	--effectue le plein si possible
 	if fuelMainIsSupply == 1 then
 		v:set_propellantmass(vMainFuel, v:get_propellantmass(vMainFuel) + 50)
-		if v:get_propellantmass(vMainFuel) > 12900 then
-			v:set_propellantmass(vMainFuel, 12900)
+		if v:get_propellantmass(vMainFuel) > 9600 then
+			v:set_propellantmass(vMainFuel, 9600)
 		end
 	end
 	if fuelRcsIsSupply == 1 then
@@ -236,11 +236,11 @@ repeat
 				v:set_propellantmass(vMainFuel, v:get_propellantmass(vMainFuel) + 10)
 				v:set_propellantmass(vRcsFuel, v:get_propellantmass(vRcsFuel) - 10)
 				--arrêt du transfert si plus de jus ou reservoir entrant plein
-				if v:get_propellantmass(vRcsFuel) < 0 or v:get_propellantmass(vMainFuel) >= 12900 then
+				if v:get_propellantmass(vRcsFuel) < 0 or v:get_propellantmass(vMainFuel) >= 9600 then
 					fuelTransfert = 0
 				end
-				if v:get_propellantmass(vMainFuel) > 12900 then
-					v:set_propellantmass(vRcsFuel, 12900)
+				if v:get_propellantmass(vMainFuel) > 9600 then
+					v:set_propellantmass(vRcsFuel, 9600)
 				end
 			end
 		end

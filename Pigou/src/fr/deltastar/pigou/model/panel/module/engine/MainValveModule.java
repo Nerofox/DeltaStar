@@ -1,8 +1,11 @@
 package fr.deltastar.pigou.model.panel.module.engine;
 
+import fr.deltastar.pigou.constant.CmdOrbiterConstants;
 import fr.deltastar.pigou.model.constant.ComponentConstants;
 import fr.deltastar.pigou.model.panel.Component;
+import fr.deltastar.pigou.model.panel.DeltaStar;
 import fr.deltastar.pigou.model.panel.ModuleInterface;
+import fr.deltastar.pigou.service.ServicePigou;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,10 +17,15 @@ public class MainValveModule implements ModuleInterface {
 
     private Component ledGreen;
     private Component switchOnOff;
+    private boolean isSupply;
 
     public MainValveModule() {
         this.ledGreen = new Component(ComponentConstants.OUTPUT, "Led green");
         this.switchOnOff = new Component(ComponentConstants.INPUT, "Main valve - Switch");
+    }
+    
+    public boolean isSupply() {
+        return isSupply;
     }
     
     @Override
@@ -30,7 +38,16 @@ public class MainValveModule implements ModuleInterface {
 
     @Override
     public void onAction(boolean activate) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (DeltaStar.getEngineSystem().getSupplyModule().isConnected()) {
+            ServicePigou.getOrbiterService().sendCmdToOrbiter(CmdOrbiterConstants.MODE_FUELSUPPLY, CmdOrbiterConstants.OPTION_MAIN);
+            if (activate) {
+                this.ledGreen.switchOn();
+                this.isSupply = true;
+            } else {
+                this.ledGreen.switchOff();
+                this.isSupply = false;
+            }
+        }
     }
 
     @Override

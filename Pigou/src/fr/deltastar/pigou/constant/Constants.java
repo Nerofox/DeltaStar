@@ -24,6 +24,13 @@ public class Constants {
     //temps d'apparition du message d'alerte
     public final static int TIME_DISPLAY_ALERT_POWER = 5000;
     
+    //CONFIG SYSTEMES MOTEUR
+    //seuil avant alert du systemes des moteurs
+    public final static int LIMIT_MAIN_FUEL_ALERT = 1000;
+    public final static int LIMIT_RCS_FUEL_ALERT = 100;
+    //temps d'apparition du message d'alerte
+    public final static int TIME_DISPLAY_ALERT_ENGINE = 5000;
+    
     //CONFIG POUR LA COMMUNICATION AVEC ORBITER
     public final static String FILENAME_CONFIG_ORBITER = "configOrbiter.pf";
     public final static String PORT_ORBITER_SOCKET = "14000";

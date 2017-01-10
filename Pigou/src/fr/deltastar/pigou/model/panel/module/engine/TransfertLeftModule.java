@@ -1,8 +1,11 @@
 package fr.deltastar.pigou.model.panel.module.engine;
 
+import fr.deltastar.pigou.constant.CmdOrbiterConstants;
 import fr.deltastar.pigou.model.constant.ComponentConstants;
 import fr.deltastar.pigou.model.panel.Component;
+import fr.deltastar.pigou.model.panel.DeltaStar;
 import fr.deltastar.pigou.model.panel.ModuleInterface;
+import fr.deltastar.pigou.service.ServicePigou;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +30,13 @@ public class TransfertLeftModule implements ModuleInterface {
 
     @Override
     public void onAction(boolean activate) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (DeltaStar.getEngineSystem().isOnline()) {
+            if (activate) {
+                ServicePigou.getOrbiterService().sendCmdToOrbiter(CmdOrbiterConstants.MODE_FUELTRANSFERT, CmdOrbiterConstants.OPTION_RCSTOMAIN);
+            } else {
+                ServicePigou.getOrbiterService().sendCmdToOrbiter(CmdOrbiterConstants.MODE_FUELTRANSFERT, CmdOrbiterConstants.OPTION_NONE);
+            }
+        }
     }
 
     @Override

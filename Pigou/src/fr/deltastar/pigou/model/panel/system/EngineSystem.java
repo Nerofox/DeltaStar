@@ -2,6 +2,7 @@
 package fr.deltastar.pigou.model.panel.system;
 
 import fr.deltastar.pigou.constant.CmdOrbiterConstants;
+import fr.deltastar.pigou.constant.Constants;
 import fr.deltastar.pigou.model.constant.LcdSystemEngineConstants;
 import fr.deltastar.pigou.model.panel.BaseSystem;
 import fr.deltastar.pigou.model.panel.DeltaStar;
@@ -11,6 +12,8 @@ import fr.deltastar.pigou.model.panel.module.engine.*;
 import fr.deltastar.pigou.service.ServicePigou;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -25,6 +28,8 @@ public class EngineSystem extends BaseSystem implements SystemLcdInterface {
     private SupplyModule supplyModule;
     private TransfertLeftModule transfertLeftModule;
     private TransfertRightModule transfertRightModule;
+    
+    private Thread consoEngine;
     
     /**
      * Réservoir restant pour le moteur principal
@@ -70,6 +75,10 @@ public class EngineSystem extends BaseSystem implements SystemLcdInterface {
     public TransfertRightModule getTransfertRightModule() {
         return transfertRightModule;
     }
+
+    public RcsValveModule getRcsValveModule() {
+        return rcsValveModule;
+    }
     
     @Override
     public int getArgOne() {
@@ -99,6 +108,30 @@ public class EngineSystem extends BaseSystem implements SystemLcdInterface {
         ServicePigou.getOrbiterService().sendCmdToOrbiter(CmdOrbiterConstants.MODE_FUELLOCK, CmdOrbiterConstants.OPTION_RCS);
         DeltaStar.getPowerSystem().onAuxSystem(true);
         DeltaStar.getPowerSystem().getEnginePowerModule().getLedGreen().switchOn();
+        this.consoEngine = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    try {
+                        Thread.sleep(Constants.TIME_DISPLAY_ALERT_ENGINE);
+                        if (qtyMainFuel <= Constants.LIMIT_MAIN_FUEL_ALERT) {
+                            DeltaStar.getEngineSystem().getArduinoComLcd().setLcdMod(LcdSystemEngineConstants.MAIN_FUEL_LOW);
+                            Thread.sleep(Constants.TIME_DISPLAY_ALERT_ENGINE);
+                            DeltaStar.getEngineSystem().getArduinoComLcd().setLcdMod(LcdSystemEngineConstants.DISPLAY_FUEL);
+                        }
+                        if (qtyRcsFuel <= Constants.LIMIT_RCS_FUEL_ALERT) {
+                            DeltaStar.getEngineSystem().getArduinoComLcd().setLcdMod(LcdSystemEngineConstants.RCS_FUEL_LOW);
+                            Thread.sleep(Constants.TIME_DISPLAY_ALERT_ENGINE);
+                            DeltaStar.getEngineSystem().getArduinoComLcd().setLcdMod(LcdSystemEngineConstants.DISPLAY_FUEL);
+                        }
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(EngineSystem.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    
+                }
+            }
+        });
+        this.consoEngine.start();
     }
 
     @Override

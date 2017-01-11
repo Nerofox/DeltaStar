@@ -26,7 +26,7 @@ public class EmpAirModule implements ModuleInterface {
         this.switchOnOff = new Component(ComponentConstants.INPUT, "Emp air - Switch");
     }
 
-    public boolean isIsDepressurized() {
+    public boolean isDepressurized() {
         return isDepressurized;
     }
     
@@ -40,9 +40,12 @@ public class EmpAirModule implements ModuleInterface {
 
     @Override
     public void onAction(boolean activate) {
+        /*le service ne marche pas si le sysème n'est pas actif, si une ou deux porte du sas sont ouverte et
+        enfin si le vaisseau est docké ou dans une atmosphère respirable*/
         if (DeltaStar.getAirlockSystem().isOnline() && 
                 !DeltaStar.getAirlockSystem().getInnerDoorModule().isIsOpen() &&
-                !DeltaStar.getAirlockSystem().getOuterDoorModule().isIsOpen()) {
+                !DeltaStar.getAirlockSystem().getOuterDoorModule().isOpen() &&
+                !ServicePigou.getOrbiterService().isPossibleToLive()) {
             this.ledGreen.switchBlink();
             if (activate) {
                 ServicePigou.getSoundService().play(SoundConstants.EMP_AIR_LOW);

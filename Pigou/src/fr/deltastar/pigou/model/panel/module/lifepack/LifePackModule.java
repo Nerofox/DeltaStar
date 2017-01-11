@@ -2,6 +2,7 @@ package fr.deltastar.pigou.model.panel.module.lifepack;
 
 import fr.deltastar.pigou.model.constant.ComponentConstants;
 import fr.deltastar.pigou.model.panel.Component;
+import fr.deltastar.pigou.model.panel.DeltaStar;
 import fr.deltastar.pigou.model.panel.ModuleInterface;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,10 +15,15 @@ public class LifePackModule implements ModuleInterface {
 
     private Component ledGreen;
     private Component switchOnOff;
+    private boolean isOnline;
 
     public LifePackModule() {
         this.ledGreen = new Component(ComponentConstants.OUTPUT, "Led green");
         this.switchOnOff = new Component(ComponentConstants.INPUT, "Life-pack - Switch");
+    }
+
+    public boolean isOnline() {
+        return isOnline;
     }
     
     @Override
@@ -30,7 +36,15 @@ public class LifePackModule implements ModuleInterface {
 
     @Override
     public void onAction(boolean activate) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (DeltaStar.getLifePackSystem().isOnline()) {
+            if (activate && this.isOnline == false) {
+                this.isOnline = true;
+                DeltaStar.getLifePackSystem().launchProcessusO2N2();
+            } else if (this.isOnline = true) {
+                DeltaStar.getLifePackSystem().stopProcessusO2N2();
+                this.isOnline = false;
+            }
+        }
     }
 
     @Override

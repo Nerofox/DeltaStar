@@ -4,7 +4,6 @@ import fr.deltastar.pigou.constant.Constants;
 import fr.deltastar.pigou.constant.ListView;
 import fr.deltastar.pigou.constant.RessourcesConstants;
 import fr.deltastar.pigou.model.constant.ArduinoPortConstants;
-import fr.deltastar.pigou.model.constant.ComponentConstants;
 import fr.deltastar.pigou.model.panel.Component;
 import fr.deltastar.pigou.model.panel.DeltaStar;
 import fr.deltastar.pigou.service.ServicePigou;

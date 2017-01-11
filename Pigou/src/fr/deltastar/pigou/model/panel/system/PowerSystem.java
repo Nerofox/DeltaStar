@@ -122,7 +122,8 @@ public class PowerSystem extends BaseSystem implements SystemLcdInterface {
     public void onActivateSystem() {
         super.setIsOnline(true);
         this.getArduinoComLcd().setLcdMod(LcdSystemPowerConstants.DISPLAY_STATUS);
-        //TODO penser a faire la boucle de décompte pour le courant électrique en fonction de la puissance
+        //lancement du processus qui gère la température des systèmes
+        DeltaStar.getLifePackSystem().launchProcessusCooling();
         this.consoPower = new Thread(new Runnable() {
             @Override
             public void run() {

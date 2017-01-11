@@ -65,7 +65,7 @@ public class AirlockSystem extends BaseSystem {
      * @return 
      */
     public boolean isPossibleToExit() {
-        return (this.outerDoorModule.isIsOpen() && this.noseConeModule.isIsOpen());
+        return (this.outerDoorModule.isOpen() && this.noseConeModule.isIsOpen());
     }
     
     /**

@@ -43,7 +43,7 @@ public class InnerDoorModule implements ModuleInterface {
         if (DeltaStar.getAirlockSystem().isOnline()) {
             ServicePigou.getSoundService().play(SoundConstants.AIRLOCK_DOOR_OPENCLOSE);
             this.ledGreen.switchBlink();
-            if (activate && !DeltaStar.getAirlockSystem().getEmpAirModule().isIsDepressurized() && !this.isOpen) {
+            if (activate && !DeltaStar.getAirlockSystem().getEmpAirModule().isDepressurized() && !this.isOpen) {
                 ServicePigou.getSoundService().play(SoundConstants.AIRLOCK_DOOR_OPENCLOSE);
                 this.ledGreen.switchBlink();
                 new Thread(new Runnable() {
@@ -58,7 +58,7 @@ public class InnerDoorModule implements ModuleInterface {
                         }
                     }
                 }).start();
-            } else if (!DeltaStar.getAirlockSystem().getEmpAirModule().isIsDepressurized() && this.isOpen) {
+            } else if (!DeltaStar.getAirlockSystem().getEmpAirModule().isDepressurized() && this.isOpen) {
                 ServicePigou.getSoundService().play(SoundConstants.AIRLOCK_DOOR_OPENCLOSE);
                 this.ledGreen.switchBlink();
                 new Thread(new Runnable() {

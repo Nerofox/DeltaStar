@@ -31,11 +31,33 @@ public class Constants {
     //temps d'apparition du message d'alerte
     public final static int TIME_DISPLAY_ALERT_ENGINE = 5000;
     
+    //CONFIG SYSTEMES SUPPORT DE VIE
+    //conso par interval de l'oxygen
+    public final static int CONSOMMATION_O2N2 = 1;
+    //augmentation par interval de la température si radiateur non déployé
+    public final static int AUGMENTATION_TEMP_COOLING = 3;
+    //interval de rafraichissement
+    public final static int INTERVAL_COOLING_O2N2 = 5000;
+    
+    //seuil avant alert du support de vie
+    public final static int LIMIT_O2N2_ALERT = 10;
+    //temps d'apparition du message d'alerte
+    public final static int TIME_DISPLAY_ALERT_LIFEPACK = 5000;
+    //temperature en celsius minimal du systèmes de refroidissement
+    public final static int TEMP_COOLING_MIN = 25;
+    //temperature en celsius max avant alert du systèmes de refroidissement
+    public final static int TEMP_COOLING_ALERT_MAX = 100;
+    //temperature en celsius max avant surchauffe
+    public final static int TEMP_COOLING_OVERHEATED = 120;
+    
+    //CONFIG LOGIQUE DU VAISSEAU
+    public final static int ALTITUDE_MINIMAL_FORLANDING = 300; //altitude en mètre minimum pour le considéré comme atterit
+    public final static int ALTITUDE_MINIMAL_FORLIFE = 20; //altitude en mètre minimum pour considéré l'extérieur comme respirable
+    
     //CONFIG POUR LA COMMUNICATION AVEC ORBITER
     public final static String FILENAME_CONFIG_ORBITER = "configOrbiter.pf";
     public final static String PORT_ORBITER_SOCKET = "14000";
     public final static String DELIMITER_CMD_ORBITER = ","; //delimiteur utilisé pour l'envoi des commandes à Orbiter
-    public final static int ALTITUDE_MINIMAL_FORLANDING = 300; //altitude en mètre minimum pour le considéré comme atterit
     public final static String TITLE_ORBITER_DIRECTORY_CHOOSER = "Choose Orbiter directory";
     public final static String MSG_CONFIG_ORBITER_SUCCESS = "Configuration done for orbiter";
     public final static String MSG_CONFIG_ORBITER_BAD = "Configuration Orbiter not found";

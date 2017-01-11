@@ -63,6 +63,17 @@ public class OrbiterService implements ListenerComInterface {
     public boolean isLanding() {
         return (this.altitude < Constants.ALTITUDE_MINIMAL_FORLANDING);
     }
+    
+    /**
+     * Retourne vrai si le pilote peut survivre sans les supports de vie
+     * cela dépend de l'altitude du vaisseau ou il se trouve et enfin
+     * si les sas sont ouvert
+     * @return 
+     */
+    public boolean isPossibleToLive() {
+        return (this.altitude < Constants.ALTITUDE_MINIMAL_FORLIFE && DeltaStar.getAirlockSystem().getInnerDoorModule().isIsOpen()
+                && DeltaStar.getAirlockSystem().getOuterDoorModule().isOpen());
+    }
 
     @Override
     public void onDataReceved(String data) {

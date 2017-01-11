@@ -98,5 +98,13 @@ public class DeltaStar {
         s.add(DeltaStar.getPowerSystem());
         s.add(DeltaStar.getWarningSystem());
         return s;
-    } 
+    }
+    
+    /**
+     * Déclenche la fin de partie, le héros est mort ou le vaisseau s'est crashé
+     */
+    public static void deadGame() {
+        //TODO A FAIRE
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

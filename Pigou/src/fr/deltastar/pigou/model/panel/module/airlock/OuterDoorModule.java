@@ -26,7 +26,7 @@ public class OuterDoorModule implements ModuleInterface {
         this.switchOnOff = new Component(ComponentConstants.INPUT, "Outer door - Switch");
     }
 
-    public boolean isIsOpen() {
+    public boolean isOpen() {
         return isOpen;
     }
     
@@ -41,7 +41,7 @@ public class OuterDoorModule implements ModuleInterface {
     @Override
     public void onAction(boolean activate) {
         if (DeltaStar.getAirlockSystem().isOnline()) {
-            if (activate && DeltaStar.getAirlockSystem().getEmpAirModule().isIsDepressurized() && !this.isOpen) {
+            if (activate && (DeltaStar.getAirlockSystem().getEmpAirModule().isDepressurized() || ServicePigou.getOrbiterService().isPossibleToLive()) && !this.isOpen) {
                 ServicePigou.getSoundService().play(SoundConstants.AIRLOCK_DOOR_OPENCLOSE);
                 this.ledGreen.switchBlink();
                 new Thread(new Runnable() {
@@ -56,7 +56,7 @@ public class OuterDoorModule implements ModuleInterface {
                         }
                     }
                 }).start();
-            } else if (DeltaStar.getAirlockSystem().getEmpAirModule().isIsDepressurized() && this.isOpen) {
+            } else if ((DeltaStar.getAirlockSystem().getEmpAirModule().isDepressurized() || ServicePigou.getOrbiterService().isPossibleToLive() ) && this.isOpen) {
                 ServicePigou.getSoundService().play(SoundConstants.AIRLOCK_DOOR_OPENCLOSE);
                 this.ledGreen.switchBlink();
                 new Thread(new Runnable() {

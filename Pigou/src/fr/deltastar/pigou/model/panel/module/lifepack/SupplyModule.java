@@ -1,8 +1,11 @@
 package fr.deltastar.pigou.model.panel.module.lifepack;
 
+import fr.deltastar.pigou.constant.SoundConstants;
 import fr.deltastar.pigou.model.constant.ComponentConstants;
 import fr.deltastar.pigou.model.panel.Component;
+import fr.deltastar.pigou.model.panel.DeltaStar;
 import fr.deltastar.pigou.model.panel.ModuleInterface;
+import fr.deltastar.pigou.service.ServicePigou;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,10 +17,15 @@ public class SupplyModule implements ModuleInterface {
 
     private Component ledGreen;
     private Component switchOnOff;
+    private boolean isConnected;
 
     public SupplyModule() {
         this.ledGreen = new Component(ComponentConstants.OUTPUT, "Led green");
         this.switchOnOff = new Component(ComponentConstants.INPUT, "Supply life-pack - Switch");
+    }
+
+    public boolean isConnected() {
+        return isConnected;
     }
     
     @Override
@@ -30,7 +38,17 @@ public class SupplyModule implements ModuleInterface {
 
     @Override
     public void onAction(boolean activate) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (DeltaStar.getLifePackSystem().isOnline() && ServicePigou.getOrbiterService().isLanding()) {
+            if (activate) {
+                this.ledGreen.switchOn();
+                this.isConnected = true;
+                ServicePigou.getSoundService().play(SoundConstants.SUPPLY_CONNECT);
+            } else if (!DeltaStar.getEngineSystem().getMainValveModule().isSupply() && !DeltaStar.getEngineSystem().getRcsValveModule().isSupply()) {
+                this.ledGreen.switchOff();
+                this.isConnected = false;
+                ServicePigou.getSoundService().play(SoundConstants.SUPPLY_CONNECT);
+            }
+        }
     }
 
     @Override

@@ -1,5 +1,6 @@
 package fr.deltastar.pigou.model.panel.module.lifepack;
 
+import fr.deltastar.pigou.constant.Constants;
 import fr.deltastar.pigou.constant.SoundConstants;
 import fr.deltastar.pigou.model.constant.ComponentConstants;
 import fr.deltastar.pigou.model.panel.Component;
@@ -8,6 +9,8 @@ import fr.deltastar.pigou.model.panel.ModuleInterface;
 import fr.deltastar.pigou.service.ServicePigou;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -18,6 +21,8 @@ public class SupplyModule implements ModuleInterface {
     private Component ledGreen;
     private Component switchOnOff;
     private boolean isConnected;
+    
+    private Thread processusSupply;
 
     public SupplyModule() {
         this.ledGreen = new Component(ComponentConstants.OUTPUT, "Led green");
@@ -39,11 +44,27 @@ public class SupplyModule implements ModuleInterface {
     @Override
     public void onAction(boolean activate) {
         if (DeltaStar.getLifePackSystem().isOnline() && ServicePigou.getOrbiterService().isLanding()) {
-            if (activate) {
+            if (activate && this.isConnected == false) {
                 this.ledGreen.switchOn();
                 this.isConnected = true;
                 ServicePigou.getSoundService().play(SoundConstants.SUPPLY_CONNECT);
-            } else if (!DeltaStar.getEngineSystem().getMainValveModule().isSupply() && !DeltaStar.getEngineSystem().getRcsValveModule().isSupply()) {
+                this.processusSupply = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        while(true) {
+                            try {
+                                Thread.sleep(Constants.INTERVAL_O2N2_SUPPLY);
+                                if (DeltaStar.getLifePackSystem().getValueO2N2() < 100)
+                                    DeltaStar.getLifePackSystem().setValueO2N2(DeltaStar.getLifePackSystem().getValueO2N2() + 1);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(SupplyModule.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+                    }
+                });
+                this.processusSupply.start();
+            } else if (this.isConnected == true) {
+                this.processusSupply.stop();
                 this.ledGreen.switchOff();
                 this.isConnected = false;
                 ServicePigou.getSoundService().play(SoundConstants.SUPPLY_CONNECT);

@@ -1,6 +1,8 @@
 package fr.deltastar.pigou.model.panel;
 
+import fr.deltastar.pigou.constant.SoundConstants;
 import fr.deltastar.pigou.model.panel.system.*;
+import fr.deltastar.pigou.service.ServicePigou;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -105,6 +107,7 @@ public class DeltaStar {
      */
     public static void deadGame() {
         //TODO A FAIRE
+        ServicePigou.getSoundService().play(SoundConstants.GAME_DEAD);
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

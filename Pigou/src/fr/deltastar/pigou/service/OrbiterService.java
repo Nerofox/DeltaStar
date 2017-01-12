@@ -100,6 +100,12 @@ public class OrbiterService implements ListenerComInterface {
         
         //CONFIG PAR DEFAUT AU DEMARRAGE DORBITER
         
+        //les portes des sas sont ouverte par défaut
+        DeltaStar.getAirlockSystem().getInnerDoorModule().getLedGreen().switchOn();
+        DeltaStar.getAirlockSystem().getOuterDoorModule().getLedGreen().switchOn();
+        //le train d'aterissage est ouvert par défaut
+        DeltaStar.getAirlockSystem().getGearModule().getLedGreen().switchOn();
+        
         //blocage carburant car les moteurs ne tourne pas !
         this.sendCmdToOrbiter(CmdOrbiterConstants.MODE_FUELLOCK, CmdOrbiterConstants.OPTION_MAIN);
         this.sendCmdToOrbiter(CmdOrbiterConstants.MODE_FUELLOCK, CmdOrbiterConstants.OPTION_RCS);

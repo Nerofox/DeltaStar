@@ -65,9 +65,15 @@ public class LifePackSystem extends BaseSystem implements SystemLcdInterface {
                     while (true) {                        
                         try {
                             Thread.sleep(Constants.INTERVAL_COOLING_O2N2);
+                            //cas ou le vaisseau a décollé hors atmosphère sans fermeture du sas complet (oui y a des idiots)
+                            if (!ServicePigou.getOrbiterService().isPossibleToLive() && DeltaStar.getAirlockSystem().getInnerDoorModule().isIsOpen()
+                                && DeltaStar.getAirlockSystem().getOuterDoorModule().isOpen()) {
+                                DeltaStar.deadGame();
+                            }
                             //si le vaisseau est pas dépendant de l'extérieur
                             if (!ServicePigou.getOrbiterService().isPossibleToLive()) {
                                 //si pas de support de survie ou plus d'oxygen/azote
+                                Thread.sleep(Constants.INTERVAL_COOLING_O2N2);
                                 if (valueO2N2 == 0 || !DeltaStar.getLifePackSystem().getLifePackModule().isOnline()) {
                                     DeltaStar.deadGame();
                                 }
@@ -143,10 +149,10 @@ public class LifePackSystem extends BaseSystem implements SystemLcdInterface {
      * Déclenche les processus de gestion O2/N2
      */
     public void launchProcessusO2N2() {
-        if (this.processusO2N2 == null) {
-            this.processusO2N2 = new Thread(new Runnable() {
-                @Override
-                public void run() {
+        this.processusO2N2 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while(true) {
                     try {
                         Thread.sleep(Constants.INTERVAL_COOLING_O2N2);
                         valueO2N2 -= Constants.CONSOMMATION_O2N2;
@@ -154,7 +160,7 @@ public class LifePackSystem extends BaseSystem implements SystemLcdInterface {
                             valueO2N2 = 0;
                         //selon O2/N2 actuel on agit
                         //seuil d'alert
-                        if (valueO2N2 <= Constants.LIMIT_O2N2_ALERT) {
+                        if (valueO2N2 <= Constants.LIMIT_O2N2_ALERT && DeltaStar.getLifePackSystem().isOnline()) {
                             DeltaStar.getLifePackSystem().getArduinoComLcd().setLcdMod(LcdSystemLifePackConstants.O2N2_LOW);
                             Thread.sleep(Constants.INTERVAL_COOLING_O2N2);
                             DeltaStar.getLifePackSystem().getArduinoComLcd().setLcdMod(LcdSystemLifePackConstants.DISPLAY_O2N2_CELSIUS);
@@ -163,8 +169,8 @@ public class LifePackSystem extends BaseSystem implements SystemLcdInterface {
                         Logger.getLogger(LifePackSystem.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
-            });
-        }
+            }
+        });
         this.processusO2N2.start();
     }
     
@@ -194,17 +200,25 @@ public class LifePackSystem extends BaseSystem implements SystemLcdInterface {
                             
                             //selon temperature atteinte on agit
                             //seuil d'alert du systeme
-                            if (temperature >= Constants.TEMP_COOLING_ALERT_MAX) {
+                            if (temperature >= Constants.TEMP_COOLING_ALERT_MAX && DeltaStar.getLifePackSystem().isOnline()) {
+                                if (DeltaStar.getLifePackSystem().isOnline()) {
+                                    DeltaStar.getLifePackSystem().getHeaterModule().getLedGreenCoolerGood().switchOff();
+                                    DeltaStar.getLifePackSystem().getHeaterModule().getLedRedCoolerBad().switchOn();
+                                }
                                 DeltaStar.getLifePackSystem().getArduinoComLcd().setLcdMod(LcdSystemLifePackConstants.SYSTEM_OVERHEATED);
                                 Thread.sleep(Constants.INTERVAL_COOLING_O2N2);
                                 DeltaStar.getLifePackSystem().getArduinoComLcd().setLcdMod(LcdSystemLifePackConstants.DISPLAY_O2N2_CELSIUS);
+                            } else {
+                                if (DeltaStar.getLifePackSystem().isOnline()) {
+                                    DeltaStar.getLifePackSystem().getHeaterModule().getLedGreenCoolerGood().switchOn();
+                                    DeltaStar.getLifePackSystem().getHeaterModule().getLedRedCoolerBad().switchOff();
+                                }
                             }
                             //seuil final avant surchauffe du système
                             if (temperature >= Constants.TEMP_COOLING_OVERHEATED) {
                                 DeltaStar.getPowerSystem().onDeactivateSystem();
                                 break;
                             }
-                            
                         } catch (InterruptedException ex) {
                             Logger.getLogger(LifePackSystem.class.getName()).log(Level.SEVERE, null, ex);
                         }

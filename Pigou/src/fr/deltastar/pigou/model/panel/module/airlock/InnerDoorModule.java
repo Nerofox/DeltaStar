@@ -24,10 +24,17 @@ public class InnerDoorModule implements ModuleInterface {
     public InnerDoorModule() {
         this.ledGreen = new Component(ComponentConstants.OUTPUT, "Led green");
         this.switchOnOff = new Component(ComponentConstants.INPUT, "Inner door - Switch");
+        //ouvert par défaut posé sur la base
+        this.isOpen = true;
+        this.switchOnOff.setStatus(ComponentConstants.ON);
     }
 
     public boolean isIsOpen() {
         return isOpen;
+    }
+
+    public Component getLedGreen() {
+        return ledGreen;
     }
     
     @Override
@@ -41,8 +48,6 @@ public class InnerDoorModule implements ModuleInterface {
     @Override
     public void onAction(boolean activate) {
         if (DeltaStar.getAirlockSystem().isOnline()) {
-            ServicePigou.getSoundService().play(SoundConstants.AIRLOCK_DOOR_OPENCLOSE);
-            this.ledGreen.switchBlink();
             if (activate && !DeltaStar.getAirlockSystem().getEmpAirModule().isDepressurized() && !this.isOpen) {
                 ServicePigou.getSoundService().play(SoundConstants.AIRLOCK_DOOR_OPENCLOSE);
                 this.ledGreen.switchBlink();

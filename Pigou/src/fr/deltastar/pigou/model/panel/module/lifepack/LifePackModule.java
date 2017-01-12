@@ -39,10 +39,12 @@ public class LifePackModule implements ModuleInterface {
         if (DeltaStar.getLifePackSystem().isOnline()) {
             if (activate && this.isOnline == false) {
                 this.isOnline = true;
+                this.ledGreen.switchOn();
                 DeltaStar.getLifePackSystem().launchProcessusO2N2();
-            } else if (this.isOnline = true) {
+            } else if (this.isOnline == true) {
                 DeltaStar.getLifePackSystem().stopProcessusO2N2();
                 this.isOnline = false;
+                this.ledGreen.switchOff();
             }
         }
     }

@@ -14,7 +14,7 @@ public class Constants {
     
     //CONFIG SYSTEMES ELECTRIQUES
     //interval de decompte de l'énergie en millisecondes
-    public final static int INTERVAL_POWER = 5000;
+    public final static int INTERVAL_POWER = 30000;
     //consommation de base toute les secondes du systèmes electriques
     public final static int NB_CONSOMMATION_BASE = 1;
     //consommation d'un systeme annexe
@@ -38,6 +38,8 @@ public class Constants {
     public final static int AUGMENTATION_TEMP_COOLING = 3;
     //interval de rafraichissement
     public final static int INTERVAL_COOLING_O2N2 = 5000;
+    //interval rafraichissement avant remplissage
+    public final static int INTERVAL_O2N2_SUPPLY = 500;
     
     //seuil avant alert du support de vie
     public final static int LIMIT_O2N2_ALERT = 10;

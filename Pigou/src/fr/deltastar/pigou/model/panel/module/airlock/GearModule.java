@@ -23,6 +23,10 @@ public class GearModule implements ModuleInterface {
         this.ledGreen = new Component(ComponentConstants.OUTPUT, "Led green");
         this.switchOnOff = new Component(ComponentConstants.INPUT, "Gear - Switch");
     }
+
+    public Component getLedGreen() {
+        return ledGreen;
+    }
     
     @Override
     public List<Component> getListComponents() {

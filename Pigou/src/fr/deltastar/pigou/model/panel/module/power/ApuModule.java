@@ -60,8 +60,8 @@ public class ApuModule implements ModuleInterface {
     @Override
     public void onAction(boolean activate) {
         //si système non activé ou EPU non branché on bloque
-        if (DeltaStar.getPowerSystem().getEpuModule().isConnected() && DeltaStar.getPowerSystem().getStarterModule().isIsOnline()) {
-            if (activate) {
+        if (DeltaStar.getPowerSystem().getStarterModule().isIsOnline()) {
+            if (activate && !DeltaStar.getPowerSystem().isOnline() && DeltaStar.getPowerSystem().getEpuModule().isConnected()) {
                 ServicePigou.getSoundService().play(SoundConstants.APU_START);
                 DeltaStar.getPowerSystem().getArduinoComLcd().setLcdMod(LcdSystemPowerConstants.APU_IN_PROGRESS);
                 this.ledRed.switchOff();
@@ -80,8 +80,12 @@ public class ApuModule implements ModuleInterface {
                         }
                     }
                 }).start();
-            } else {
-
+            } else if (DeltaStar.getPowerSystem().isOnline()) {
+                ServicePigou.getSoundService().stop(SoundConstants.MAIN_AMBIANCE);
+                ServicePigou.getSoundService().play(SoundConstants.APU_STOP);
+                this.ledGreen.switchOff();
+                this.ledRed.switchOn();
+                DeltaStar.getPowerSystem().onDeactivateSystem();
             }
         } else {
             ServicePigou.getSoundService().play(SoundConstants.BAD_ACTION);

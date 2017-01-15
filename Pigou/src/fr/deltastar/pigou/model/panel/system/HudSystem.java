@@ -32,7 +32,9 @@ public class HudSystem extends BaseSystem {
 
     @Override
     public void onDeactivateSystem() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        super.setIsOnline(false);
+        DeltaStar.getPowerSystem().onAuxSystem(false);
+        DeltaStar.getPowerSystem().getHudPowerModule().getLedGreen().switchOff();
     }
     
     @Override

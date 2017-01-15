@@ -22,6 +22,7 @@ public class RcsValveModule implements ModuleInterface {
     public RcsValveModule() {
         this.ledGreen = new Component(ComponentConstants.OUTPUT, "Led green");
         this.switchOnOff = new Component(ComponentConstants.INPUT, "RCS valve - Switch");
+        this.isSupply = false;
     }
 
     public boolean isSupply() {
@@ -40,10 +41,10 @@ public class RcsValveModule implements ModuleInterface {
     public void onAction(boolean activate) {
         if (DeltaStar.getEngineSystem().getSupplyModule().isConnected()) {
             ServicePigou.getOrbiterService().sendCmdToOrbiter(CmdOrbiterConstants.MODE_FUELSUPPLY, CmdOrbiterConstants.OPTION_RCS);
-            if (activate) {
+            if (activate && !this.isSupply) {
                 this.ledGreen.switchOn();
                 this.isSupply = true;
-            } else {
+            } else if (this.isSupply) {
                 this.ledGreen.switchOff();
                 this.isSupply = false;
             }

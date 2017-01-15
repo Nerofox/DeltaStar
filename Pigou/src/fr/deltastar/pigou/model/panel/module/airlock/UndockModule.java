@@ -22,6 +22,10 @@ public class UndockModule implements ModuleInterface {
         this.ledRed = new Component(ComponentConstants.OUTPUT, "Led red");
         this.button = new Component(ComponentConstants.INPUT, "Undock - Big button");
     }
+
+    public Component getLedRed() {
+        return ledRed;
+    }
     
     @Override
     public List<Component> getListComponents() {
@@ -35,6 +39,7 @@ public class UndockModule implements ModuleInterface {
     public void onAction(boolean activate) {
         if (DeltaStar.getAirlockSystem().isOnline()) {
             ServicePigou.getOrbiterService().sendCmdToOrbiter(CmdOrbiterConstants.MODE_CMD, CmdOrbiterConstants.OPTION_DEDOCK);
+            this.ledRed.switchOff();
         }
     }
 

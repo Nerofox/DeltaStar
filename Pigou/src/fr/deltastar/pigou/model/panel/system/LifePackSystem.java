@@ -73,7 +73,7 @@ public class LifePackSystem extends BaseSystem implements SystemLcdInterface {
                             //si le vaisseau est pas dépendant de l'extérieur
                             if (!ServicePigou.getOrbiterService().isPossibleToLive()) {
                                 //si pas de support de survie ou plus d'oxygen/azote
-                                Thread.sleep(Constants.INTERVAL_COOLING_O2N2);
+                                Thread.sleep(Constants.INTERVAL_COOLING_O2N2 + 20000);
                                 if (valueO2N2 == 0 || !DeltaStar.getLifePackSystem().getLifePackModule().isOnline()) {
                                     DeltaStar.deadGame();
                                 }
@@ -142,7 +142,16 @@ public class LifePackSystem extends BaseSystem implements SystemLcdInterface {
 
     @Override
     public void onDeactivateSystem() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //coupure des systemes si actif
+        this.supplyModule.onAction(false);
+        this.lifePackModule.onAction(false);
+        this.heaterModule.getLedRedCoolerBad().switchOff();
+        this.heaterModule.getLedGreenCoolerGood().switchOff();
+        
+        DeltaStar.getPowerSystem().getLifePackPowerModule().getLedGreen().switchOff();
+        DeltaStar.getPowerSystem().onAuxSystem(false);
+        this.arduinoComLcd.setLcdMod(LcdSystemLifePackConstants.NO_CONNECTION_APU);
+        super.setIsOnline(false);
     }
     
     /**
@@ -183,49 +192,47 @@ public class LifePackSystem extends BaseSystem implements SystemLcdInterface {
      * Deviens une procédure une fois l'APU branchée
      */
     public void launchProcessusCooling() {
-        if (this.processusCooling == null) {
-            this.processusCooling = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    while (true) {                        
-                        try {
-                            Thread.sleep(Constants.INTERVAL_COOLING_O2N2);
-                            
-                            //selon si radiateur déployé
-                            if (DeltaStar.getLifePackSystem().getHeaterModule().isDeployed() && temperature >= Constants.TEMP_COOLING_MIN) {
-                                temperature -= 1;
-                            } else if (!DeltaStar.getLifePackSystem().getHeaterModule().isDeployed()) {
-                                temperature += Constants.AUGMENTATION_TEMP_COOLING;
-                            }
-                            
-                            //selon temperature atteinte on agit
-                            //seuil d'alert du systeme
-                            if (temperature >= Constants.TEMP_COOLING_ALERT_MAX && DeltaStar.getLifePackSystem().isOnline()) {
-                                if (DeltaStar.getLifePackSystem().isOnline()) {
-                                    DeltaStar.getLifePackSystem().getHeaterModule().getLedGreenCoolerGood().switchOff();
-                                    DeltaStar.getLifePackSystem().getHeaterModule().getLedRedCoolerBad().switchOn();
-                                }
-                                DeltaStar.getLifePackSystem().getArduinoComLcd().setLcdMod(LcdSystemLifePackConstants.SYSTEM_OVERHEATED);
-                                Thread.sleep(Constants.INTERVAL_COOLING_O2N2);
-                                DeltaStar.getLifePackSystem().getArduinoComLcd().setLcdMod(LcdSystemLifePackConstants.DISPLAY_O2N2_CELSIUS);
-                            } else {
-                                if (DeltaStar.getLifePackSystem().isOnline()) {
-                                    DeltaStar.getLifePackSystem().getHeaterModule().getLedGreenCoolerGood().switchOn();
-                                    DeltaStar.getLifePackSystem().getHeaterModule().getLedRedCoolerBad().switchOff();
-                                }
-                            }
-                            //seuil final avant surchauffe du système
-                            if (temperature >= Constants.TEMP_COOLING_OVERHEATED) {
-                                DeltaStar.getPowerSystem().onDeactivateSystem();
-                                break;
-                            }
-                        } catch (InterruptedException ex) {
-                            Logger.getLogger(LifePackSystem.class.getName()).log(Level.SEVERE, null, ex);
+        this.processusCooling = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {                        
+                    try {
+                        Thread.sleep(Constants.INTERVAL_COOLING_O2N2);
+
+                        //selon si radiateur déployé
+                        if (DeltaStar.getLifePackSystem().getHeaterModule().isDeployed() && temperature >= Constants.TEMP_COOLING_MIN) {
+                            temperature -= 1;
+                        } else if (!DeltaStar.getLifePackSystem().getHeaterModule().isDeployed()) {
+                            temperature += Constants.AUGMENTATION_TEMP_COOLING;
                         }
+
+                        //selon temperature atteinte on agit
+                        //seuil d'alert du systeme
+                        if (temperature >= Constants.TEMP_COOLING_ALERT_MAX && DeltaStar.getLifePackSystem().isOnline()) {
+                            if (DeltaStar.getLifePackSystem().isOnline()) {
+                                DeltaStar.getLifePackSystem().getHeaterModule().getLedGreenCoolerGood().switchOff();
+                                DeltaStar.getLifePackSystem().getHeaterModule().getLedRedCoolerBad().switchOn();
+                            }
+                            DeltaStar.getLifePackSystem().getArduinoComLcd().setLcdMod(LcdSystemLifePackConstants.SYSTEM_OVERHEATED);
+                            Thread.sleep(Constants.INTERVAL_COOLING_O2N2);
+                            DeltaStar.getLifePackSystem().getArduinoComLcd().setLcdMod(LcdSystemLifePackConstants.DISPLAY_O2N2_CELSIUS);
+                        } else {
+                            if (DeltaStar.getLifePackSystem().isOnline()) {
+                                DeltaStar.getLifePackSystem().getHeaterModule().getLedGreenCoolerGood().switchOn();
+                                DeltaStar.getLifePackSystem().getHeaterModule().getLedRedCoolerBad().switchOff();
+                            }
+                        }
+                        //seuil final avant surchauffe du système
+                        if (temperature >= Constants.TEMP_COOLING_OVERHEATED) {
+                            DeltaStar.getPowerSystem().onDeactivateSystem();
+                            break;
+                        }
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(LifePackSystem.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
-            });
-        }
+            }
+        });
         this.processusCooling.start();
     }
     

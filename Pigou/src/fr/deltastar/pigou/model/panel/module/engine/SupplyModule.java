@@ -1,6 +1,5 @@
 package fr.deltastar.pigou.model.panel.module.engine;
 
-import fr.deltastar.pigou.constant.CmdOrbiterConstants;
 import fr.deltastar.pigou.constant.SoundConstants;
 import fr.deltastar.pigou.model.constant.ComponentConstants;
 import fr.deltastar.pigou.model.panel.Component;
@@ -32,6 +31,10 @@ public class SupplyModule implements ModuleInterface {
     public void setIsConnected(boolean isConnected) {
         this.isConnected = isConnected;
     }
+
+    public Component getLedGreen() {
+        return ledGreen;
+    }
     
     @Override
     public List<Component> getListComponents() {
@@ -51,7 +54,6 @@ public class SupplyModule implements ModuleInterface {
             } else if (!DeltaStar.getEngineSystem().getMainValveModule().isSupply() && !DeltaStar.getEngineSystem().getRcsValveModule().isSupply()) {
                 this.ledGreen.switchOff();
                 this.isConnected = false;
-                ServicePigou.getSoundService().play(SoundConstants.SUPPLY_CONNECT);
             }
         }
     }

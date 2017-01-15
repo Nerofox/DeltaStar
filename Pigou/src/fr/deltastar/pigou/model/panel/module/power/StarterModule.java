@@ -48,7 +48,15 @@ public class StarterModule implements ModuleInterface {
             //allumage led rouge apu
             ps.getApuModule().getLedRed().switchOn();
         } else {
+            //coupure de l'apu et epu si connecté
+            DeltaStar.getPowerSystem().getEpuModule().onAction(false);
+            DeltaStar.getPowerSystem().getApuModule().onAction(false);
+            //changement texte des LCD
+            ps.getArduinoComLcd().setLcdMod(LcdSystemPowerConstants.NO_DISPLAY);
+            es.getArduinoComLcd().setLcdMod(LcdSystemPowerConstants.NO_DISPLAY);
+            lps.getArduinoComLcd().setLcdMod(LcdSystemPowerConstants.NO_DISPLAY);
             this.isOnline = false;
+            DeltaStar.getPowerSystem().getApuModule().getLedRed().switchOff();
         }
     }
 

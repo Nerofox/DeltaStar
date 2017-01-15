@@ -17,10 +17,12 @@ public class AirlockPowerModule implements ModuleInterface {
 
     private Component ledGreen;
     private Component switchOnOff;
+    private boolean isOn;
 
     public AirlockPowerModule() {
         this.ledGreen = new Component(ComponentConstants.OUTPUT, "Led green");
         this.switchOnOff = new Component(ComponentConstants.INPUT, "Airlock power - Switch");
+        this.isOn = false;
     }
 
     public Component getLedGreen() {
@@ -38,9 +40,11 @@ public class AirlockPowerModule implements ModuleInterface {
     @Override
     public void onAction(boolean activate) {
         if (DeltaStar.getPowerSystem().isOnline()) {
-            if (activate) {
+            if (activate && !this.isOn) {
+                this.isOn = true;
                 DeltaStar.getAirlockSystem().onActivateSystem();
-            } else {
+            } else if (this.isOn) {
+                this.isOn = false;
                 DeltaStar.getAirlockSystem().onDeactivateSystem();
             }
         } else {

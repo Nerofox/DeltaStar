@@ -17,10 +17,12 @@ public class MainDumpModule implements ModuleInterface {
 
     private Component ledGreen;
     private Component switchOnOff;
+    private boolean isDump;
 
     public MainDumpModule() {
         this.ledGreen = new Component(ComponentConstants.OUTPUT, "Led green");
         this.switchOnOff = new Component(ComponentConstants.INPUT, "Main dump - Switch");
+        this.isDump = false;
     }
     
     @Override
@@ -34,11 +36,14 @@ public class MainDumpModule implements ModuleInterface {
     @Override
     public void onAction(boolean activate) {
         if (DeltaStar.getEngineSystem().isOnline()) {
-            ServicePigou.getOrbiterService().sendCmdToOrbiter(CmdOrbiterConstants.MODE_FUELDUMP, CmdOrbiterConstants.OPTION_MAIN);
-            if (activate) {
+            if (activate && !this.isDump) {
+                this.isDump = true;
                 this.ledGreen.switchBlink();
-            } else {
+                ServicePigou.getOrbiterService().sendCmdToOrbiter(CmdOrbiterConstants.MODE_FUELDUMP, CmdOrbiterConstants.OPTION_MAIN);
+            } else if (this.isDump) {
+                this.isDump = false;
                 this.ledGreen.switchOff();
+                ServicePigou.getOrbiterService().sendCmdToOrbiter(CmdOrbiterConstants.MODE_FUELDUMP, CmdOrbiterConstants.OPTION_MAIN);
             }
         }
     }

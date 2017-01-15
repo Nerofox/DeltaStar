@@ -22,6 +22,7 @@ public class MainValveModule implements ModuleInterface {
     public MainValveModule() {
         this.ledGreen = new Component(ComponentConstants.OUTPUT, "Led green");
         this.switchOnOff = new Component(ComponentConstants.INPUT, "Main valve - Switch");
+        this.isSupply = false;
     }
     
     public boolean isSupply() {
@@ -39,13 +40,14 @@ public class MainValveModule implements ModuleInterface {
     @Override
     public void onAction(boolean activate) {
         if (DeltaStar.getEngineSystem().getSupplyModule().isConnected()) {
-            ServicePigou.getOrbiterService().sendCmdToOrbiter(CmdOrbiterConstants.MODE_FUELSUPPLY, CmdOrbiterConstants.OPTION_MAIN);
-            if (activate) {
+            if (activate && !this.isSupply) {
                 this.ledGreen.switchOn();
                 this.isSupply = true;
-            } else {
+                ServicePigou.getOrbiterService().sendCmdToOrbiter(CmdOrbiterConstants.MODE_FUELSUPPLY, CmdOrbiterConstants.OPTION_MAIN);
+            } else if (this.isSupply) {
                 this.ledGreen.switchOff();
                 this.isSupply = false;
+                ServicePigou.getOrbiterService().sendCmdToOrbiter(CmdOrbiterConstants.MODE_FUELSUPPLY, CmdOrbiterConstants.OPTION_MAIN);
             }
         }
     }

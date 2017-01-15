@@ -161,6 +161,28 @@ public class PowerSystem extends BaseSystem implements SystemLcdInterface {
         this.consoPower.start();
     }
     
+    @Override
+    public void onDeactivateSystem() {
+        //desactivation des systèmes annexes si en ligne
+        if (DeltaStar.getAirlockSystem().isOnline())
+            this.airlockPowerModule.onAction(false);
+        if (DeltaStar.getComputerSystem().isOnline())
+            this.computerPowerModule.onAction(false);
+        if (DeltaStar.getEngineSystem().isOnline())
+            this.enginePowerModule.onAction(false);
+        if (DeltaStar.getHudSystem().isOnline())
+            this.hudPowerModule.onAction(false);
+        if (DeltaStar.getLifePackSystem().isOnline())
+            this.lifePackPowerModule.onAction(false);
+        //consommation inerte les systeme ne chauffe plus
+        DeltaStar.getLifePackSystem().stopProcessusCooling();
+        //plus de consommation on coupe
+        this.consoPower.stop();
+        
+        super.setIsOnline(false);
+        this.getArduinoComLcd().setLcdMod(LcdSystemPowerConstants.NO_CONNECTION_APU);
+    }
+    
     /**
      * Appellé par les système annexes pour informer le systemes electriques l'activation/desactivation d'un systeme
      * @param activate 
@@ -173,11 +195,6 @@ public class PowerSystem extends BaseSystem implements SystemLcdInterface {
             this.usePower -= 20;
             this.consoSupp -= Constants.CONSOMMATION_SYSTEM;
         }
-    }
-
-    @Override
-    public void onDeactivateSystem() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     @Override

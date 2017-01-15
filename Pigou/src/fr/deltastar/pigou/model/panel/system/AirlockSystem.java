@@ -1,16 +1,11 @@
 package fr.deltastar.pigou.model.panel.system;
 
-import fr.deltastar.pigou.constant.SoundConstants;
 import fr.deltastar.pigou.model.panel.BaseSystem;
-import fr.deltastar.pigou.model.panel.Component;
 import fr.deltastar.pigou.model.panel.DeltaStar;
 import fr.deltastar.pigou.model.panel.ModuleInterface;
 import fr.deltastar.pigou.model.panel.module.airlock.*;
-import fr.deltastar.pigou.service.ServicePigou;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -87,7 +82,9 @@ public class AirlockSystem extends BaseSystem {
 
     @Override
     public void onDeactivateSystem() {
-        
+        super.setIsOnline(false);
+        DeltaStar.getPowerSystem().onAuxSystem(false);
+        DeltaStar.getPowerSystem().getAirlockPowerModule().getLedGreen().switchOff();
     }
 
     @Override

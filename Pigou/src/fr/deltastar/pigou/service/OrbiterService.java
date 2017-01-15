@@ -23,6 +23,10 @@ public class OrbiterService implements ListenerComInterface {
      * Altitude du vaisseau actuellement
      */
     private long altitude;
+    /**
+     * Indique si le vaisseau est docké ou pas
+     */
+    private boolean isDocking;
 
     public OrbiterService() {
         this.serverSocket = new SocketServer(this);
@@ -82,14 +86,19 @@ public class OrbiterService implements ListenerComInterface {
         this.altitude = Long.parseLong(dataSplit[0]);
         int fuelMain = Integer.parseInt(dataSplit[1]);
         int fuelRcs = Integer.parseInt(dataSplit[2]);
+        this.isDocking = (Integer.parseInt(dataSplit[3]) == 1);
+        
         
         //OPERATION AVEC MAJ DES VALEURS RECU PAR ORBITER
         
+        if (this.isDocking) {
+            DeltaStar.getAirlockSystem().getUndockModule().getLedRed().switchOn();
+        }
+        
         //maj carburant si système en place
-        EngineSystem es = DeltaStar.getEngineSystem();
-        if (es.isOnline()) {
-            es.setArgOne(fuelMain);
-            es.setArgTwo(fuelRcs);
+        if (DeltaStar.getEngineSystem().isOnline()) {
+            DeltaStar.getEngineSystem().setArgOne(fuelMain);
+            DeltaStar.getEngineSystem().setArgTwo(fuelRcs);
         }
         
     }

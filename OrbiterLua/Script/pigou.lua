@@ -34,6 +34,7 @@ tcp:settimeout(0)
 local v = vessel.get_interface('GL-01') --préciser le nom du vaisseau
 local vMainFuel = v:get_propellanthandle(0) --réservoir principal
 local vRcsFuel = v:get_propellanthandle(1) --réservoir RCS
+portDock = v:get_dockhandle(0) --objet du port de docking du vaisseau
 --variable de controle blocage des réservoirs
 local currentFuelMain = 0
 local currentFuelRcs = 0
@@ -261,10 +262,16 @@ repeat
 		output = output .. round(v:get_propellantmass(vMainFuel))
 	end
 	if fuelRcsIsLock == 1 then
-		output = output .. "," .. currentFuelRcs .. "\n"
+		output = output .. "," .. currentFuelRcs
 	else
-		output = output .. "," .. round(v:get_propellantmass(vRcsFuel)) .. "\n"
+		output = output .. "," .. round(v:get_propellantmass(vRcsFuel))
 	end
+	--etat du docking si le vaiseau est arrimé
+	local isDock = 1
+	if (v:get_dockstatus(portDock) == nil) then
+		isDock = 0
+	end
+	output = output .. "," .. isDock .. "\n"
 	tcp:send(output)
 
 	--en seconde précise le temps d'accorder du temps au simulateur

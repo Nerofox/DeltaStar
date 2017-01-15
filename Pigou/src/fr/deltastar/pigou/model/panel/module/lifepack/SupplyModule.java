@@ -44,7 +44,7 @@ public class SupplyModule implements ModuleInterface {
     @Override
     public void onAction(boolean activate) {
         if (DeltaStar.getLifePackSystem().isOnline() && ServicePigou.getOrbiterService().isLanding()) {
-            if (activate && this.isConnected == false) {
+            if (activate && !this.isConnected) {
                 this.ledGreen.switchOn();
                 this.isConnected = true;
                 ServicePigou.getSoundService().play(SoundConstants.SUPPLY_CONNECT);
@@ -63,7 +63,7 @@ public class SupplyModule implements ModuleInterface {
                     }
                 });
                 this.processusSupply.start();
-            } else if (this.isConnected == true) {
+            } else if (this.isConnected) {
                 this.processusSupply.stop();
                 this.ledGreen.switchOff();
                 this.isConnected = false;

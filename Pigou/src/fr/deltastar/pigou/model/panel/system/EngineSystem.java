@@ -136,7 +136,22 @@ public class EngineSystem extends BaseSystem implements SystemLcdInterface {
 
     @Override
     public void onDeactivateSystem() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.consoEngine.stop();
+        this.getArduinoComLcd().setLcdMod(LcdSystemEngineConstants.NO_CONNECTION_APU);
+        ServicePigou.getOrbiterService().sendCmdToOrbiter(CmdOrbiterConstants.MODE_FUELLOCK, CmdOrbiterConstants.OPTION_MAIN);
+        ServicePigou.getOrbiterService().sendCmdToOrbiter(CmdOrbiterConstants.MODE_FUELLOCK, CmdOrbiterConstants.OPTION_RCS);
+        DeltaStar.getPowerSystem().onAuxSystem(false);
+        DeltaStar.getPowerSystem().getEnginePowerModule().getLedGreen().switchOff();
+        //coupure ravitailleur si en place
+        this.getMainValveModule().onAction(false);
+        this.getRcsValveModule().onAction(false);
+        this.getMainDumpModule().onAction(false);
+        this.getRcsDumpModule().onAction(false);
+        this.getTransfertLeftModule().onAction(false);
+        this.getTransfertRightModule().onAction(false);
+        this.getSupplyModule().onAction(false);
+        
+        super.setIsOnline(false);
     }
     
     @Override

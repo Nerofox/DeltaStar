@@ -17,10 +17,12 @@ public class HudPowerModule implements ModuleInterface {
 
     private Component ledGreen;
     private Component switchOnOff;
+    private boolean isOn;
 
     public HudPowerModule() {
         this.ledGreen = new Component(ComponentConstants.OUTPUT, "Led green");
         this.switchOnOff = new Component(ComponentConstants.INPUT, "HUD power - Switch");
+        this.isOn = false;
     }
 
     public Component getLedGreen() {
@@ -38,9 +40,11 @@ public class HudPowerModule implements ModuleInterface {
     @Override
     public void onAction(boolean activate) {
         if (DeltaStar.getPowerSystem().isOnline()) {
-            if (activate) {
+            if (activate && !this.isOn) {
+                this.isOn = true;
                 DeltaStar.getHudSystem().onActivateSystem();
-            } else {
+            } else if (this.isOn) {
+                this.isOn = false;
                 DeltaStar.getHudSystem().onDeactivateSystem();
             }
         } else {

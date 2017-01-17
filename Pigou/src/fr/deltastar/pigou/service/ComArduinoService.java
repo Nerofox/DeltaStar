@@ -140,6 +140,18 @@ public class ComArduinoService {
         return arduinoC;
     }
 
+    public String getPortComA() {
+        return portComA;
+    }
+
+    public String getPortComB() {
+        return portComB;
+    }
+
+    public String getPortComC() {
+        return portComC;
+    }
+
     public void setPortComA(String portComA) {
         this.portComA = portComA;
     }

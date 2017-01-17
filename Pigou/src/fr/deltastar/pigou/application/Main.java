@@ -28,6 +28,7 @@ public class Main extends Application {
     
     @Override
     public void start(Stage primaryStage) throws IOException {
+        //mise en place fenetre principale
         Parent root = FXMLLoader.load(getClass().getResource(ListView.WELCOME));
         Scene scene = new Scene(root, Constants.SIZE_WIDTH_APPLICATION, Constants.SIZE_HEIGHT_APPLICATION);
         primaryStage.getIcons().add(new Image(RessourcesConstants.ICON));
@@ -46,7 +47,22 @@ public class Main extends Application {
         stageStatusCom.setY(primaryScreenBounds.getMinY() + primaryScreenBounds.getHeight() - 250);
         stageStatusCom.getIcons().add(new Image(RessourcesConstants.ICON));
         
-        //chargement de la config du panneau DeltaStar
+        //chargement de la config des Arduino si existante
+        if (new File(Constants.FILENAME_CONFIG_PORT_COM_ARDUINO).exists()) {
+            String[] conf = FileManager.open(Constants.FILENAME_CONFIG_PORT_COM_ARDUINO);
+            for (String oneConf : conf) {
+                String[] confSplit = oneConf.split(Constants.FILENAME_DELIMITER);
+                if (confSplit[0].equals(ArduinoPortConstants.ARDUINO_A)) {
+                    ServicePigou.getComArduinoService().setPortComA(confSplit[1]);
+                } else if (confSplit[0].equals(ArduinoPortConstants.ARDUINO_B)) {
+                    ServicePigou.getComArduinoService().setPortComB(confSplit[1]);
+                } else if (confSplit[0].equals(ArduinoPortConstants.ARDUINO_C)) {
+                    ServicePigou.getComArduinoService().setPortComC(confSplit[1]);
+                }
+            }
+        }
+        
+        //chargement de la config du panneau DeltaStar si existante
         if (new File(Constants.FILENAME_CONFIG).exists()) {
             List<Component> listAllComponents = DeltaStar.getListComponents();
             String[] conf = FileManager.open(Constants.FILENAME_CONFIG);

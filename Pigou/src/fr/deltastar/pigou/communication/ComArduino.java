@@ -60,7 +60,7 @@ public class ComArduino implements ListenerComInterface {
         if (Constants.MODE_VIRTUAL) {
             this.com = new SocketClient();
         } else {
-            //TODO faire pour la commande série
+            this.com = new SerialClient();
         }
         this.com.connect(Constants.VIRTUAL_IP, port, lci, arduinoId);
         //on écoute les données entrante si souhaité

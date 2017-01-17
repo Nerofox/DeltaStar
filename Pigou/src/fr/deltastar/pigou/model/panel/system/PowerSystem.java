@@ -149,7 +149,6 @@ public class PowerSystem extends BaseSystem implements SystemLcdInterface {
                         //plus de jus on coupe tout et ça craint !
                         if (qtyPower <= 0) {
                             qtyPower = 0;
-                            //TODO GENERER ALERTE
                             DeltaStar.getPowerSystem().onDeactivateSystem();
                         }
                     } catch (InterruptedException ex) {

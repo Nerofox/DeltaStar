@@ -1,12 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package fr.deltastar.pigou.constant;
 
 /**
- *
+ * Les constantes général ainsi que les config non modifiable en prod sont ici
  * @author Valentin
  */
 public class Constants {
@@ -67,6 +62,7 @@ public class Constants {
     public final static String ORBITER_MISSION_ONE = "Mission1.scn";
     
     //CONFIG POUR LE DELTASTAR VIRTUEL
+    //si a true on utilise le deltastar virtuel, sinon le réel
     public final static boolean MODE_VIRTUAL = true;
     public final static String VIRTUAL_IP = "127.0.0.1";
     public final static String VIRTUAL_PORT_A = "10000";
@@ -75,6 +71,10 @@ public class Constants {
     
     public final static int SIZE_WIDTH_APPLICATION = 800;
     public final static int SIZE_HEIGHT_APPLICATION = 600;
+    
+    //CONFIG POUR LES COMMUNICATIONS ARDUINO
+    public final static int SERIALCOM_DEBIT_COMMUNICATION = 9600;
+    public final static String FILENAME_CONFIG_PORT_COM_ARDUINO = "arduinoPort.pf";
     
     //PARTIE AUTO CONFIG SETTING CONTROLLEUR
     public static String FILENAME_CONFIG = "config.pf";

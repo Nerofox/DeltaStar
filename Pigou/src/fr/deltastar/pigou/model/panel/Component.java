@@ -13,25 +13,25 @@ public class Component {
     /**
      * Numéro du champ input ou position du champ output dans le code arduino
      */
-    protected int idPos;
+    private int idPos;
     /**
      * Indique le type de composant en question, input ou output
      * utilise le ComponentConstants
      */
-    protected int type;
+    private int type;
     /**
      * Etat du composant, allumé ou éteint voir clignotant pour une led
      * utilise le ComponentConstants
      */
-    protected int status;
+    private int status;
     /**
      * Com arduino associé au composant
      */
-    protected ComArduino comArduino;
+    private ComArduino comArduino;
     /**
      * Nom du composant
      */
-    protected String title;
+    private String title;
 
     public Component(int type, String title) {
         this.type = type;

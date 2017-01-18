@@ -17,6 +17,7 @@ import javafx.scene.control.Button;
 public class WelcomeController extends BaseViewController implements Initializable {
     
     @FXML private Button btnLaunch;
+    @FXML private Button btnTestingPanel;
     @FXML private Button btnSettings;
     @FXML private Button btnExit;
     
@@ -25,6 +26,11 @@ public class WelcomeController extends BaseViewController implements Initializab
         if (!new File(Constants.FILENAME_CONFIG).exists()) {
             ServicePigou.getMessageService().displayInfo(Constants.FILENAME_NOTFOUND_CONFIG_MSG);
         }
+    }
+    
+    @FXML
+    private void btnTestingPanelClick() {
+        super.navigate(ListView.TESTING_PANEL);
     }
     
     @FXML

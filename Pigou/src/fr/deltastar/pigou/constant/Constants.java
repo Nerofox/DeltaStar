@@ -87,4 +87,8 @@ public class Constants {
     public static String AUTO_CONFIG_MSG_OUTPUTPROGRESS = "Configuration output in progress look at Deltastar and clic on the component on";
     public static String AUTO_CONFIG_MSG_OUTPUTFINISH = "Configuration output is finish, launch configuration input";
     public static String AUTO_CONFIG_MSG_FINISH = "Configuration finished, have fun !";
+    
+    //PARTIE TESTING DU PANEL (branchement)
+    public final static int NB_SWITCH_INPUT = 24;
+    
 }

@@ -9,8 +9,6 @@ import fr.deltastar.pigou.model.constant.ComponentConstants;
 import fr.deltastar.pigou.model.panel.Component;
 import fr.deltastar.pigou.model.panel.DeltaStar;
 import fr.deltastar.pigou.service.ServicePigou;
-import fr.deltastar.pigou.utils.FileManager;
-import java.io.File;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -35,7 +33,7 @@ public class SettingsAutoConfigController extends BaseViewController implements 
     
     //utiliser pour la boucle de paramétrage
     private int currentPosOutputArduino;
-    private int currentIdInputArduino;
+    //private int currentIdInputArduino;
     private Component currentComponentInput;
     private int currentArduino;
 

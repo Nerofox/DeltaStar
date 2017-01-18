@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="ap" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.deltastar.pigou.controller.TestingPanelController">
+   <children>
+      <Pane layoutX="-4.0" layoutY="-1.0" prefHeight="608.0" prefWidth="813.0" style="-fx-background-color: #0F056B;">
+         <children>
+            <Button fx:id="btnBack" layoutX="18.0" layoutY="14.0" mnemonicParsing="false" onAction="#btnBackClick" prefHeight="48.0" prefWidth="61.0" stylesheets="@../resources/css/baseStyle.css" text="&lt;" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="8.0" layoutX="13.0" layoutY="301.0" stroke="BLACK" strokeType="INSIDE" width="793.0" />
+            <Label layoutX="79.0" layoutY="324.0" text="Output" textFill="WHITE">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label layoutX="79.0" layoutY="85.0" text="Input" textFill="WHITE">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <ProgressBar fx:id="pbProgressInput" disable="true" layoutX="79.0" layoutY="228.0" prefHeight="48.0" prefWidth="532.0" progress="0.0" />
+            <Label fx:id="lCurrentInput" layoutX="79.0" layoutY="198.0" text="1 / 100" textFill="WHITE" />
+            <Button fx:id="btnSwitchOn" disable="true" layoutX="332.0" layoutY="394.0" mnemonicParsing="false" onAction="#btnSwitchOnClick" prefHeight="63.0" prefWidth="155.0" stylesheets="@../resources/css/baseStyle.css" text="Switch ON" />
+            <Button fx:id="btnSwitchOff" disable="true" layoutX="332.0" layoutY="469.0" mnemonicParsing="false" onAction="#btnSwitchOffClick" prefHeight="63.0" prefWidth="155.0" stylesheets="@../resources/css/baseStyle.css" text="Switch OFF" />
+            <Label layoutX="199.0" layoutY="346.0" prefHeight="27.0" prefWidth="532.0" text="Clic on Switch ON for switch on all led and display LCD on the panel, look and check." textFill="WHITE">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="79.0" layoutY="131.0" prefHeight="27.0" prefWidth="421.0" text="Press all button for test and switch on/off all switch." textFill="WHITE">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Button fx:id="btnReset" disable="true" layoutX="620.0" layoutY="228.0" mnemonicParsing="false" onAction="#btnResetClick" prefHeight="48.0" prefWidth="120.0" stylesheets="@../resources/css/baseStyle.css" text="Reset" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

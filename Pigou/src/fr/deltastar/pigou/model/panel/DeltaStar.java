@@ -1,6 +1,7 @@
 package fr.deltastar.pigou.model.panel;
 
 import fr.deltastar.pigou.constant.SoundConstants;
+import fr.deltastar.pigou.model.constant.ComponentConstants;
 import fr.deltastar.pigou.model.panel.system.*;
 import fr.deltastar.pigou.service.ServicePigou;
 import java.util.ArrayList;

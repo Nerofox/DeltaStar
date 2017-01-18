@@ -23,9 +23,10 @@
                </font>
             </Label>
             <Button fx:id="btnSettings" layoutX="34.0" layoutY="504.0" mnemonicParsing="false" onAction="#btnSettingsClick" prefHeight="64.0" prefWidth="220.0" stylesheets="@../resources/css/baseStyle.css" text="Settings" />
-            <Button fx:id="btnLaunch" layoutX="405.0" layoutY="167.0" mnemonicParsing="false" onAction="#btnLaunchClick" prefHeight="64.0" prefWidth="220.0" stylesheets="@../resources/css/baseStyle.css" text="Launch" />
+            <Button fx:id="btnLaunch" layoutX="405.0" layoutY="167.0" mnemonicParsing="false" onAction="#btnLaunchClick" prefHeight="64.0" prefWidth="220.0" stylesheets="@../resources/css/baseStyle.css" text="Launch Space Simulator" />
             <Button fx:id="btnExit" layoutX="295.0" layoutY="504.0" mnemonicParsing="false" onAction="#btnExitClick" prefHeight="64.0" prefWidth="220.0" stylesheets="@../resources/css/baseStyle.css" text="Exit" />
             <Label layoutX="734.0" layoutY="98.0" text="V 0.1" textFill="WHITE" />
+            <Button fx:id="btnTestingPanel" layoutX="446.0" layoutY="255.0" mnemonicParsing="false" onAction="#btnTestingPanelClick" prefHeight="47.0" prefWidth="138.0" stylesheets="@../resources/css/baseStyle.css" text="Testing Panel" />
          </children>
       </Pane>
    </children>

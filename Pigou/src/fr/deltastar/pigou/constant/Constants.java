@@ -63,7 +63,7 @@ public class Constants {
     
     //CONFIG POUR LE DELTASTAR VIRTUEL
     //si a true on utilise le deltastar virtuel, sinon le réel
-    public final static boolean MODE_VIRTUAL = true;
+    public final static boolean MODE_VIRTUAL = false;
     public final static String VIRTUAL_IP = "127.0.0.1";
     public final static String VIRTUAL_PORT_A = "10000";
     public final static String VIRTUAL_PORT_B = "11000";

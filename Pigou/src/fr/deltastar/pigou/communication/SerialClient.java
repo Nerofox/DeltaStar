@@ -82,10 +82,12 @@ public class SerialClient implements ComClientInterface, SerialPortEventListener
     public void serialEvent(SerialPortEvent spe) {
         if (spe.getEventType() == SerialPortEvent.DATA_AVAILABLE) {
             try {
-                String inputLine = this.in.readLine();
-                listenerCom.onDataReceved(inputLine);
+                char[] result = new char[2];
+                this.in.read(result);
+                String input = String.valueOf(result[0]) + String.valueOf(result[1]);
+                listenerCom.onDataReceved(input);
                 if (StatusComViewController.getInstance() != null)
-                    StatusComViewController.getInstance().addDataInput(inputLine);
+                    StatusComViewController.getInstance().addDataInput(input);
             } catch (Exception e) {
                 e.printStackTrace();
                 System.out.println("Error listen input on " + port);
@@ -107,9 +109,9 @@ public class SerialClient implements ComClientInterface, SerialPortEventListener
                 try {
                     if (out == null)
                         out = new PrintWriter(serialPort.getOutputStream());
-                    out.write(data);
+                    out.write(data + "\n");
                     System.out.println("Data send on " + nameCom + " : " + data);
-                    //out.flush();
+                    out.flush();
                 } catch (Exception ex) {
                     System.out.println("Error send output on " + port);
                     if (StatusComViewController.getInstance() != null)

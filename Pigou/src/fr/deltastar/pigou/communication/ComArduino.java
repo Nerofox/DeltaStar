@@ -56,6 +56,12 @@ public class ComArduino implements ListenerComInterface {
         for (int i = 0; i < this.sizeOutputArgTwoLcd; i++)
             this.outputArgTwoLcd += "0";
         
+        //initialisation des led, par défaut 0 
+        this.outputCodeLed = new char[nbOutput];
+        for (int i = 0; i < nbOutput; i++) {
+            this.outputCodeLed[i] = '0';
+        }
+        
         //selon le mode paramétré on utilise le panel virtuel ou réelle
         if (Constants.MODE_VIRTUAL) {
             this.com = new SocketClient();
@@ -64,13 +70,8 @@ public class ComArduino implements ListenerComInterface {
         }
         this.com.connect(Constants.VIRTUAL_IP, port, lci, arduinoId);
         //on écoute les données entrante si souhaité
-        if (modeInputOutput == ComponentConstants.INPUT) {
+        if (modeInputOutput == ComponentConstants.INPUT && this.com.isConnect()) {
             this.com.listenInput();
-        }
-        //initialisation des led, par défaut 0 
-        this.outputCodeLed = new char[nbOutput];
-        for (int i = 0; i < nbOutput; i++) {
-            this.outputCodeLed[i] = '0';
         }
     }
     
@@ -95,13 +96,15 @@ public class ComArduino implements ListenerComInterface {
      * Envoi a l'arduino le code de sortie complet
      */
     public void sendOutput() {
-        //si on utilise un écran LCD, MAJ auto des valeurs de l'écran LCD
-        if (this.sli != null) {
-            this.setLcdArg(this.sli.getArgOne(), this.sli.getArgTwo());
+        if (this.isConnect()) {
+            //si on utilise un écran LCD, MAJ auto des valeurs de l'écran LCD
+            if (this.sli != null) {
+                this.setLcdArg(this.sli.getArgOne(), this.sli.getArgTwo());
+            }
+            StringBuilder sbOuput = new StringBuilder(String.valueOf(this.outputCodeLed));
+            sbOuput.append(this.statusLcd).append(this.outputArgOneLcd).append(this.outputArgTwoLcd);
+            this.com.sendData(sbOuput.toString());
         }
-        StringBuilder sbOuput = new StringBuilder(String.valueOf(this.outputCodeLed));
-        sbOuput.append(this.statusLcd).append(this.outputArgOneLcd).append(this.outputArgTwoLcd);
-        this.com.sendData(sbOuput.toString());
     }
     
     /**

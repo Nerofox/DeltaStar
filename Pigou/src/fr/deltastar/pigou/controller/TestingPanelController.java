@@ -101,26 +101,24 @@ public class TestingPanelController extends BaseViewController implements Initia
 
     @Override
     public void onConnect(String arduinoId) {
-        if (ServicePigou.getComArduinoService().isFullConnected()) {
-            this.pbProgressInput.setDisable(false);
-            this.btnSwitchOff.setDisable(false);
-            this.btnSwitchOn.setDisable(false);
-            this.btnReset.setDisable(false);
-            
-            //display LCD mod
-            PowerSystem ps = DeltaStar.getPowerSystem();
-            EngineSystem es = DeltaStar.getEngineSystem();
-            LifePackSystem lps = DeltaStar.getLifePackSystem();
-            lps.getArduinoComLcd().setLcdMod(LcdSystemLifePackConstants.DISPLAY_O2N2_CELSIUS);
-            lps.setArgOne(100);
-            lps.setArgTwo(100);
-            ps.getArduinoComLcd().setLcdMod(LcdSystemPowerConstants.DISPLAY_STATUS);
-            ps.setArgOne(100);
-            ps.setArgTwo(100);
-            es.getArduinoComLcd().setLcdMod(LcdSystemEngineConstants.DISPLAY_FUEL);
-            es.setArgOne(9600);
-            es.setArgTwo(600);
-        }
+        this.pbProgressInput.setDisable(false);
+        this.btnSwitchOff.setDisable(false);
+        this.btnSwitchOn.setDisable(false);
+        this.btnReset.setDisable(false);
+
+        //display LCD mod
+        PowerSystem ps = DeltaStar.getPowerSystem();
+        EngineSystem es = DeltaStar.getEngineSystem();
+        LifePackSystem lps = DeltaStar.getLifePackSystem();
+        lps.getArduinoComLcd().setLcdMod(LcdSystemLifePackConstants.DISPLAY_O2N2_CELSIUS);
+        lps.setArgOne(100);
+        lps.setArgTwo(100);
+        ps.getArduinoComLcd().setLcdMod(LcdSystemPowerConstants.DISPLAY_STATUS);
+        ps.setArgOne(100);
+        ps.setArgTwo(100);
+        es.getArduinoComLcd().setLcdMod(LcdSystemEngineConstants.DISPLAY_FUEL);
+        es.setArgOne(9600);
+        es.setArgTwo(600);
     }
     
     

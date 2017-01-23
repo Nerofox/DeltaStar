@@ -141,10 +141,13 @@ public class SettingsAutoConfigController extends BaseViewController implements 
                 this.currentNbTotal++;
 
                 //fait évoluer la progressbar output et total
-                this.lNbOutput.setText(String.format(Constants.AUTOCONFIG_VIEW_NB_OUTPUT, this.currentNbOutput, this.totalNbOutput));
-                this.lNbTotal.setText(String.format(Constants.AUTOCONFIG_VIEW_NB_TOTAL, this.currentNbOutput + this.currentNbInput, this.totalNb));
-                this.pbOutput.setProgress((double)this.currentNbOutput / (double)this.totalNbOutput);
-                this.pbTotal.setProgress((double)this.currentNbTotal / (double)this.totalNb);
+                Platform.runLater(() -> {
+                    lNbOutput.setText(String.format(Constants.AUTOCONFIG_VIEW_NB_OUTPUT, currentNbOutput, totalNbOutput));
+                    lNbTotal.setText(String.format(Constants.AUTOCONFIG_VIEW_NB_TOTAL, currentNbOutput + currentNbInput, totalNb));
+                    pbOutput.setProgress((double)currentNbOutput / (double)totalNbOutput);
+                    pbTotal.setProgress((double)currentNbTotal / (double)totalNb);
+                });
+                
             } else {
                 //remise a zéro de la précédente led output avant paramétrage input
                 if (this.currentNbOutputArduino > 0) {

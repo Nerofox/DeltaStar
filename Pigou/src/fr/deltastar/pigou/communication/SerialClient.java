@@ -79,12 +79,17 @@ public class SerialClient implements ComClientInterface, SerialPortEventListener
     }
     
     @Override
-    public void serialEvent(SerialPortEvent spe) {
+    public synchronized void serialEvent(SerialPortEvent spe) {
         if (spe.getEventType() == SerialPortEvent.DATA_AVAILABLE) {
             try {
                 char[] result = new char[2];
-                this.in.read(result);
-                String input = String.valueOf(result[0]) + String.valueOf(result[1]);
+                String input = "";
+                //pour palier au probleme de un chiffre a la fois, on attend que
+                //la liaison série emmet 2 caracteres renseigné ex: 02 ou 12
+                do {
+                    this.in.read(result);
+                    input = input + String.valueOf(result[0]) + String.valueOf(result[1]);
+                } while (input.trim().length() < 2);
                 listenerCom.onDataReceved(input);
                 if (StatusComViewController.getInstance() != null)
                     StatusComViewController.getInstance().addDataInput(input);
@@ -109,7 +114,7 @@ public class SerialClient implements ComClientInterface, SerialPortEventListener
                 try {
                     if (out == null)
                         out = new PrintWriter(serialPort.getOutputStream());
-                    out.write(data + "\n");
+                    out.write(data);
                     System.out.println("Data send on " + nameCom + " : " + data);
                     out.flush();
                 } catch (Exception ex) {

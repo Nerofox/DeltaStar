@@ -74,7 +74,11 @@ void loop() {
   for (int i = 0; i < nbSwitch; i++) {
     currentStateRead = digitalRead(inputSwitch[i]);
     if (currentStateRead != currentStateInputSwitch[i]) {
-      Serial.print(i);
+      String output = String(i);
+      if (i < 10) {
+        output = "0" + output;
+      }
+      Serial.print(output);
       currentStateInputSwitch[i] = currentStateRead;
     }
   }
@@ -84,7 +88,11 @@ void loop() {
   for (int i = 0; i < nbButton; i++) {
     currentStateRead = digitalRead(inputButton[i]);
     if (currentStateRead != currentStateInputButton[i] && finalStateInputButton[i] != currentStateRead) {
-      Serial.print(currentPort);
+      String output = String(currentPort);
+      if (currentPort < 10) {
+        output = "0" + output;
+      }
+      Serial.print(output);
     }
     currentStateInputButton[i] = currentStateRead;
     currentPort++;

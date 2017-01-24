@@ -27,9 +27,9 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <ComboBox fx:id="cbArduinoA" layoutX="515.0" layoutY="137.0" prefHeight="25.0" prefWidth="93.0" onAction="#cbArduinoAOnChange"  />
-            <ComboBox fx:id="cbArduinoB" layoutX="515.0" layoutY="182.0" prefHeight="25.0" prefWidth="93.0" onAction="#cbArduinoBOnChange" />
-            <ComboBox fx:id="cbArduinoC" layoutX="515.0" layoutY="226.0" prefHeight="25.0" prefWidth="93.0" onAction="#cbArduinoCOnChange" />
+            <ComboBox fx:id="cbArduinoA" layoutX="515.0" layoutY="137.0" prefHeight="25.0" prefWidth="120.0" onAction="#cbArduinoAOnChange"  />
+            <ComboBox fx:id="cbArduinoB" layoutX="515.0" layoutY="182.0" prefHeight="25.0" prefWidth="120.0" onAction="#cbArduinoBOnChange" />
+            <ComboBox fx:id="cbArduinoC" layoutX="515.0" layoutY="226.0" prefHeight="25.0" prefWidth="120.0" onAction="#cbArduinoCOnChange" />
             <Button fx:id="btnSave" layoutX="297.0" layoutY="315.0" mnemonicParsing="false" onAction="#btnSaveClick" prefHeight="64.0" prefWidth="220.0" stylesheets="@../resources/css/baseStyle.css" text="Save" />
          </children>
       </Pane>

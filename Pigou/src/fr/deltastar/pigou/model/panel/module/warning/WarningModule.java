@@ -2,6 +2,7 @@ package fr.deltastar.pigou.model.panel.module.warning;
 
 import fr.deltastar.pigou.model.constant.ComponentConstants;
 import fr.deltastar.pigou.model.panel.Component;
+import fr.deltastar.pigou.model.panel.DeltaStar;
 import fr.deltastar.pigou.model.panel.ModuleInterface;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,10 +38,51 @@ public class WarningModule implements ModuleInterface {
         this.ledRed10 = new Component(ComponentConstants.OUTPUT, "Led red 10");
         this.buttonReset = new Component(ComponentConstants.INPUT, "Warning reset - Button");
     }
+
+    public Component getLedRed1() {
+        return ledRed1;
+    }
+
+    public Component getLedRed2() {
+        return ledRed2;
+    }
+
+    public Component getLedRed3() {
+        return ledRed3;
+    }
+
+    public Component getLedRed4() {
+        return ledRed4;
+    }
+
+    public Component getLedRed5() {
+        return ledRed5;
+    }
+
+    public Component getLedRed6() {
+        return ledRed6;
+    }
+
+    public Component getLedRed7() {
+        return ledRed7;
+    }
+
+    public Component getLedRed8() {
+        return ledRed8;
+    }
+
+    public Component getLedRed9() {
+        return ledRed9;
+    }
+
+    public Component getLedRed10() {
+        return ledRed10;
+    }
     
     @Override
     public List<Component> getListComponents() {
         List<Component> c = new ArrayList<>();
+        c.add(this.buttonReset);
         c.add(this.ledRed1);
         c.add(this.ledRed2);
         c.add(this.ledRed3);
@@ -51,7 +93,6 @@ public class WarningModule implements ModuleInterface {
         c.add(this.ledRed8);
         c.add(this.ledRed9);
         c.add(this.ledRed10);
-        c.add(this.buttonReset);
         return c;
     }
 
@@ -61,7 +102,7 @@ public class WarningModule implements ModuleInterface {
      * Desactive tout les voyants
      */
     public void onAction(boolean activate) {
-        
+        DeltaStar.getWarningSystem().stopAlert();
     }
 
     @Override

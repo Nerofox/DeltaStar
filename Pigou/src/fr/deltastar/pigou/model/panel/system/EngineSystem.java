@@ -4,6 +4,7 @@ package fr.deltastar.pigou.model.panel.system;
 import fr.deltastar.pigou.constant.CmdOrbiterConstants;
 import fr.deltastar.pigou.constant.Constants;
 import fr.deltastar.pigou.model.constant.LcdSystemEngineConstants;
+import fr.deltastar.pigou.model.constant.WarningConstants;
 import fr.deltastar.pigou.model.panel.BaseSystem;
 import fr.deltastar.pigou.model.panel.DeltaStar;
 import fr.deltastar.pigou.model.panel.ModuleInterface;
@@ -115,11 +116,13 @@ public class EngineSystem extends BaseSystem implements SystemLcdInterface {
                     try {
                         Thread.sleep(Constants.TIME_DISPLAY_ALERT_ENGINE);
                         if (qtyMainFuel <= Constants.LIMIT_MAIN_FUEL_ALERT) {
+                            DeltaStar.getWarningSystem().displayAlert(WarningConstants.WARNING_FUEL_LOW);
                             DeltaStar.getEngineSystem().getArduinoComLcd().setLcdMod(LcdSystemEngineConstants.MAIN_FUEL_LOW);
                             Thread.sleep(Constants.TIME_DISPLAY_ALERT_ENGINE);
                             DeltaStar.getEngineSystem().getArduinoComLcd().setLcdMod(LcdSystemEngineConstants.DISPLAY_FUEL);
                         }
                         if (qtyRcsFuel <= Constants.LIMIT_RCS_FUEL_ALERT) {
+                            DeltaStar.getWarningSystem().displayAlert(WarningConstants.WARNING_FUEL_LOW);
                             DeltaStar.getEngineSystem().getArduinoComLcd().setLcdMod(LcdSystemEngineConstants.RCS_FUEL_LOW);
                             Thread.sleep(Constants.TIME_DISPLAY_ALERT_ENGINE);
                             DeltaStar.getEngineSystem().getArduinoComLcd().setLcdMod(LcdSystemEngineConstants.DISPLAY_FUEL);

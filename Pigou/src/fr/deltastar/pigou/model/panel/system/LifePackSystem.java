@@ -2,6 +2,7 @@ package fr.deltastar.pigou.model.panel.system;
 
 import fr.deltastar.pigou.constant.Constants;
 import fr.deltastar.pigou.model.constant.LcdSystemLifePackConstants;
+import fr.deltastar.pigou.model.constant.WarningConstants;
 import fr.deltastar.pigou.model.panel.BaseSystem;
 import fr.deltastar.pigou.model.panel.DeltaStar;
 import fr.deltastar.pigou.model.panel.ModuleInterface;
@@ -73,6 +74,7 @@ public class LifePackSystem extends BaseSystem implements SystemLcdInterface {
                             //si le vaisseau est pas dépendant de l'extérieur
                             if (!ServicePigou.getOrbiterService().isPossibleToLive()) {
                                 //si pas de support de survie ou plus d'oxygen/azote
+                                DeltaStar.getWarningSystem().displayAlert(WarningConstants.WARNING_LIFESUPPORT);
                                 Thread.sleep(Constants.INTERVAL_COOLING_O2N2 + 20000);
                                 if (valueO2N2 == 0 || !DeltaStar.getLifePackSystem().getLifePackModule().isOnline()) {
                                     DeltaStar.deadGame();
@@ -170,6 +172,7 @@ public class LifePackSystem extends BaseSystem implements SystemLcdInterface {
                         //selon O2/N2 actuel on agit
                         //seuil d'alert
                         if (valueO2N2 <= Constants.LIMIT_O2N2_ALERT && DeltaStar.getLifePackSystem().isOnline()) {
+                            DeltaStar.getWarningSystem().displayAlert(WarningConstants.WARNING_O2N2_LOW);
                             DeltaStar.getLifePackSystem().getArduinoComLcd().setLcdMod(LcdSystemLifePackConstants.O2N2_LOW);
                             Thread.sleep(Constants.INTERVAL_COOLING_O2N2);
                             DeltaStar.getLifePackSystem().getArduinoComLcd().setLcdMod(LcdSystemLifePackConstants.DISPLAY_O2N2_CELSIUS);
@@ -213,6 +216,7 @@ public class LifePackSystem extends BaseSystem implements SystemLcdInterface {
                                 DeltaStar.getLifePackSystem().getHeaterModule().getLedGreenCoolerGood().switchOff();
                                 DeltaStar.getLifePackSystem().getHeaterModule().getLedRedCoolerBad().switchOn();
                             }
+                            DeltaStar.getWarningSystem().displayAlert(WarningConstants.WARNING_HOVERHEATED);
                             DeltaStar.getLifePackSystem().getArduinoComLcd().setLcdMod(LcdSystemLifePackConstants.SYSTEM_OVERHEATED);
                             Thread.sleep(Constants.INTERVAL_COOLING_O2N2);
                             DeltaStar.getLifePackSystem().getArduinoComLcd().setLcdMod(LcdSystemLifePackConstants.DISPLAY_O2N2_CELSIUS);

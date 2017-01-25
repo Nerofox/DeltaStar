@@ -2,6 +2,7 @@ package fr.deltastar.pigou.model.panel.system;
 
 import fr.deltastar.pigou.constant.Constants;
 import fr.deltastar.pigou.model.constant.LcdSystemPowerConstants;
+import fr.deltastar.pigou.model.constant.WarningConstants;
 import fr.deltastar.pigou.model.panel.BaseSystem;
 import fr.deltastar.pigou.model.panel.DeltaStar;
 import fr.deltastar.pigou.model.panel.ModuleInterface;
@@ -133,6 +134,7 @@ public class PowerSystem extends BaseSystem implements SystemLcdInterface {
                         qtyPower = qtyPower - (Constants.NB_CONSOMMATION_BASE + consoSupp);
                         //on atteint le seuil on avertis
                         if (qtyPower <= Constants.LIMIT_POWER_BEFORE_ALERT) {
+                            DeltaStar.getWarningSystem().displayAlert(WarningConstants.WARNING_POWER_LOW);
                             DeltaStar.getPowerSystem().getArduinoComLcd().setLcdMod(LcdSystemPowerConstants.APU_LOW);
                             new Thread(new Runnable() {
                                 @Override

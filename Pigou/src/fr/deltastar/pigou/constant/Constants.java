@@ -84,7 +84,7 @@ public class Constants {
     public static String AUTOCONFIG_VIEW_NB_OUTPUT = "%d / %d output";
     public static String AUTOCONFIG_VIEW_NB_TOTAL = "Total progress %d / %d I/O";
     public static String AUTOCONFIG_MSG_CHOOSEOUTPUT = "Please choose a valid output before next";
-    public static String AUTO_CONFIG_MSG_OUTPUTPROGRESS = "Configuration output in progress look at Deltastar and clic on the component on";
+    public static String AUTO_CONFIG_MSG_OUTPUTPROGRESS = "Configuration output in progress, clic on the start button and look at Deltastar and clic on the component on";
     public static String AUTO_CONFIG_MSG_OUTPUTFINISH = "Configuration output is finish, launch configuration input";
     public static String AUTO_CONFIG_MSG_FINISH = "Configuration finished, have fun !";
     

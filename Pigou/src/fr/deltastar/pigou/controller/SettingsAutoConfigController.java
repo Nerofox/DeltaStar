@@ -10,6 +10,7 @@ import fr.deltastar.pigou.model.panel.Component;
 import fr.deltastar.pigou.model.panel.DeltaStar;
 import fr.deltastar.pigou.service.ServicePigou;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
@@ -28,6 +29,8 @@ public class SettingsAutoConfigController extends BaseViewController implements 
 
     private List<Component> listComponentsOutput;
     private List<Component> listComponentsInput;
+    
+    private int[] listInputAlreadyPressed;
     
     private List<ComArduino> listComArduino;
     
@@ -71,6 +74,10 @@ public class SettingsAutoConfigController extends BaseViewController implements 
         this.totalNb = this.listComponentsInput.size() + this.listComponentsOutput.size();
         this.totalNbOutput = this.listComponentsOutput.size();
         
+        this.listInputAlreadyPressed = new int[this.totalNbInput];
+        for (int i = 0; i < this.listInputAlreadyPressed.length; i++)
+            this.listInputAlreadyPressed[i] = -1;
+        
         this.lNbOutput.setText(String.format(Constants.AUTOCONFIG_VIEW_NB_OUTPUT, this.currentNbOutputArduino, this.totalNbOutput));
         this.lNbInput.setText(String.format(Constants.AUTOCONFIG_VIEW_NB_INPUT, this.currentNbInput, this.totalNbInput));
         this.lNbTotal.setText(String.format(Constants.AUTOCONFIG_VIEW_NB_TOTAL, this.currentNbTotal, this.totalNb));
@@ -84,6 +91,13 @@ public class SettingsAutoConfigController extends BaseViewController implements 
      */
     @FXML
     public void btnNextClick() {
+        //cas du premier clic
+        if (this.btnNext.getText().equals("Start")) {
+            this.btnNext.setText("Next");
+            this.nextStep();
+            return;
+        }
+        
         //recupere output selectionné
         Component cSelect = this.ttvpOutput.getSelectedComponent();
         if (cSelect != null) {
@@ -110,9 +124,19 @@ public class SettingsAutoConfigController extends BaseViewController implements 
     public void onDataReceved(String data) {
         //empèche une étape suivante tant qu'on a pas finis le mode output
         if (this.totalNbOutput == this.currentNbOutput) {
+            //si touche déja préssé on l'ignore
+            int dataInt = Integer.parseInt(data);
+            for (int i = 0; i < this.listInputAlreadyPressed.length; i++) {
+                if (this.listInputAlreadyPressed[i] == dataInt) {
+                    System.out.println("Input " + dataInt + " is already pressed");
+                    return;
+                }
+            }
+            this.listInputAlreadyPressed[this.currentNbInput - 1] = dataInt;
+            
             //Arduino C est le seul a fournir les entrées
             this.currentComponentInput.setComArduino(ServicePigou.getComArduinoService().getArduinoC());
-            this.currentComponentInput.setIdPos(Integer.parseInt(data));
+            this.currentComponentInput.setIdPos(dataInt);
             this.nextStep();
         }
     }
@@ -198,7 +222,7 @@ public class SettingsAutoConfigController extends BaseViewController implements 
         if (ServicePigou.getComArduinoService().isFullConnected()) {
             this.listComArduino = ServicePigou.getComArduinoService().getAllArduino();
             ServicePigou.getMessageService().displayInfo(Constants.AUTO_CONFIG_MSG_OUTPUTPROGRESS);
-            this.nextStep();
+            //this.nextStep();
         }
     }
 
@@ -207,6 +231,5 @@ public class SettingsAutoConfigController extends BaseViewController implements 
     protected void btnBackClick() {
         super.navigate(ListView.SETTINGS);
     }
-    
     
 }

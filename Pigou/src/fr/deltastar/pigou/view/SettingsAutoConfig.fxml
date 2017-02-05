@@ -29,7 +29,7 @@
             </Label>
             <ProgressBar fx:id="pbTotal" layoutX="52.0" layoutY="539.0" prefHeight="35.0" prefWidth="735.0" progress="0.0" stylesheets="@../resources/css/baseStyle.css"/>
             <Label fx:id="lNbOutput" layoutX="52.0" layoutY="404.0" text="1 / 40 output" textFill="WHITE" />
-            <Button fx:id="btnNext" layoutX="351.0" layoutY="424.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="92.0" text="Next" onAction="#btnNextClick" />
+            <Button fx:id="btnNext" layoutX="351.0" layoutY="424.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="92.0" text="Start" onAction="#btnNextClick" />
             <Label fx:id="lNbTotal" layoutX="52.0" layoutY="510.0" text="Total progress 1 / 80 I/O" textFill="WHITE" />
             <Label fx:id="lNbInput" layoutX="494.0" layoutY="174.0" text="1 / 40 input" textFill="WHITE" visible="false"  />
          </children>

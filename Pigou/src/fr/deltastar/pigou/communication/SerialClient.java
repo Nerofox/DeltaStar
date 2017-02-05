@@ -10,6 +10,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.sql.Timestamp;
 import java.util.TooManyListenersException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,6 +28,8 @@ public class SerialClient implements ComClientInterface, SerialPortEventListener
     private CommPortIdentifier portIdentifier;
     private BufferedReader in;
     private PrintWriter out;
+    
+    private long lastTimeInputPressed;
     
     private ListenerComInterface listenerCom;
     
@@ -53,6 +56,7 @@ public class SerialClient implements ComClientInterface, SerialPortEventListener
             }
             //connexion au port com et configuration
             this.serialPort = (SerialPort)this.portIdentifier.open(nameCom, 2000);
+            this.lastTimeInputPressed = System.currentTimeMillis();
             this.serialPort.setSerialPortParams(Constants.SERIALCOM_DEBIT_COMMUNICATION, SerialPort.DATABITS_8,SerialPort.STOPBITS_1,SerialPort.PARITY_NONE);
             this.in = new BufferedReader(new InputStreamReader(serialPort.getInputStream()));
             
@@ -90,6 +94,20 @@ public class SerialClient implements ComClientInterface, SerialPortEventListener
                     this.in.read(result);
                     input = input + String.valueOf(result[0]) + String.valueOf(result[1]);
                 } while (input.trim().length() < 2);
+                //filtrage des espaces
+                input = input.replaceAll(" ", "");
+
+                //pour pallier au problème de la carte qui envoi une trop grande quantité d'infos au départ
+                //si la dernière action est trop rapide elle ne peut provenir d'un humain
+                if ((System.currentTimeMillis() - this.lastTimeInputPressed) < 250) {
+                    System.out.println("Stopping input too fast");
+                    this.lastTimeInputPressed = System.currentTimeMillis();
+                    return;
+                }
+                this.lastTimeInputPressed = System.currentTimeMillis();
+
+                //envoi de l'infos
+                System.out.println("Data receved : " + input);
                 listenerCom.onDataReceved(input);
                 if (StatusComViewController.getInstance() != null)
                     StatusComViewController.getInstance().addDataInput(input);

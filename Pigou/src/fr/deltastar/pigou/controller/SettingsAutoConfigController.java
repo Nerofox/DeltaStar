@@ -124,20 +124,25 @@ public class SettingsAutoConfigController extends BaseViewController implements 
     public void onDataReceved(String data) {
         //empèche une étape suivante tant qu'on a pas finis le mode output
         if (this.totalNbOutput == this.currentNbOutput) {
-            //si touche déja préssé on l'ignore
-            int dataInt = Integer.parseInt(data);
-            for (int i = 0; i < this.listInputAlreadyPressed.length; i++) {
-                if (this.listInputAlreadyPressed[i] == dataInt) {
-                    System.out.println("Input " + dataInt + " is already pressed");
-                    return;
+            //première touche préssé
+            if (this.currentNbInput == 0) {
+                this.nextStep();
+            } else {
+                //si touche déja préssé on l'ignore
+                int dataInt = Integer.parseInt(data);
+                for (int i = 0; i < this.listInputAlreadyPressed.length; i++) {
+                    if (this.listInputAlreadyPressed[i] == dataInt) {
+                        System.out.println("Input " + dataInt + " is already pressed");
+                        return;
+                    }
                 }
+                this.listInputAlreadyPressed[this.currentNbInput - 1] = dataInt;
+
+                //Arduino C est le seul a fournir les entrées
+                this.currentComponentInput.setComArduino(ServicePigou.getComArduinoService().getArduinoC());
+                this.currentComponentInput.setIdPos(dataInt);
+                this.nextStep();
             }
-            this.listInputAlreadyPressed[this.currentNbInput - 1] = dataInt;
-            
-            //Arduino C est le seul a fournir les entrées
-            this.currentComponentInput.setComArduino(ServicePigou.getComArduinoService().getArduinoC());
-            this.currentComponentInput.setIdPos(dataInt);
-            this.nextStep();
         }
     }
     
@@ -189,7 +194,7 @@ public class SettingsAutoConfigController extends BaseViewController implements 
                         }
                     });
                     ServicePigou.getMessageService().displayInfo(Constants.AUTO_CONFIG_MSG_OUTPUTFINISH);
-                    this.nextStep();
+                    //this.nextStep();
                     return;
                 }
                 //PARAMETRAGE INPUT

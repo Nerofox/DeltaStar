@@ -1,6 +1,7 @@
 package fr.deltastar.pigou.communication;
 
 import fr.deltastar.pigou.constant.Constants;
+import fr.deltastar.pigou.model.constant.ArduinoPortConstants;
 import fr.deltastar.pigou.model.constant.ComponentConstants;
 import fr.deltastar.pigou.model.panel.BaseSystem;
 import fr.deltastar.pigou.model.panel.Component;
@@ -96,7 +97,7 @@ public class ComArduino implements ListenerComInterface {
      * Envoi a l'arduino le code de sortie complet
      */
     public void sendOutput() {
-        if (this.isConnect()) {
+        if (this.isConnect() && !this.arduinoId.equals(ArduinoPortConstants.ARDUINO_C)) {
             //si on utilise un écran LCD, MAJ auto des valeurs de l'écran LCD
             if (this.sli != null) {
                 this.setLcdArg(this.sli.getArgOne(), this.sli.getArgTwo());

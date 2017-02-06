@@ -95,8 +95,14 @@ public class SerialClient implements ComClientInterface, SerialPortEventListener
                     input = input + String.valueOf(result[0]) + String.valueOf(result[1]);
                 } while (input.trim().length() < 2);
                 //filtrage des espaces
-                input = input.replaceAll(" ", "");
-
+                char[] arrayInput = input.toCharArray();
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < arrayInput.length; i++) {
+                    if ((int)arrayInput[i] != 0)
+                        sb.append(arrayInput[i]);
+                }
+                input = sb.toString();
+                
                 //pour pallier au problème de la carte qui envoi une trop grande quantité d'infos au départ
                 //si la dernière action est trop rapide elle ne peut provenir d'un humain
                 if ((System.currentTimeMillis() - this.lastTimeInputPressed) < 250) {
@@ -112,6 +118,10 @@ public class SerialClient implements ComClientInterface, SerialPortEventListener
                 if (StatusComViewController.getInstance() != null)
                     StatusComViewController.getInstance().addDataInput(input);
             } catch (Exception e) {
+                if (e instanceof IOException) {
+                    System.out.println("Data input ignored");
+                    return;
+                }
                 e.printStackTrace();
                 System.out.println("Error listen input on " + port);
                 if (StatusComViewController.getInstance() != null)

@@ -76,7 +76,7 @@ public class ComArduinoService {
                 public void run() {
                     while(true) {
                         try {
-                            Thread.sleep(500);
+                            Thread.sleep(Constants.REFRESH_ARDUINO_INTERVAL);
                             if (arduinoA.isConnect())
                                 arduinoA.sendOutput();
                             if (arduinoB.isConnect())

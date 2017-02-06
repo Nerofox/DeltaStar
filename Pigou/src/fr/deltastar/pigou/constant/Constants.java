@@ -74,6 +74,7 @@ public class Constants {
     
     //CONFIG POUR LES COMMUNICATIONS ARDUINO
     public final static int SERIALCOM_DEBIT_COMMUNICATION = 9600;
+    public final static int REFRESH_ARDUINO_INTERVAL = 1000;
     public final static String FILENAME_CONFIG_PORT_COM_ARDUINO = "arduinoPort.pf";
     
     //PARTIE AUTO CONFIG SETTING CONTROLLEUR

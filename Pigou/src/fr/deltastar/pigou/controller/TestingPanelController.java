@@ -58,7 +58,7 @@ public class TestingPanelController extends BaseViewController implements Initia
     private void btnSwitchOnClick() {
         List<Component> components = DeltaStar.getListComponents(ComponentConstants.OUTPUT);
         for (Component c : components) {
-            c.switchBlink();
+            c.switchOn();
         }
         ServicePigou.getComArduinoService().getArduinoA().sendOutput();
         ServicePigou.getComArduinoService().getArduinoB().sendOutput();

@@ -97,7 +97,7 @@ public class ComArduino implements ListenerComInterface {
      * Envoi a l'arduino le code de sortie complet
      */
     public void sendOutput() {
-        if (this.isConnect() && !this.arduinoId.equals(ArduinoPortConstants.ARDUINO_C)) {
+        if (this.isConnect()) {
             //si on utilise un écran LCD, MAJ auto des valeurs de l'écran LCD
             if (this.sli != null) {
                 this.setLcdArg(this.sli.getArgOne(), this.sli.getArgTwo());

@@ -175,6 +175,8 @@ public class PowerSystem extends BaseSystem implements SystemLcdInterface {
             this.hudPowerModule.onAction(false);
         if (DeltaStar.getLifePackSystem().isOnline())
             this.lifePackPowerModule.onAction(false);
+        if (DeltaStar.getPowerSystem().isOnline())
+            this.apuModule.onAction(false);
         //consommation inerte les systeme ne chauffe plus
         DeltaStar.getLifePackSystem().stopProcessusCooling();
         //plus de consommation on coupe

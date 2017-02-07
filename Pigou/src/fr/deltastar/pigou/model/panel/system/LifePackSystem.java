@@ -73,9 +73,10 @@ public class LifePackSystem extends BaseSystem implements SystemLcdInterface {
                             }
                             //si le vaisseau est pas dépendant de l'extérieur
                             if (!ServicePigou.getOrbiterService().isPossibleToLive()) {
-                                //si pas de support de survie ou plus d'oxygen/azote
-                                DeltaStar.getWarningSystem().displayAlert(WarningConstants.WARNING_LIFESUPPORT);
+                                if (!DeltaStar.getLifePackSystem().getLifePackModule().isOnline())
+                                    DeltaStar.getWarningSystem().displayAlert(WarningConstants.WARNING_LIFESUPPORT);
                                 Thread.sleep(Constants.INTERVAL_COOLING_O2N2 + 20000);
+                                //si pas de support de survie ou plus d'oxygen/azote
                                 if (valueO2N2 == 0 || !DeltaStar.getLifePackSystem().getLifePackModule().isOnline()) {
                                     DeltaStar.deadGame();
                                 }
